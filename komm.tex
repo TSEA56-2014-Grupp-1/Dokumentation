@@ -1,0 +1,44 @@
+\section{Delsystem kommunikation}
+Kommunikationsenheten ska agera som ett gränssnitt mellan roboten och omvärlden.
+
+\subsection{Funktion}
+Kommunikationsenheten ska ha två uppgifter, att styra bluetoothkommunikationen och att hantera LCD-displayen. Kommunikationsenheten agerar helt passivt och initierar inga förfrågningar på egen hand, utan är bara en mellanhand för robotens kommunikation med datorn och LCD-displayen.
+
+Bluetoothenheten som är kopplad till kommunikationsenhetens UART ska fungera som en virtuell seriell länk mellan PC och robotsystemet. Här ska information, som roboten får in från sensorer samt vilka beslut roboten väljer att göra, skickas via BT till PC.
+
+LCD-displayen kan visa två rader med 16~tecken på varje. Det ska finnas ett enkelt gränssnitt där alla delsystem kan mata ut information på displayen med ett kommando. Kommunikationsenheten kommer att lagra vad respektive delsystem “säger” för närvarande, och roterar/växlar med någon sekunds intervall vilken enhets information som visas på displayen. 
+
+
+\subsection{Kopplingsschema}
+I figur \ref{fig:komkopp} visas ett kopplingschema över allt som ska finnas på kommunikationsenhetens virkort.
+
+\nyBild{kopplingsschema-komm}{Kopplingsschema för delsystem kommunikation}{komkopp}{1}
+
+\subsection{Komponenter}
+\begin{packed_itemize}
+\item 1 x ATmega1284p - huvudprocessor
+\item 1 x EXO-3 oscillator (18.432 MHz, delas med 160 i USART-klockan för 115200 baud)
+\item 1 x JM126A LCD-display - för utmatning av debug/besluts/sensorinformation
+\item 1 x BlueSMiRF Gold Blåtandsmodem, “Firefly”
+\item 1 x tryckknapp för reset
+\item 2 x resistorer - pullup för reset-linan och strömbegränsning till displayens backlight
+\item 1 x potentiometer - för att justera kontrastspänningen till displayen
+\item 1 x kondensator - fördröjer pullup av reset vid strömtillslag
+\end{packed_itemize}
+
+\subsection{Analys av prestanda och resurser}
+
+I kopplingsschemat ser man tydligt att pinnarna på processorn räcker till och inte behöver användas till flera saker samtidigt. 
+
+Kommunikationsenheten kommer att behöva använda två timers, en för att upptäcka om uppkopplingen till PC:n har förlorats och en för att växla mellan olika delsystems utmatning på displayen. ATmega1284p har två 8-bitars timers och två 16-bitars, så det finns inga begränsningar där.
+
+\subsection{Översiktlig beskrivning av programmet}
+
+För initiering och konfigurering av kommunikation mellan bluetoothenhet och processor, se bilaga \ref{Bluetoothinit}.
+
+Kommunikationsenheten kommer att vara avvaktande tills dess att PC har skickat något kommando via BT till den. Från PC kommer den antingen få en informations/statusförfrågan eller ett styrkommando. Enheten har sedan till uppgift att antingen samla på sig den informations som frågas efter och skicka det till PC, eller att vidarebefodra det styrkommando som kommer in till lämplig enhet på bussen. Se figur \ref{fig:komflöd}.
+Datorn kommer även, om den inte håller på att skicka något, att skicka en “ping” till roboten. När roboten får någon data, kommandon eller ping, kommer en timer att nollställas. Om länken bryts av någon anledning så att timern inte nollställs kommer den att ge ett avbrott när den når ett visst värde, vilket leder till att kommunikationsenheten skickar ett general call på bussen om att alla enheter ska avbryta all rörelse.
+
+När kommunikationsenheten får en begäran om att visa information på LCD-displayen kommer den att lagra informationen i minnet. Det är först när en timer går ut som texten på displayen kommer att växlas till nästa delsystem i ordningen och informationen visas.
+
+\nyBild{BT.jpg}{Flödesschema över hur kommunikation med BT sker.}{komflöd}{0.8}

@@ -1,0 +1,126 @@
+
+
+\section{Delsystem sensorenhet}
+
+
+\subsection{Funktion}
+
+Sensorenhetens uppgift är att samla in rådata från de olika sensorerna och formatera denna så att den på begäran kan skickas ut till de andra delsystemen via bussen. Sensorenheten är utrustad med en linjesensor vars uppgift det är att ge styrdata som chassimodulen kan använda för att roboten ska kunna följa linjen. Vidare är roboten bestyckad med två stycken sidoskannrar som används för att lokalisera de objekt roboten ska plocka upp, samt en avståndssensor monterad på armen för finjusteringar när objekt plockas upp.
+
+Eftersom att A/D-omvandlaren sannolikt kommer att vara en flaskhals i systemet så är det viktigt att optimera användningen av denna. Detta görs genom att använda sensorerna en och en, beroende på vilken uppgift det är som roboten för tillfället utför. När roboten följer linjen så kommer enbart linjesensorn att vara aktiverad medan endast en av de båda sidoskannrarna kommer att användas då roboten väl stannat. Efter att objektet har lokaliserats så slutar sidoskannern att jobba och den avståndssensor som är monterad på robotarmen kopplas istället in.
+
+
+\subsection{Analys av prestanda}
+
+A/D-omvandlaren går att klocka i upp till 200~kHz utan att tappa upplösning. RFID-läsaren kommunicerar dock seriellt med en baud-rate på 2400~bps, för att få maximal hastighet på A/D-klockan och samtidigt kunna läsa med exakt 2400~bps hade en processorklocka på 11.0592~MHz önskats. Denna gick dock inte att få fram med de oscillatorkretsar som finns på Vanheden. Detta innebär att klockfrekvens väljs till  20~MHz istället på systemklockan. Då fås en kompromiss som gör att kommunikationen med RFID-läsaren löper på samtidigt A/D-omvandlarens frekvens maximeras inom ramen för vilka frekvenser processorn klarar av. Resultatet blir att A/D-omvandlaren får en klockfrekvens på ca 150~kHz. Ytterligare en fördel med att klocka processorn i 20~MHz är att processorn då hinner med så många instruktioner som möjligt medan A/D-omvandlaren är upptaget med att omvandla sensordata.
+
+Samplingstakten av de olika sensorerna kommer alltså att bli beroende dels av hur snabbt A/D-omvandlarens klocka går, samt hur många klockcykler det tar för A/D-omvandlaren att omvandla ett analogt värde. Detta gör att en A/D-omvandling, och således en sensorsampling, kommer att ta i storleksordningen 10\textsuperscript{-4}~sekunder.
+
+Den timern som kommer att användas är för att åstadkomma pulsbreddsmodulering till sidoskannrarna. Vidare är resterande pinnar och funktioner på processorn redogjorda för i ovanstående kopplingsschema.
+
+
+\subsection{Kopplingsschema}
+
+%%\nyBild{KopplingsschemaSensorenhet.jpg}{Kopplingsschema till delsystem sensorenhet.}{senskoppling}{1}
+
+
+
+\subsection{Komponenter}
+
+\begin{packed_itemize}
+\item 1 x ATmega1284P, huvudprocessor
+\item 1 x reflexsensormodul
+\item 2 x 16-kanals multiplexrar (MC14067B)
+\item 2 x 2-kanals multiplexrar (UTC 4053)
+\item 1 x RFID-läsare (Parallax Serial)
+\item 3 x avståndssensorer (GP2D120)
+\item 3 x resistorer (18~k\ohm)
+\item 3 x kondensatorer (100~nF)
+\end{packed_itemize}
+
+
+\subsection{Sensorer}
+Sensorenheten består av tre olika sensortyper; avståndssensor, linjesensor, RFID-läsare, som beskrivs nedan. 
+
+\subsubsection{Avståndssensorer}
+Avståndssensorer kommer användas dels till sidoskannrarna och dels till armen. Dessa mäter avstånd med hjälp av IR. Eftersom att avståndssensorerna först mäter ett digitalt värde och sedan skickar ut ett analogt värde så uppstår brus på utsignalen. Detta brus är relativt högfrekvent och kommer därför filtreras bort med hjälp av en RC-länk enligt ovanstående kopplingsschema. 
+
+
+\subsubsection{Linjesensor}
+Eftersom reflexsensormodulen består av 11~stycken separata IR-dioder och fototransistorer kommer en multiplexer och en demultiplexer användas för att styra denna sensor. Multiplexern kommer att driva IR-dioderna, och demultiplexern kommer att användas för att ta in insignalerna från fototransistorerna. Linjesensorn kommer att vara kopplad i enlighet med kopplingsschemat ovan.
+
+
+\subsubsection{RFID-läsare}
+Linjesensorn kommer detektera plockstationer. När detta sker anropas en subrutin som läser av RFID-sensorn och skickar ut RFID-värdet till chassienheten. Den RFID-läsare som kommer att användas är en “Parallax Serial”. Denna kräver två pinnar på processorn enligt ovanstående kopplingsschema.
+
+
+\subsection{Sidoskanner}
+Sidoskannerns uppgift är att hitta det objekt som ska plockas upp när roboten har stannat vid en plockstation. 
+
+
+\subsubsection{Hårdvara}
+
+Sidoskannern består av två avståndssensorer monterade på varsitt servo. Två multiplexrar används för att välja huruvida det är höger eller vänster sida som ska avsökas. Servona styrs med pulsbreddsmodulering. Servot ska få en puls var 20:e~millisekund och pulsbredden avgör vilket läge servot antar. En pulsbredd på 1~ms motsvarar servots ursprungsläge och en pulsbredd på 2~ms motsvarar max vinkelutslag. Enheten ska ha en tabell över vilka pulstider som motsvarar vilka vinklar på servot. För att ställa servot i en vinkel som ligger mellan de vinklar som finns i tabellen så kommer enheten beräkna en approximerad pulsbredd med hjälp av linjärinterpolering.
+
+\subsubsection{Funktionsbeskrivning}
+
+Sensorenheten ska med hjälp av sidoskannern kunna ta fram en koordinat för objektet som ska plockas upp. Koordinaterna bestäms utifrån ett koordinatsystem där origo ligger i mitten på roboten. När sidoskannern får in ett avstånd som är mindre än plockstationens radie ska sidoskannerns vinkel noteras. Med hjälp av det uppmätta avståndet för ett visst vinkelutslag beräknas sedan objektets koordinat.
+
+
+\nyBild{Sidoscanner_-_ber_kningstrekant.jpg}{Visar vad koordinatberäkning för objektet begrundar sig på.}{senssidoscanner}{0.6}
+
+I figur \ref{senssidoscanner} betecknar x avståndet från armens fästpunkt, alltså origo i koordinatsystemet, till avståndssensorn. Utifrån vinkeln alfa och avståndet $L$ som fås från sensorenheten kan föremålets koordinat i planet beräknas genom:
+
+$$\begin{pmatrix}
+x \\ y
+\end{pmatrix}
+ = 
+\begin{pmatrix}
+x+L*cos(\alpha) \\ 
+L*sin(\alpha))
+\end{pmatrix}$$
+
+
+\subsection{Översiktlig beskrivning av programmet}
+
+Sensorenheten ska initieras vid uppstart. Detta innefattar att konfigurera in- respektive utgångar, aktivera avbrott, initiera A/D-omvandlaren samt pulsbreddsmoduleringen. Utöver detta behöver även muxarna som är kopplade till linjesensorn initieras för att läsa av den första reflexsensorn. Efter detta kommer en A/D-omvandling startas. Sensoravläsning kommer sedan skötas kontinuerligt via avbrott som genereras av A/D-omvandlaren vid färdig avbrottsomvandling. Avbrottsrutinen kollar sedan vilken kanal A/D-omvandlaren är inställd på, och uppdaterar på så sätt den för tillfället aktuella sensorn.
+
+
+
+\subsubsection{Inläsning från avståndssensorer}
+En avläsning av avståndssensorn görs genom att ställa servot i ursprungsläge. Därefter läses avståndet av genom att A/D-omvandla avståndssensorn signal. Värde jämförs med en tabell över kända avstånd och spänningar. Värden som inte finns i tabellen kommer beräknas med linjärinterpolering. Programmet anser att ett objekt funnits när avståndet som detekterats är inom armens arbetsradie. Om inget objekt hittades för en vinkel vrider sig servot ett steg till och upprepar processen.
+
+\subsubsection{Inläsning från Linjesensor}
+
+Inläsning från linjesensorn kommer ske genom ett funktionsanrop (via avbrott från A/D-omvandlaren) till linjesensorinläsningsfunktionen som finns på linjesensorns processor. När denna funktion anropas uppdateras en uppsättning variabler som är lagrade i en vektor. Vektorn kommer vara 11 element lång, där varje element representerar en reflexsensor.
+
+När uppdateringen av linjesensorn startas för första gången kommer muxarna som styr linjesensorn ställas in så reflexsensorn längst till vänster väljs. Efter detta startas A/D-omvandling på kanal~0. När A/D-omvandlingen är färdig kommer ett avbrott (ADIF) att genereras vilket triggar en avbrottsfunktion.
+
+När A/D-omvandlingen är klar skrivs det A/D-omvandlade värdet in på korrekt plats i linjesensorns datavektor. Denna plats motsvarar den valda linjesensorns position på sensormatrisen. Därefter upprepas samma process för nästkommande sensor. Pinne~40 används för A/D-omvandling. Figur \ref{fig:senslinjeflöde} illustrerar processen för att uppdatera linjesensorns data.
+
+\nyBild{Programfl_de_Uppdatering_linjesensor.jpg}{Programflöde vid uppdatering av linjesensorn}{senslinjeflöde}{0.2}
+
+\subsubsection{Korsning, avbrott och plockstationsdetektering}
+
+Varje gång linjesensorn läses av uppdateras viktvektorn och en ny tyngdpunkt beräknas utifrån denna. Det lagras också olika flaggor för vilken status tejpen ligger i, som kommer att returneras med tyngdpunkten när chassienheten begär sensordata. Det kommer att sättas en flagga för om roboten har kommit till en korsning eller inte (se figur \ref{fig:senskorsning} nedan), en för eventuellt avbrott i tejpen, om det har kommit en plockstation eller inte och en för vilken sida plockstationen befinner sig på.
+
+\nyBild{programfl_de-_sensorenheten_uppdaterar_variabler.jpg}{Programflöde för att upptäcka korsning eller plockstation}{senskorsning}{1}
+
+
+\subsubsection{Tyngdpunktsberäkning}
+
+Tyngdpunktberäkning sker i en separat subrutin. Varje gång rutinen körs omvandlas sensorvärdena till en byte innehållande ett värde mellan -127 och 128. -127 innebär att tyngdpunkten ligger längst till vänster på sensorn och 128 innebär att den är längst till höger. Om värdet är 0 ligger tyngdpunkten precis i mitten av linjesensorn.
+
+
+\subsubsection{Detektering av objekt vid plockstation}
+
+Det program som kommer att koordinatbestämma objektet kommer att fungera enligt nedanstående programflöde:
+
+
+\nyBild{Programfl_de_Sidoscanner.png}{Programflöde för detektion av objekt vid plockstation}{sensobjekt}{1}
+
+I denna figur är $L$, som tidigare beskrivet, det av avståndssensorn uppmätta avståndet till det föremål som ska plockas upp. Ifall det av någon anledning får ett felaktigt värde från avståndssensorn där sensorn antingen detekterar ett föremål, trots att det inte finns där, eller att den har svept förbi det föremål som sensorn letar efter så använder den sig av parametern $K$. Till att börja med stegas servot tillbaka i små steg för att se ifall föremålet hade råkat missats. Om fler än 10 steg hinner tas innan något hittas så resonerades det att det snabbaste alternativet är att helt enkelt starta om objektsökningen. Observera att just värdet 10 kan komma att justeras, beroende på i hur stora steg vinkelutslaget ändras.
+
+\subsubsection{RFID-inläsning}
+
+När sensorenheten upptäckt att roboten är på en station körs en rutin där RFID-läsaren aktiveras och ett värde läses in och sparas i minnet tills dess att chassienheten efterfrågar det.

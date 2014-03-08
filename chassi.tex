@@ -1,0 +1,78 @@
+
+\section{Delsystem chassi}
+
+Chassienheten är huvudhjärnan för roboten och tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när armen ska plocka upp objekt. Den kommer att sköta regleringen av den tyngpunkt den får av sensorenheten via bussen för att kunna följa en tejpad linje på marken. På chassienheten kommer det även att finnas två omkopplare, en för att informera roboten om att den ska påbörja sin tävlingsprocedur, och en som anger om roboten ska operera autonomt eller styras via fjärrkommandon.
+
+
+\subsection{Funktion}
+
+Chassit har ett par huvudfunktioner att ta hand om, som anges i punktlistan nedan.
+\begin{packed_itemize}
+\item Kunna ta beslut och styras både autonomt och genom order från dator via kommunikationsenheten.
+\item Styra de två motorerna med PWM-styrning.
+\item Använda regleralgoritm för att kunna följa linjen utan att slingra sig fram.
+\item Hantera plockstationer genom att stanna och skicka kommandon till arm- och sensorenheten.
+\item Kunna vända autonomt.
+\item Mäta tid mellan stationer och m.h.a. detta ta beslut om att vända eller inte.
+\item Skicka styrbeslut till dator via kommunikationsenheten.
+\end{packed_itemize}
+
+
+\subsection{Kopplingsschema}
+
+\nyBild{kopplingsschema_chassi.png}{Kopplingsschema för delsystem chassi}{kopplingchassi}{1}
+
+
+\subsection{Komponenter}
+
+\begin{packed_itemize}
+\item Färdig plattform med batteri, två motorer som driver varsitt hjul och två “kundvagnshjul”
+\item 1 x Atmega1284P, huvudprocessor
+\item 2 x tryckknappar för reset samt start/stopp.
+\item 1 x omkopplare, för autonomt/manuellt läge.
+\item 1 x EXO-3, kristalloscillator (16 MHz)
+\end{packed_itemize}
+
+\subsection{Översiktlig beskrivning av programmet}
+
+Programmet på chassit kommer med hjälp av tyngdpunkten att beräkna styrriktning. Den kommer hämta nya värden från sensorenheten med jämna tidsintervall och med dessa uppdatera motorstyrningen. Enheten kommer också mäta tid mellan plockstationer, deras ordning samt lyssna på styr- och stoppkommandon.
+
+Chassit får information om att roboten är på plockstation av sensorenheten i samma paket som den får tyngdpunkten. Vid plockstation skall roboten stanna och en begäran om att få RFID-tag skickas till sensorenheten. Efter detta skickas instruktion till armenheten att antingen plocka upp eller lämna av föremål. När det är dags att köra vidare tar chassit beslut om ifall den ska vända eller inte. Alla dessa beslut skickas via kommunikationsenheten till datorn.
+
+
+\nyBild{programfl_de_chassi.png}{Flödesdiagram för huvudprogram till chassienheten.}{chassiflöde}{0.7}
+
+\subsubsection{Följa linje samt motorkontroll}
+
+För att kontrollera hastighet till motorerna kommer snabb PWM att implementeras i roboten. Denna kommer att vara kopplad till en H-brygga (inbyggd i den givna plattformen)  som sköter matningen till själva motorerna. Motorerna kommer att uppdateras med en uppdateringsfrekvens på 1~kHz.
+
+Eftersom systemets klocka kommer gå i 16~MHz måste timern ställas in så att den kan uppnå en period på 1~kHz i uppdateringsfrekvens. Detta uppnås genom att prescalern ($N$) till timern sätts till 1 samt att timern räknar till 15999 innan en ny period ska starta. 
+
+För att kunna göra linjeföljning utan att slingra sig fram måste en regleralgoritm implementeras. Den reglering som kommer att göras är en PD-reglering, enligt formlen:
+
+$$u[t] = K_{p}e[t] + K_{d}\frac{d}{dt}e[t]$$
+
+Om värdet är positivt/negativ ska motor på vänster/höger sida att bromsas medan den andra kör med full fart. För att beräkna motorkontrollen till PWM kommer följande formel användas.
+
+$$P[t] = 15999 - K_{total}u[t]$$
+
+Där alltså $P[t]$ är värdet räknaren till vänster/höger motor ska räkna till. Den andra motorn kommer att gå på full hastighet, alltså är $P[t] = 15999$ för den motorn. Av dessa värden kommer $K_{p}$,$K_{d}$ och $K_{total}$ att kunna ändras för att optimera regleringen.
+
+
+\subsubsection{Identifiering av plockstationer samt trippmätning}
+
+Varje gång roboten stannar vid en plockstation kommer chassit att, via sensorenheten, läsa av plockstationens RFID-tagg. Värdet hos dessa RFID-taggar kommer sparas i en tabell innehållandes dels taggarnas värden och dels hur långt det är mellan taggarna tidsmässigt. Detta gör att roboten kan vända om vägen till plockstationen som den ska till blir kortare då.
+
+
+\subsubsection{Styrkommando}
+
+Chassit ska reagera på styrkommandon från bussen om brytaren är satt i manuellt läge. Ett styrkommando består av ett rattutslag och ett gaspådrag. Ett negativt rattutslag innebär vänstersväng och ett positivt innebär högersväng. Gaspådrag kan vara positivt och negativt, där positivt för roboten framåt och negativt för roboten bakåt. 
+
+
+\subsubsection{Autonomt läge och start-/stoppkommando}
+
+När brytaren är i autonomt läge ska chassit reagera på startknappen som sitter på chassit. Startknappen påbörjar linjeföljning med hantering av plockstationer beskrivet enligt ovan.
+
+\subsection{Analys av prestanda och resurser}
+
+Chassienheten kommer behöva 3 timer. En för att mäta tid för trippmätaren, en för PWM-styrning av motorerna och en som ger avbrott för att begära linjesensordata med jämna intervall. En av ATmega1284:ans 8~bits-timers kommer att användas för att begära sensordata, och de två 16~bits-timrarna kommer att användas till trippmätare respektive PWM. I övrigt kommer chassit att beräkna gaspådrag till de olika motorerna med en regleralgoritm. Eftersom värdet på linjesensorn kommer uppdateras med intervall på 2~ms kommer det finnas tillräckligt med tid för att göra denna beräkning.

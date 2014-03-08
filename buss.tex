@@ -1,0 +1,90 @@
+\section{Kommunikation mellan delsystem}
+
+För att alla delssytem ska kunna kommunicera med varandra kommer en multimaster I\textsuperscript{2}C buss att implementeras Alla delsystem kommer att sitta kopplade på denna och all kommunikation mellan olika delssytem måste gå via denna.
+
+Fysiskt kommer bussen bestå av två kablar, en Serial Data Line (SDA) samt en Serial Clock Line (SCL).
+
+\subsection{Protokollbeskrivning}
+När bussen är ledig kommer alla system att vara master. När sedan ett system vill ta kontroll över bussen skickar den en start-bit. Detta kommer tala om för alla andra system att bussen nu är upptagen och de antar då slave-mode.
+
+Alla system kommer att ha en egen unik adress (SLA). Vilken adress olika system har finns i tabell \ref{tab:adresstab}. General call kommer finnas och alla system kommer då vara adresserade slavar.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Delsystem} & \textbf{Adress} \\
+\hline
+Chassi & 0000 001\\
+\hline
+Arm & 0000 110\\
+\hline
+Sensor & 0000 100\\
+\hline
+Kommunikation & 0000 101\\
+\hline
+\end{tabular}
+\caption{Adresser över samtliga delsystem}
+\label{tab:adresstab}
+\end{table}
+
+Varje dataöverföring kommer att vara två byte lång. Efter detta kommer alltid repetedstart att vara tillåtet. Efter varje byte som överförs skickar system som tog emot acknowledgement (ACK) eller no-acknowledgement (NACK) tillbaka. NACK kommer endast att skickas då överföringen misslyckades eller i specialfallet då master är mottagare och den sista byten i överföringen har mottagits.
+
+Vid fallet att två eller flera system försöker prata på bussen samtidigt kommer de system som förlorar arbitration att vänta på en stop-signal på bussen och sedan försöka igen.
+
+Programflöden med beskrivningar om vilka register som ska ändras för att få önskad funktion finns i bilaga \ref{bussbilaga}.
+
+\subsection{Analys av prestanda}
+
+\nyBild{bussprestanda}{Relativ tidsbelastning på bussen från olika ärenden. De flesta överföringar sker så sällan att de inte syns i diagrammet}{bussprestanda}{0.7}
+\subsection{Informationsflöde}
+
+Delsystem kommer både att kunna efterfråga data från andra delsystem över bussen, och skicka kommandon och information på eget initiativ. Viktigt att observera är att en förfrågan endast ska göras när datan redan finns redo och förberedd på delsystemet som får förfrågan, eftersom datan ska returneras omedelbart efter att förfrågan har kommit in. Om datan vid en förfrågan inte är redo eller inte finns ska en förutbestämd felkod returneras.
+
+
+
+\begin{table}
+	\centering
+	\begin{tabularx}{\textwidth}{|X|X|X|X|}
+		\hline
+        \textbf{Data} & \textbf{Sändarenhet} & \textbf{Metod} & \textbf{Mottagarenhet} \\
+        \hline
+        Tyngdpunkt och flaggor för tejpstatus & Sensor & Får förfrågan från & Chassi \\
+        \hline
+        Värde på RFID-tag & Sensor & Får förfrågan från & Chassi \\
+        \hline
+        Koordinater till plockobjekt & Sensor & Får förfrågan från & Arm \\
+        \hline
+        Avstånd från gripklon till föremål & Sensor  & Får förfrågan från & Arm\\
+        \hline
+        All sensordata & Sensor & Får förfrågan från & PC via Komm. e. \\
+        \hline
+        Styrkommandon & PC via Komm. e. & Skickar själv till & Arm och Chassi\\
+        \hline
+        Stoppkod & Komm. e. eller PC via Komm. e. & Skickar själv till & Alla via general call\\
+        \hline
+        Styrbeslut och händelser & Chassi & Skickar själv till & PC via Komm. e. \\
+        \hline
+        Kommando för upplockining & Chassi & Skickar själv till & Arm \\
+        \hline
+        Kommando för avlämning & Chassi & Skickar själv till & Arm \\
+        \hline
+        Rattutslag och gaspådrag & Chassi & Får förfrågan från & PC via Komm. e. \\
+        \hline
+        Statusmeddelanden & Arm & Skickar själv till & Chassi och PC via Komm. e.\\
+        \hline
+	\end{tabularx}
+	\caption{Informationsflöde mellan delsystem.}
+	\label{tab:infflöde}
+\end{table}
+    
+
+\section{Implementeringsstrategi}
+För att kunna arbeta optimalt så kommer första prioritet för utveckling att vara att färdigställa den interna busskommunikationen fullständigt. Med hjälp av logikanalysatorer och andra standardkretsar som använder I\textsuperscript{2}C kommer funktionalieten att kunna testas i varje delsystem för sig till viss del, innan alla kopplas samman och testas. 
+
+Bland det första som ska ske i projektet är också att bygga ihop hårdvaran till virkorten och verifiera att den fungerar.                                                                                                                
+För att kunna undersöka hur delsystem reagerar på förfrågningar över bussen finns funktionalitet i programvaran för att skicka förfrågningar till delsystem från PC:n och observera deras svar. Detta ska användas för att verifiera att delsystem fungerar som de ska.
+
+I så stor utsträckning som möjligt ska alla funktioner testas i samband med att de färdigställs.
+
+

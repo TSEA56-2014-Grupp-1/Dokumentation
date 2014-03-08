@@ -1,0 +1,190 @@
+
+\section{Master transmitt}
+\label{bussbilaga}
+Pseudokod samt vilka register som ska ändras i vilka steg för att bussen ska få önskad funktion. Denna kommer bestå utav 4 olika program, enligt följande:’
+
+\subsection{Master transmitt}
+Programflödet för det program som krävs för master transmitt ska fungera De register som måste modifieras och hur de ska modifieras i de olika punkter finns i följande tabell.
+
+\begin{packed_enumerate}
+\item För START ska TWINT samt TWSTA sättas till 1 i TWCR. Processorn kommer då att vänta på att bussen ska bli ledig och sedan skicka START på bussen.
+\item Vänta på att TWINT ska gå hög.
+\item Läs TWSR, kontrollera innehåll, koderna är som följer:
+\begin{packed_enumerate}
+\item 0x08 START lyckades.
+\item 0x10 REPEATED START lyckades.
+\end{packed_enumerate}
+\item Skriv SLA+W till TWDR.
+\item Skriv TWINT till 1 i TWCR.
+\item Vänta på att TWINT ska gå hög.
+\item Läs TWSR, kontrollera innehåll, koderna är som följer:
+\begin{packed_enumerate}
+\item 0x18 SLA+W lyckades, ACK mottagen.
+\item 0x20 SLA+W lyckades, NACK mottagen.
+\item 0x38 arbitration förlorad.
+\end{packed_enumerate}
+\item Skicka data till TWDR. Beroende på värde i TWSR ska följa aktion tas:
+\begin{packed_enumerate}
+\item 0x18: TWINT = 1, TWSTA = TWSTO = 0. Skriver data på bussen.
+\item 0x20: TWINT = TWSTA = 1, TWSTO = 0. REPEATED START, tillbaka på punkt 2.
+\item 0x38: TWINT = TWSTA = 1, TWSTO = 0. START kommer sändas då bussen är ledig, tillbaka på punkt 2.
+\end{packed_enumerate}
+\item Vänta på att TWINT till 1 i TWCR.
+\item Läs TWSR, kontrollera innehåll, koderna är som följer:
+\begin{packed_enumerate}
+\item 0x28 Data byte skickad, ACK mottagen.
+\item 0x30 Data byte skickad, NACK mottagen.
+\end{packed_enumerate}
+\item Beroende på kod samt om mer data ska skickas eller inte kan följande aktion tas:
+\begin{packed_enumerate}
+\item 0x28:
+\begin{packed_enumerate}
+\item Mer data skickas i samma paket? Om ja, TWINT = 1, TWSTA = TWSTO = 0. Tillbaka på 8 a.
+\item TWSTA = TWINT = 1, TWSTO = 0. REPEATED START, om mer data ska skickas, tillbaka på punkt 1.
+\item TWINT = TWSTO = 1, TWSTA = 0. STOP skickas, överföring klar.
+\end{packed_enumerate}
+\item 0x30:
+\begin{packed_enumerate}
+\item TWINT = TWSTA = 1, TWSTO = 0. REPEATED START skickas, tillbaka på punkt 2.
+\item TWINT = TWSTO = 1, TWSTA = 0. STOP skickas, överföring klar.
+\end{packed_enumerate}
+\end{packed_enumerate}
+\end{packed_enumerate}
+
+\subsection{Master receiver mode}
+Punkt 1 till 6 samma som för master transmitt mode med skillnaden att SLA+R skrivs till TWDR istället för SLA+W. Sedan följer flödet:
+
+\begin{packed_enumerate}
+\setcounter{enumi}{4}
+\item Läs TWSR, kontrollera innehåll, koderna är som följande:
+\begin{packed_enumerate}
+\item 0x38 arbitration förlorad eller NACK mottagen.
+\item 0x40 SLA+R skickad, ACK mottagen.
+\item 0x48 SLA+R skickad, NACK mottagen.
+\end{packed_enumerate}
+\item Beroende på värdet i TWSR ska följande aktion tas:
+\begin{packed_enumerate}
+\item 0x38: TWINT = TWSTA = 1, TWSTO = 0. Vänta till bussen är ledig och skicka START igen, tillbaka på punkt 2.
+\item 0x40: Vänta på att TWINT ska bli hög, fortsätt på punkt 9.
+\item 0x48: TWINT = TWSTA = 1, TWSTO = 0. REPEATED START kommer att skickas. (Finns risk för oändlig loop om adressen inte finns)
+\end{packed_enumerate}
+\item Läs TWSR, kontrollera innehåll, koderna är som följer:
+\begin{packed_enumerate}
+\item 0x50 Data mottagen, ACK skickad.
+\item 0x58 Data mottagen, NACK skickad.
+\end{packed_enumerate}
+\item Läs data i TWDR.
+\item Beroende på värdet i TWSR ska följande aktion tas:
+\begin{packed_enumerate}
+\item 0x50: Ta emot en byte till? Om ja ska TWINT = TWEA = 1, TWSTA = TWSTO = 0. ACK skickas. Om nej ska TWINT = 1, TWEA = TWSTA = TWSTO = 0. NACK skickas.
+\item 0x58: Starta en ny överföring? Om ja, sätt TWINT = TWSTA = 1, TWSTO = 0. REPETADE START kommer skickas. Om nej, TWINT = TWSTO = 1, TWSTA = 0.
+\end{packed_enumerate}
+\end{packed_enumerate}
+
+\subsection{Slave receiver mode}
+För att en slav ska kunna ta emot data behövs följande programflöde.
+
+\begin{packed_enumerate}
+\item Vänta på TWINT FLAG går hög (hanteras via avbrott)
+\item Kontrollera TWSR, möjliga koder är:
+\begin{packed_enumerate}
+\item 0x60 Egen SLA+W har tagits emot, ACK skickats.
+\item 0x68 Förlorat arbitration som master, egen SLA+W/R har mottagits. ACK skickats.
+\item 0x70 general call adress mottagen, ACK skickad.
+\item 0x78 Arbitration förlorad som master. General call mottaget, ACK returnerad.
+\item 0x80 Data har mottagits, ACK returnerad.
+\item 0x88 Data har mottagits, NACK returnerad.
+\item 0x90 Data har mottagits efter general call, ACK returnerad.
+\item 0x98 Data har mottagits efter general call, NACK returnerad.’
+\item 0xA0 STOP eller REPETATED START har mottagits medans fortfarande adresserad som slav.
+\end{packed_enumerate}
+\item Beroende på värde i TWSR ska följande aktion tas:
+\begin{packed_enumerate}
+\item 0x60: TWINT = TWAE = 1, TWSTO = 0. Data tas emot, ACK returneras.
+\item 0x68: Samma som för 0x60.
+\item 0x70: Samma som för 0x60.
+\item 0x80: Samma som för 0x60.
+\item 0x88: Läs från TWDR (kan vara koorupt?) TWINT = TWEA = 1, TWSTO = 0. Ändra inte TWSTA, detta görs i en annan rutin om vi vill skicka på bussen när den blir ledig.
+\item 0x90: Läs från TWDR. TWINT = TWEA = 1, TWSTO = 0. Data kommer tas emot, ACK returneras.
+\item 0x98: Samma som 0x88.
+\item 0xA0: Samma som 0x88.
+\end{packed_enumerate}
+\end{packed_enumerate}
+
+\subsection{Slave transmitter mode}
+För att en slav ska kunna skicka data behövs följande programflöde.
+
+\begin{packed_enumerate}
+\item Vänta på att TWINT FLAG går hög. (hanteras via avbrott)
+\item Kontrollera TWSR, möjkliga koder är:
+\begin{packed_enumerate}
+\item 0xA8 Egen SLA+R har tagits emot, ACK skickats.
+\item 0xB0 Arbitration förlorad i SLA+R/W som master, egen SLA+R mottagen, ACK skickad.
+\item 0xC0 Data i TWDR skickas, NACK mottagen.
+\item 0xC8 Sista byte i TWDR skickad, ACK mottagen.
+\end{packed_enumerate}
+\item Beroende på värde i TWSR ska följande aktion tas:
+\begin{packed_enumerate}
+\item 0xA8: Ladda data till TWDR. TWINT = TWEA = 1, TWSTO = 0. Data skickas.
+\item 0xB0 Samma som 0xA8.
+\item 0xB8 Ladda data till TWDR. TWINT = 1, TWSTO = TWEA = 0. Sista data byte skickas.
+\item 0xC0 TWINT = TWEA = 1, TWSTO = 0. Går tillbaka till grundläge. Ändra inte TWSTA, detta görs i en annan rutin om vi vill skicka på bussen när det blir ledig.
+\item 0xC8 Samma som för 0xC0.
+\end{packed_enumerate}
+\end{packed_enumerate}
+
+
+\section{Bluetooth initiering och konfigurering}
+\label{Bluetoothinit}
+
+För att inleda kommunikation så behövs följande göras på BT enheten och på PC:
+
+\begin{packed_enumerate}
+\item Följa uppkopplingsguide till BT-enheten på följande websida:
+https://docs.isy.liu.se/twiki/bin/view/VanHeden/BlueTooth
+\item Skicka ‘\$\$\$’ till BT när enheten är Idle (‘stat’-lampa blinkar 1 gång per sek).
+\item Konfigurera efter preferens (skicka SF,1 för att gå tillbaka till default).
+\item Skicka ‘---’ för att gå ur kommandoläge
+\item Nu är det bara att skicka/läsa den data du behagar till/från den port som enheten är kopplad till.
+\end{packed_enumerate}
+
+Några bra konfigurationskommandon (ändras endast med välmotiverade och genomtänkta anledningar):
+
+\begin{packed_itemize}
+\item SF,1 ;Gör att enheten går tillbaka till defaultinställningar
+\item SN  ;Sätter namnet på BTenheten
+\item SM  ;Sätter mode på BT
+\item SP  ;Sätter pinkod (default är 1234)
+\item SU  ;Sätter baud rate (default 115k)
+\end{packed_itemize}
+
+För att processorn ska kunna läsa och skriva data till BT-enhet:
+
+\begin{packed_enumerate}
+	\item Koppla BT med processorn enligt kopplingschema.
+	\item Initiera USART genom att konfigurera alla register enligt:
+	\begin{packed_enumerate}
+		\item UCSRnB
+		\begin{packed_enumerate}
+			\item RXENn (bit4) = 0x1, slår på Recieve
+			\item TXENn (bit3) = 0x1, slår på Transmitt
+			\item RXCIEn (bit7) = 0x1, gör att det sker ett avbrott när processorn fått en recieve.
+		\end{packed_enumerate}
+		\item USCRnC
+		\begin{packed_enumerate}
+			\item UMSEL = 0x0 asynkront läge (ingen extern klocka som styr)
+			\item UPMn = 0x00, ingen paritet
+			\item USBSn = 0x0, vi kör med 1 stopbit
+		\end{packed_enumerate}
+		\item Baudrate-registrerna konfigureras med formeln, $BaudValue = \frac{F_{CPU}}{16USART_{BAUDRATE} - 1}$ enligt nuvarande konfigurationer sätts:
+		\begin{packed_enumerate}
+			\item UBRRH = 0x00
+			\item UBRRL = 0x09
+		\end{packed_enumerate}
+	\end{packed_enumerate}
+	\item Skicka görs genom att skriva data på UDRn-registret (8 bitar i taget) så görs resten automatiskt. 
+Läsning görs genom att läsa från UDRn-registret (8 bitar), detta då en recieve mottagits och inladdning i registret är klart, enligt konfiguration så sker ett avbrott när detta händer.
+	\item Se flödesschema för hantering av dataflöde.
+\end{packed_enumerate}
+
+

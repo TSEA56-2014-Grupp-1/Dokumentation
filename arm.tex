@@ -1,0 +1,77 @@
+
+
+\section{Delsystem arm}
+
+Robotens arm är av modell PhantomX Reactor från Trossen Robotics, som är en servostyrd arm med 4 rotationsleder och en griphand varpå det sitter totalt 7~st AX-12A acutatorer. Armen kontrolleras av en microprocessor, ATmega 1284, genom att parallellkoppla acutatorerna till en seriell UART-port, via en tri state buffer så att styrningen till actutatorerna sker med half duplex. Armen har en räckvidd på 38~cm och en rotationsfrihet på 300~grader. 
+
+
+\subsection{Funktion}
+
+Armen ska att kunna köras i antingen manuellt eller autonomt läge. Den kommer vara avvaktande tills dess att ett kommando skickas på bussen till armenheten. Det kan antingen vara ett visst styrkommando eller en koordinat där det objekt man vill plocka upp befinner sig.
+
+
+\subsubsection{Manuellt läge} 
+
+Vid manuellt läge får armenheten kommandon skickade från PC via kommunikationsenheten, som armen rör sig utefter. Ett kommando kommer se ut på det viset att den talar om vilken riktning armen ska röra sig, i djupled (Y), i höjd (Z), rotationen runt Z eller klogrip. Därefter rör den på sig tills dess att annan instruktion tilldelas eller tills att den nått max-läge. Den ska också kunna få en instruktion om att den automatiskt ska röra sig till ett startläge genom invers kinematik (se nedan). 
+
+\subsubsection{Automatiskt läge}
+
+Vid autonomt läge ska armenheten befinnas sig i ett avvaktande läge tills dess att den får ett kommando från chassienheten att den befinner vid en plockstation. Armen kommer då fråga sensorenheten om objektets position. Som svar kommer den få en vinkel, avstånd från origo, och position i höjdled. Detta svar innehåller också information om ifall det finns ett objekt på plockstationen. Utifrån detta skall enheten göra beräkning på hur armen behöver röra sig för att nå koordinaten med klon. Detta görs genom invers kinematik (se nedan).
+
+För att kunna förutsätta att armen plockar upp ett föremål med säkerhet och försiktigthet så rör sig armen först till ett läge en bit framför slutkoordinaten för att sedan tillsammans med respons från en avståndssensor på klon sakta röra sig fram till objektet och greppa det. När den rör sig närmare objektet frågar armenhenheten koninuerligt sensorenheten om avståndet till objektet för att utefter det besluta om att fortsätta. Efter greppning av föremål rör den sig tillbaka till startläget på samma sätt. När armen är i utgångsposition igen, eller om inget föremål hittades, skickas kommando till chassienheten om föremål plockades upp eller inte. Därefter kan chassienheten välja att köra igen.
+
+
+\subsubsection{Inverterad kinematik}
+
+Positioner anges i ett koordinatsystem relativt armens bas. X anger avstånd i sidled, Y anger avstånd i djupled och Z anger avstånd i höjdled. Armens gripklo hålls horisontell mot underlaget. Då armens rotation i XY-planet endast styrs av armbasens rotation kan det inverterade kinematikproblemet reduceras till ett tvådimensionellt problem. Eftersom gripleden ska hållas horisontell kan även denna led tas ur ekvationen, då den anpassas efter de övriga två ledernas position.
+
+\nyBild{Figur_arm_--_inveterad_kinematik.png}{Figur över koordinatsystem och vinklar som definierar armens läge.}{arminverskinematik}{1}
+
+I figur \ref{fig:arminverskinematik} kan man se att origo ligger över marknivå. $\gamma$ kommer vara inställd i den riktning som armen ska röra sig i för att nå föremålet. $\beta$ kommer se till att hålla $L_{3}$ horisontell mot marknivån.
+
+$$
+\begin{pmatrix}
+	x \\
+	y
+\end{pmatrix}
+ = 
+\begin{pmatrix}
+	L_{1}cos(\alpha_{1}) + L_{2}cos(\alpha_{1} + \alpha_{2} - \pi) \\
+	L_{1}sin(\alpha_{1}) + L_{2}sin(\alpha_{1} + \alpha_{2} - \pi)
+\end{pmatrix}$$
+
+
+
+\subsubsection{Förprogrammerade rörelser}
+
+När gripklon har fått grepp om föremålet kommer armen att kunna återgå till sitt ursprungsläge genom ett förprogrammerat rörelsemönster. Armenheten kommer även, vid avlämningsstationer, kunna ta emot kommandot “lämna av föremål”. Detta kommando kommer starta ett förprogrammerat beteende hos armens servon för att lämna av föremålet autonomt. 
+
+
+\subsection{Kopplingsschema}
+\nyBild{kopplingsschema-arm}{Kopplingsschema över delsystem arm}{kopparm}{1}
+
+
+\subsection{Komponenter}
+
+\begin{packed_itemize}
+\item 1 x PhantomX Reactor arm med 7st AX-12A-servon
+\item 1 x 3-state buffer (74LS241)
+\item 1 x ATMega1284P, huvudprocessor
+\item 1 x EXO-3, kristalloscillator (16~MHz)
+\item 1 x Resistor, för pullup av reset
+\item 1 x Kondensator, för fördröjning av resetpullup
+\end{packed_itemize}
+
+
+
+\subsection{Analys av prestanda och minne}
+
+Av kopplingsschemat framgår att antalet pinnar räcker till på processorenheten. Vald klockfrekvens garanterar att rätt baudrate kan användas för den seriella kommunikationen med armens servon och även över bussen.
+Enheten behöver inte använda några av processorns AD-omvandlare eller timers.
+
+
+\subsection{Översiktlig beskrivning av programmet}
+
+Programmet kommunicerar med acutatorerna över UART. Med hjälp av invers kinematik kan programmet beräkna vilka vinklar armens servon ska anta för att armens gripklo ska anta en given position. Nedanstående figur visar vilka bibliotek som programmet ska bestå av. Grönmarkerade lådor innebär att de kan delas med andra delar av roboten. Lådor som ligger ovanför en annan låda bygger på den lådans funktioner. Exempelvis är servostyrning och servoläsning beroende av funktioner för att kommunicera över UART.
+
+\nyBild{Programstruktur_arm.png}{Övergripande bild över armenhetens programbibliotek.}{armprogrambibliotek}{0.8}

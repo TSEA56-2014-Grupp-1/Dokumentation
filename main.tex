@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{setspace}
+\usepackage{tabularx}
+\input{LIPS.tex}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\frenchspacing
+
+\renewcommand{\thepage}{\roman{page}}
+
+\newcommand{\LIPSartaltermin}{VT14}
+\newcommand{\LIPSkursnamn}{TSEA56 Elektronik kandiatprojekt}
+
+\newcommand{\LIPSprojekttitel}{Lagerrobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 1}
+\newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
+\newcommand{\LIPSdokumentansvarig}{LIPS Designspecifikation}
+
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-28 13 68, 3B:528, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
+
+
+\newcommand{\LIPSdokumenttyp}{Designspecifikation}
+\newcommand{\LIPSredaktor}{Patrik Nyberg}
+\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Karl Linderhed}{Projektledare (PL)}{073-679 59 59}{karli315@student.liu.se}
+  \LIPSgruppmedlem{Patrik Nyberg}{Dokumentansvarig (DOK)}{073 -049 59 90}{patny205@student.liu.se}
+  \LIPSgruppmedlem{Johan Lind}{}{070-897 58 24}{johli887@student.liu.se}
+  \LIPSgruppmedlem{Erik Nybom}{}{070-022 47 85}{johjo939@student.liu.se}
+  \LIPSgruppmedlem{Andreas Runfalk}{}{070-564 23 79}{andru411@student.liu.se}
+  \LIPSgruppmedlem{Philip Nilsson}{}{073-528 48 86}{phini326@student.liu.se}
+  \LIPSgruppmedlem{Lucas Nilsson}{}{073-059 42 94}{lucni395@student.liu.se}
+\end{LIPSprojektidentitet}
+
+
+\renewcommand*\contentsname{Innehåll}
+\begin{spacing}{0.5}
+\tableofcontents{}
+\end{spacing}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+%\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+  \LIPSversionsinfo{0.1}{2014-03-08}{Första utkast.}{PaN}{}
+  %\LIPSversionsinfo{1.0}{2012-02-14}{Första utkast.}{}{}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+\section{Systemöversikt}
+\nyBild{Figur__versikt_systemet.jpg}{Schematisk beskrivning av systemet}{systemschema}{1}
+
+Roboten ska vara uppbyggd av fyra olika delsystem (chassi, sensor, arm och kommunikation) som vart och ett har sin specifika uppgift att sköta. Målet är att ett delsystem inte ska behöva känna till hur de andra delsystemen fungerar och man ska kunna byta ut ett delsystem mot en annan implementation utan att behöva ändra på övriga delsystem. Förutom robotens fyra delsystem kommer också en programvara till en dator att utvecklas för övervakning och styrning. Den kommer att både kunna operera i ett fjärrstyrt och i ett autonomt läge. I första hand ska autonomin endast innefatta linjeföljning och några förutbestämda armrörelser (t.ex. arm ut, arm in, lämna av föremål åt höger). Om det finns tid i projektet kommer autonom lokalisering och upplockning av föremål också implementeras.
+
+Sensorenheten ska kontinuerligt övervaka de olika sensorerna roboten har och omvandla dess primärdata till systemanvändbara enheter för att sedan kunna skicka dessa vidare till andra delsystem.
+
+Kommunikationsenheten ska fungera som en förbindelselänk mellan omvärlden och roboten. Den ska kunna bli tillfrågad och skicka bekräftelse om de beslut som roboten gör samt status över de olika delsystemen och omgivningsobservationer.
+
+Chassienheten fungerar som det handlingsbeslutande organet på roboten. Den ska vid automatiskt läge vet hur roboten ska agera vid olika situationer. Den styr också hjulen på roboten, det vill säga att den genom sensordata och reglering beräknar hastighet på hjulen för att kunna svänga och hålla kursen längst banan.
+
+Armenheten ska vid en avhämtningsstation, utifrån identifiering av var ett objekt befinner sig, kunna plocka upp detta med robotarmen som är monterad på chassit. Det kommer ha kontroll över samtliga servon och vet hur dessa ska röras vid kommando. Med hjälp av invers kinematik ska den kunna, vid automatiskt läge, beräkna hur vardera led skall röra sig för nå objektet och för att plocka upp det.
+
+PC-programvaran ska visa upp ett instrumentbräde på för användaren att både se robotens beslut samt statusinformation. Här ska också roboten kunna styras med olika sorters kommandon som finns.
+
+\subsection{Sensorer och sensorplacering}
+
+En linjesensor ska sitta längst fram på roboten, nära marken. En RFID-läsare ska sitta parallellt med marken under roboten, då den endast har 7~cm läsavstånd till taggarna som ligger på marken. På vardera sida av roboten kommer en avståndssensor sitta placerad på ett servo, för att skanna efter objekt att plocka upp. På armen kommer det också att sitta avståndssensor för att kunna hitta och plocka upp objekt.
+
+\input{komm.tex}
+\input{sensor.tex}
+\input{chassi.tex}
+\input{arm.tex}
+\input{pc.tex}
+\input{buss.tex}
+
+\newpage
+\appendix
+
+\input{bilaga.tex}
+
+\end{document} 
