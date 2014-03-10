@@ -2,9 +2,9 @@
 Kommunikationsenheten ska agera som ett gränssnitt mellan roboten och omvärlden.
 
 \subsection{Funktion}
-Kommunikationsenheten ska ha två uppgifter, att styra bluetoothkommunikationen och att hantera LCD-displayen. Kommunikationsenheten agerar helt passivt och initierar inga förfrågningar på egen hand, utan är bara en mellanhand för robotens kommunikation med datorn och LCD-displayen.
+Kommunikationsenheten ska ha två uppgifter, att styra bluetoothkommunikationen och att hantera LCD-displayen. Kommunikationsenheten agerar helt passivt och initierar inga förfrågningar på egen hand, utan är bara en mellanhand för robotens kommunikation med datorn och \mbox{LCD-displayen.}
 
-Bluetoothenheten som är kopplad till kommunikationsenhetens UART ska fungera som en virtuell seriell länk mellan PC och robotsystemet. Här ska information, som roboten får in från sensorer samt vilka beslut roboten väljer att göra, skickas via BT till PC.
+Bluetoothenheten som är kopplad till kommunikationsenhetens UART ska fungera som en virtuell seriell länk mellan PC och robotsystemet. Här ska information som roboten får in från sensorer samt vilka beslut roboten väljer att göra skickas via BT till PC.
 
 LCD-displayen kan visa två rader med 16~tecken på varje. Det ska finnas ett enkelt gränssnitt där alla delsystem kan mata ut information på displayen med ett kommando. Kommunikationsenheten kommer att lagra vad respektive delsystem “säger” för närvarande, och roterar/växlar med någon sekunds intervall vilken enhets information som visas på displayen. 
 
@@ -28,7 +28,7 @@ I figur \ref{fig:komkopp} visas ett kopplingschema över allt som ska finnas på
 
 \subsection{Analys av prestanda och resurser}
 
-I kopplingsschemat ser man tydligt att pinnarna på processorn räcker till och inte behöver användas till flera saker samtidigt. 
+I kopplingsschemat framgår att pinnarna på processorn räcker till och inte behöver användas till flera saker samtidigt. 
 
 Kommunikationsenheten kommer att behöva använda två timers, en för att upptäcka om uppkopplingen till PC:n har förlorats och en för att växla mellan olika delsystems utmatning på displayen. ATmega1284p har två 8-bitars timers och två 16-bitars, så det finns inga begränsningar där.
 

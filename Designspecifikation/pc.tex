@@ -2,35 +2,39 @@
 
 \section{Programvara – PC}
 
-Gränssnittet ska användas för att en människa ska kunna kommunicera med roboten. Detta innebär att i realtid redovisas alla relevanta styrbeslut som roboten tar, så som fart och riktning. Utöver detta skall gränssnittet även representera världen ur robotens synvinkel, alltså ska det på ett förståeligt sätt uppvisa och formatera de sensordata som sensorenheten samlar in för att ge en bild av lagerrobotens omgivning. För att kunna testa delsystems beteende i grunden finns ett debug-fönster där man kan skicka en förfrågan till ett delsystem för att se vilket svar som returnerades.
+Gränssnittet ska användas för att en människa ska kunna kommunicera med roboten. Detta innebär att i realtid redovisas alla relevanta styrbeslut som roboten tar, så som fart och riktning. Utöver detta skall gränssnittet även representera världen ur robotens synvinkel, alltså ska det på ett förståeligt sätt uppvisa och formatera de sensordata som sensorenheten samlar in för att ge en bild av lagerrobotens omgivning. För att kunna testa delsystems beteende i grunden finns ett debug-fönster där en förfrågan kan skickas till ett delsystem för att se vilket svar som returnerades.
 
-\nyBild{Designspec_Disposition_och_arbetsdokument.png}{Användargränssnitt för PC-programvara}{pcgränssnitt}{1}
+\nyBild{Designspec_Disposition_och_arbetsdokument.png}{Användargränssnitt för PC-programvara}{pcgränssnitt}{0.7}
 
 
 
-Programvaran kommer att ha två huvudsakliga uppgifter. För det första så ska den kontinuerligt visa upp relevant data och information från roboten oavsett om roboten opererar i autonomt eller manuellt läge. För det andra så ska programvaran kunna skicka styrbeslut till roboten när den befinner sig i manuellt läge. All kommunikation sköts trådlöst via Bluetooth. Kommunikationsenheten skickar vidare datorns kommandon till rätt enhet. Programvaran ska också periodiskt att skicka ett enkelt paket till roboten som kommer att nollställa en timeout-räknare, för att möjliggöra att roboten kan upptäcka om kontakten förloras.
+Programvaran kommer att ha två huvudsakliga uppgifter. För det första så ska den kontinuerligt visa upp relevant data och information från roboten oavsett om roboten opererar i autonomt eller manuellt läge. För det andra så ska programvaran kunna skicka styrbeslut till roboten när den befinner sig i manuellt läge. All kommunikation sköts trådlöst via Bluetooth. Kommunikationsenheten skickar vidare datorns kommandon till rätt enhet. Programvaran ska också periodiskt skicka ett enkelt paket till roboten som kommer att nollställa en timeout-räknare, för att möjliggöra att roboten kan upptäcka om kontakten förloras.
 
 \subsection{Funktion}
+Programvaran skall möjliggöra manuell styrning av robotens arm, manuell styrning av robotens framfart och åskådliggöra mätdata från sensorer samt de beslut roboten tar.
 
 \subsubsection{Styrning}
+Med knappar i det grafiska instrumentbräde och/eller tangentnedtryckningar kan användaren styra roboten. Genom att trycka ner en styrknapp så ökar farten i den önskade riktningen, det vill säga, för att åka framåt följt av en högersväng så ska först farten ökas framåt sedan i högerriktning. Det betyder också att farten sänks i någon riktning genom att öka farten i motsatt riktning. Om höger- och vänsterstyrning görs när roboten står stilla, kommer roboten rotera på plats. En stoppknapp finns för att stanna roboten. Det finns också en linjeföljningsknapp som gör att när roboten kör så kommer den automatiskt att följa linjen på banan. I linjeföljningsläge kommer höger- och vänsterstyrning endast fungera när roboten står stilla och då kommer roboten att rotera.
 
 \subsubsection{Armrörelse}
-
-På instrumentbrädet skall också användaren kunna kontrollera armens rörelse genom knappar eller tangentnedtryckningar. Armens rörelse kommer kunna styras genom rotation av basen och tre leder i själva armen. Gripklon ska man kunna välja att gripa tag och släppa loss med. Dessa styrningar kommer fungera så att roboten rör på sig så länge du håller i knappen för önskad styrning. Det kommer också finnas ett gäng olika fördefinierade lägen för armen som den automatiskt ska kunna röra sig till genom att användaren trycker på önskat läge. Några exempel på fördefinierade lägen är:
+På instrumentbrädet skall också användaren kunna kontrollera armens rörelse genom knappar eller tangentnedtryckningar. Armens rörelse kommer kunna styras genom rotation av basen och tre leder i själva armen. Gripklon ska kunna öppnas och stängas. Dessa styrningar kommer fungera så att roboten rör på sig så länge du håller i knappen för önskad styrning. Det kommer också finnas ett gäng olika fördefinierade lägen för armen som den automatiskt ska kunna röra sig till genom att användaren trycker på önskat läge. Några exempel på fördefinierade lägen är:
 
 \begin{packed_itemize}
 \item Startläge, ett infällt läge där roboten kommer vara redo att köra vidare.
 \item Avlämning höger/vänster, ett mönster där roboten kommer att lämna av ett föremål på någon sida.
 \end{packed_itemize}
 
-\subsubsection{Utslagsgrafer}
+\subsubsection{Sensordata}
+I programvaran ska en rad olika sensordata finnas representerade. Dessa ska uppdateras i realtid så att användaren lätt kan se kvantitativa uppgifter om hur roboten rör sig samt sensordata och stationsinformation. 
+
+\subsubsection{Grafer}
+Ett antal utvalda sensordata kommer att lagras över tid och visas på ett diagram som kontinuerligt uppdateras med tiden. Detta ska möjliggöra för användaren att tydligt kunna se och förstå hur roboten har rört sig och vad som observerats den senaste tiden. 
 
 \subsubsection{Debugfönster}
-Man kommer kunna öppna ett debugfönster där man kan specificera en detaljerad förfrågan bit för bit till ett visst delsystem. När fönstret stängs kommer kommunikationsenheten att skicka denna förfrågan över bussen och få ett svar, som returneras direkt i sin helhet till datorn och visas i loggfönstret.
+Det kommer finnas ett debugfönster där en detaljerad förfrågan kan specificeras bit för bit till ett visst delsystem. När fönstret stängs kommer kommunikationsenheten att skicka denna förfrågan över bussen och få ett svar, som returneras direkt i sin helhet till datorn och visas i loggfönstret.
 
 \subsubsection{Loggfönster}
 Loggfönstret kommer fungera som en systemomfattande statusmeddelare. Här kommer ett flöde av beslut och statusrapporter från roboten, bekräftelse av kommando och errormeddelande visas.
 
-\subsubsection{Sensorutslag}
 
 

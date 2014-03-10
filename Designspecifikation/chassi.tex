@@ -1,12 +1,12 @@
 
 \section{Delsystem chassi}
 
-Chassienheten är huvudhjärnan för roboten och tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när armen ska plocka upp objekt. Den kommer att sköta regleringen av den tyngpunkt den får av sensorenheten via bussen för att kunna följa en tejpad linje på marken. På chassienheten kommer det även att finnas två omkopplare, en för att informera roboten om att den ska påbörja sin tävlingsprocedur, och en som anger om roboten ska operera autonomt eller styras via fjärrkommandon.
+Chassienheten tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när armen ska plocka upp objekt. Den kommer att sköta regleringen av styrningen med hjälp av den tyngpunkt som fås av sensorenheten via bussen. Detta för att kunna följa en tejpad linje på marken. På chassienheten kommer det även att finnas två omkopplare, en för att informera roboten om att den ska påbörja sin tävlingsprocedur, och en som anger om roboten ska operera autonomt eller styras via fjärrkommandon.
 
 
 \subsection{Funktion}
 
-Chassit har ett par huvudfunktioner att ta hand om, som anges i punktlistan nedan.
+Chassit ska uppfylla flera funktioner, som anges i punktlistan nedan.
 \begin{packed_itemize}
 \item Kunna ta beslut och styras både autonomt och genom order från dator via kommunikationsenheten.
 \item Styra de två motorerna med PWM-styrning.
@@ -43,6 +43,7 @@ Chassit får information om att roboten är på plockstation av sensorenheten i 
 \nyBild{programfl_de_chassi.png}{Flödesdiagram för huvudprogram till chassienheten.}{chassiflöde}{0.7}
 
 \subsubsection{Följa linje samt motorkontroll}
+\label{följalinje}
 
 För att kontrollera hastighet till motorerna kommer snabb PWM att implementeras i roboten. Denna kommer att vara kopplad till en H-brygga (inbyggd i den givna plattformen)  som sköter matningen till själva motorerna. Motorerna kommer att uppdateras med en uppdateringsfrekvens på 1~kHz.
 
@@ -71,7 +72,7 @@ Chassit ska reagera på styrkommandon från bussen om brytaren är satt i manuel
 
 \subsubsection{Autonomt läge och start-/stoppkommando}
 
-När brytaren är i autonomt läge ska chassit reagera på startknappen som sitter på chassit. Startknappen påbörjar linjeföljning med hantering av plockstationer beskrivet enligt ovan.
+När brytaren är i autonomt läge ska chassit reagera på startknappen som sitter på chassit. Startknappen påbörjar linjeföljning med hantering av plockstationer beskrivet i \ref{följalinje}.
 
 \subsection{Analys av prestanda och resurser}
 

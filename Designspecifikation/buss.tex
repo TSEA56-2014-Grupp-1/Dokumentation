@@ -5,7 +5,7 @@ För att alla delssytem ska kunna kommunicera med varandra kommer en multimaster
 Fysiskt kommer bussen bestå av två kablar, en Serial Data Line (SDA) samt en Serial Clock Line (SCL).
 
 \subsection{Protokollbeskrivning}
-När bussen är ledig kommer alla system att vara master. När sedan ett system vill ta kontroll över bussen skickar den en start-bit. Detta kommer tala om för alla andra system att bussen nu är upptagen och de antar då slave-mode.
+När bussen är ledig kommer alla system att vara master. När ett system vill ta kontroll över bussen skickar det en start-bit. Detta kommer tala om för alla andra system att bussen nu är upptagen och de antar då slave-mode.
 
 Alla system kommer att ha en egen unik adress (SLA). Vilken adress olika system har finns i tabell \ref{tab:adresstab}. General call kommer finnas och alla system kommer då vara adresserade slavar.
 
@@ -28,13 +28,15 @@ Kommunikation & 0000 101\\
 \label{tab:adresstab}
 \end{table}
 
-Varje dataöverföring kommer att vara två byte lång. Efter detta kommer alltid repetedstart att vara tillåtet. Efter varje byte som överförs skickar system som tog emot acknowledgement (ACK) eller no-acknowledgement (NACK) tillbaka. NACK kommer endast att skickas då överföringen misslyckades eller i specialfallet då master är mottagare och den sista byten i överföringen har mottagits.
+Varje dataöverföring kommer att vara två byte lång. Efter detta kommer alltid repeatedstart att vara tillåtet. Efter varje byte som överförs skickar system som tog emot acknowledgement (ACK) eller no-acknowledgement (NACK) tillbaka. NACK kommer endast att skickas då överföringen misslyckades eller i specialfallet då master är mottagare och den sista byten i överföringen har mottagits.
 
 Vid fallet att två eller flera system försöker prata på bussen samtidigt kommer de system som förlorar arbitration att vänta på en stop-signal på bussen och sedan försöka igen.
 
 Programflöden med beskrivningar om vilka register som ska ändras för att få önskad funktion finns i bilaga \ref{bussbilaga}.
 
 \subsection{Analys av prestanda}
+Figur \ref{fig:bussprestanda} beskriver hur bussens tid fördelas på olika funktioner. Grafen har framställts genom att uppskatta hur lång tid överföringar av olika funktioner tar och hur många gånger de sker under en sekund.
+
 
 \nyBild{bussprestanda}{Relativ tidsbelastning på bussen från olika ärenden. De flesta överföringar sker så sällan att de inte syns i diagrammet}{bussprestanda}{0.7}
 \subsection{Informationsflöde}
@@ -43,7 +45,7 @@ Delsystem kommer både att kunna efterfråga data från andra delsystem över bu
 
 
 
-\begin{table}
+\begin{table}[H]
 	\centering
 	\begin{tabularx}{\textwidth}{|X|X|X|X|}
 		\hline

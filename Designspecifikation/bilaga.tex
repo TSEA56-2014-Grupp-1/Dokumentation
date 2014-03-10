@@ -1,7 +1,7 @@
 
 \section{Master transmitt}
 \label{bussbilaga}
-Pseudokod samt vilka register som ska ändras i vilka steg för att bussen ska få önskad funktion. Denna kommer bestå utav 4 olika program, enligt följande:’
+Pseudokod samt vilka register som ska ändras i vilka steg för att bussen ska få önskad funktion. Denna kommer bestå utav 4 olika program, enligt följande:
 
 \subsection{Master transmitt}
 Programflödet för det program som krävs för master transmitt ska fungera De register som måste modifieras och hur de ska modifieras i de olika punkter finns i följande tabell.
@@ -140,8 +140,7 @@ För att en slav ska kunna skicka data behövs följande programflöde.
 För att inleda kommunikation så behövs följande göras på BT enheten och på PC:
 
 \begin{packed_enumerate}
-\item Följa uppkopplingsguide till BT-enheten på följande websida:
-https://docs.isy.liu.se/twiki/bin/view/VanHeden/BlueTooth
+\item Följa uppkopplingsguide till BT-enheten på följande websida: \\ https://docs.isy.liu.se/twiki/bin/view/VanHeden/BlueTooth
 \item Skicka ‘\$\$\$’ till BT när enheten är Idle (‘stat’-lampa blinkar 1 gång per sek).
 \item Konfigurera efter preferens (skicka SF,1 för att gå tillbaka till default).
 \item Skicka ‘---’ för att gå ur kommandoläge
