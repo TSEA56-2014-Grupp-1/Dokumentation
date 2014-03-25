@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+﻿\documentclass[a4paper,12pt]{article}
 \usepackage{graphicx}
 
 \usepackage{epstopdf}
@@ -104,14 +104,74 @@ Som i alla batterier används två elektriskt isolerade elektroder, omslutna av 
 
 \nyBild{Reaktionsforlopp.png}{Flöde av ström och joner vid laddning och urladdning}{reaction}{0.8}
 
+\subsection{Laddning}
+För laddning av batterier finns det två olika tekniker. En är att hålla en konstant ström till batteriet och den andra att hålla en konstant spänning till batteriet. Sedan Li-ion batterier är mycket känsliga mot för hög spänning är det vanligt att en kombination av de båda används.
+
+Då hålls först en konstant ström, sedan när batteriet når 4,2V per cell hålls istället en konstant spänning. Då mäts strömen till batteriet och när det når några procent av ursprungliga värdet så anses batteriet vara fullt laddat. Exakt siffra på hur många procent av strömmen batteriet laddas till beror på tillverkare, typsikt är runt 2-5\%.
+
+\subsection{Livstid}
+Livstid hos batterier mäts främst i antalet cykler de klarar av innan de når 80\% av sin ursprungliga kapacitet. En cykel består utav en full laddning och ur laddning. Detta kan dock ske under flera separata laddningstillfällen. Det sker alltså ingen nämnvärd skillnad i livslängd om ett batteri laddas ofta eller sällan. Detta sålänge ett batteri inte lagars mer än 6 månader utan användning.
+
+Under lagring av batterier kan de över lång tid att tappa i kapacitet, detta beror dock på hur mycket laddade de är. Vid full laddning finns det risk att batteriet tappar mer maximal kapacitet än vid ej full laddning. Eftersom det laddas ur under lagring så kan det vid lagring med nästan tom laddning göra att batteriet går under 2,7V per cell. Om detta sker går batteriet in ett “djupt urladdningstillstånd” och kommer då inte gå att ladda igen. För ett exempel så rekommenderar Apple att om deras produkter ska förvaras längre tid utan användning ska detta ske vid cirka 50\% laddning. \cite{apple}
+
+Slitage på Li-ion batterier beror på många olika faktorer. Bland annat spelar temperatur på batteriet roll. Höga temperaturer gör att slitage på batteriet kommer ske med ökande hastighet, men även låga temperaturer påverkar batteriets livslängd negativt. Låga temperaturer har visats ha störst negativ effekt vid uppladdning av batteriet. \cite{ageing}
+
+Laddning av batterier är ett utav de moment som sliter på batterier signifikant. En utav de effekter som påverkar livstiden mest \cite{charging} och som ger upphov till permanenta skador på batteriet är såkallad “Lithium plating”. Detta sker då det blir en litiummetall beläggning på anoden.\cite{nasa} Detta är en icke reversibel process och betyder då att batteriet permantent förlora kapacitet. För att minimera denna effekt ska laddning inte ske vid låga temperaturer och med låg ström under de första samt sista 10\% av laddningen. \cite{charging-p}
+
+Intressant att notera är att den typen av uppladningsteknik som används utav laddare till hemelektronik idag inte gör på detta sätt.\cite{apple} De laddar istället med konstant ström från början tills att 4,7V finns i varje cell och byter därefter till konstant spänning. Detta görs troligen eftersom dagens batteri trots detta har en livstid på ungefär 1 000 cykler, och tillverkarna har då prioriterat snabbhet över livstid.
+
+\subsection{Säkerhet}
+Li-ion batterier kan av många olika anledningar gå sönder. De vanligaste är felaktigheter i produktion eller att användaren på något sätt utsätter batteriet för för stora påfrestningar. Dessa påfrestningar kan vara för hög eller låg temperatur, överladdning, brand, kortslutning eller mekaniska påfrestningar så som tryck. \cite{lihazard}
+
+När ett Li-ion batteri går sönder finns det stor risk att det expanderar, blir varmt och i vissa fall även börjar brinna eller till och med exploderar.
+
+Li-ion batterier kan, utav slitage genom litihum plating, internet kortslutas.\cite{nasa} Då detta händer finns det risk för att batteriet blir mycket varmt, expanderar, börjar brinna eller exploderar. 
+
+Då ett batteri utsätts för öppen låg har forskning gjord av FAA \cite{fire-faa} visat att batterier från olika tillverkar beter sig i stort sätt likadant. Deras experiment visar att de först ventilerar en del av elektrolyten i batteriet. Denna vätska antändes sedan och bilda då en egen brandhärd. Vidare säger de att “Occasionally, the pressure release ports failed to operate correctly, causing buildup of pressure inside the cell case until the casing failed. When this occurred, the cell literally exploded …”
+
+Dessa experiement utförda av FAA visade också hur snabbt brandförloppet är. Efter 45 sekunder började batterierna att ventilera elektrolyt och 65 sekunder in antändes även vätskan. I denna studie fastslogs även att lågan som li-ion batterier ger upphov till är tillräckligt varm för att antända annat vanligt packmaterial som ofta finns i lastrum.\cite{fire-faa}
+
+På grund utav detta är batterier av li-ion typ klassade som farligt gods då de transporteras i större mängd. Det finns också ytterligare risk då de transporteras via flygplan. Detta då en brand i li-ion batterier kan göra att trycket ökar. Detta gör i sådant fall att med så få som 4 battericeller kan trycket i lastrummet öka så mycket att lastrummet måste öppna ventiler för att hålla tryckskillnad inom säkra nivåer. Detta kommer i sin tur att göra det svårare för det automatiska brand försvarssystem som finns installerat.\cite{fire-faa}
+
+Ett uppmärksammat fall med li-ion batterier och säkerhet är Boeings plan 787 “Dreamliner”. Där fanns det ett problem med li-ion batterier i cockpit som orsakade rökutveckling under flera flygningar. I detta fall har man inte kunnat identifierat problemet som gör att batterierna började brinna. Detta trots stora tester och 25 000 timmars tester av batterierna innan lansering av planet. Problemet löstes sedemera genom en ny batteridesign samt en brandsäker annordning som också kunde avvärja rök från cockpit.\cite{dreamliner}
+
 \subsection{Servon}
 
 \section{Fördjupning}
 
 \section{Resultat och slutsatser}
+Li-ion batterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
+
+Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
 
 \begin{thebibliography}{9}
-\bibitem{glaize13} C. Glaize, S. Geniès, \emph{Lithium Batteries and other Electrochemical Storage Systems}\\ Wiley-ISTE, 2013   
+\bibitem{glaize13} C. Glaize, S. Geniès, \emph{Lithium Batteries and other Electrochemical Storage Systems}\\ Wiley-ISTE, 2013
+
+\bibitem{apple} Apple Inc, \emph{Apple Notebooks battery}
+\\ http://www.apple.com/batteries/notebooks.html
+
+\bibitem{ageing} J. Vetter, P. Novák, M.R. Wagner, K.-C. Möller, J.O. Besenhard, M. Winter, M. Wohlfahrt-Mehrens, C. Vogler, A. Hammouche, \emph{Ageing mechanisms in lithium-ion batteries}
+\\ Journal of Power Sources, volym 147, utgåva 1-2, september 2005, sidor 269-281
+
+\bibitem{charging} S.S. Zhang, K. Xu, T.R. Jow, \emph{Study of the charging process of a LiCoO$_{2}$-based Li-ion battery}
+\\ Journal of Power Sources, volym 160, utgåva 2, oktober 2006, sidor 1349-1354
+
+\bibitem{charging-p} S.S. Zhang, \emph{The effect of the charging protocol on the cycle life of a Li-ion battery}
+\\ Journal of Power Sources, volym 161, utgåva 2, oktober 2006, sidor 1385-1391
+
+\bibitem{fire-faa} H. Webster, \emph{Flammability Assessment of Bulk-Packed, Rechargeable Lithium-Ion Cells in Transport Category Aircraft}
+\\DOT/FAA/AR-06/38, september 2006, Final Report
+
+\bibitem{dreamliner} N. Williard, W. He, C. Hendricks, M. Pecht, \emph{Lessons Learned from the 787 Dreamliner Issue on Lithium-Ion Battery Reliability}
+\\Energies, september 2013
+
+\bibitem{lihazard} C. Mikolajczak, M. Kahn, K. White, R. Thomas, \emph{Lithium-Ion Batteries Hazard and Use Assessment}
+\\Springer, 2011
+
+\bibitem{nasa} A. Zimmerman, M. Quinzio, \emph{Lithium Plating in Lithium-Ion Cells}
+\\The Aerospace Corporation, 2010
+\\https://batteryworkshop.msfc.nasa.gov/presentations/1-Lithium\_Plating\_AZimmerman.pdf 
+
 
 \end{thebibliography}
 \end{document} 
