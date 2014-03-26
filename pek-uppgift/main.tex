@@ -1,4 +1,4 @@
-﻿\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{article}
 \usepackage{graphicx}
 
 \usepackage{epstopdf}
@@ -104,45 +104,83 @@ Som i alla batterier används två elektriskt isolerade elektroder, omslutna av 
 
 \nyBild{Reaktionsforlopp.png}{Flöde av ström och joner vid laddning och urladdning}{reaction}{0.8}
 
-\subsection{Laddning}
-För laddning av batterier finns det två olika tekniker. En är att hålla en konstant ström till batteriet och den andra att hålla en konstant spänning till batteriet. Sedan Li-ion batterier är mycket känsliga mot för hög spänning är det vanligt att en kombination av de båda används.
+\subsubsection{Laddning}
+För laddning av batterier finns det två olika tekniker. En är att hålla en konstant ström till batteriet och den andra att hålla en konstant spänning till batteriet. Eftersom litiumjonbatterier är mycket känsliga mot för hög spänning är det vanligt att en kombination av de båda används.
 
-Då hålls först en konstant ström, sedan när batteriet når 4,2V per cell hålls istället en konstant spänning. Då mäts strömen till batteriet och när det når några procent av ursprungliga värdet så anses batteriet vara fullt laddat. Exakt siffra på hur många procent av strömmen batteriet laddas till beror på tillverkare, typsikt är runt 2-5\%.
+Då hålls först en konstant ström, sedan när batteriet når 4,2V per cell hålls istället en konstant spänning. Då mäts strömmen till batteriet och när det når några procent av ursprungliga värdet så anses batteriet vara fullt laddat. Exakt siffra på hur många procent av strömmen batteriet laddas till beror på tillverkare, typiskt är runt 2-5\%.
 
-\subsection{Livstid}
-Livstid hos batterier mäts främst i antalet cykler de klarar av innan de når 80\% av sin ursprungliga kapacitet. En cykel består utav en full laddning och ur laddning. Detta kan dock ske under flera separata laddningstillfällen. Det sker alltså ingen nämnvärd skillnad i livslängd om ett batteri laddas ofta eller sällan. Detta sålänge ett batteri inte lagars mer än 6 månader utan användning.
+\subsubsection{Livstid}
+Livstid hos batterier mäts främst i antalet cykler de klarar av innan de når 80\% av sin ursprungliga kapacitet. En cykel består utav en full laddning och urladdning, detta kan dock ske under flera separata laddningstillfällen. Det sker alltså ingen nämnvärd skillnad i livslängd om ett batteri laddas ofta eller sällan. Detta så länge ett batteri inte lagras mer än 6 månader utan användning.
 
-Under lagring av batterier kan de över lång tid att tappa i kapacitet, detta beror dock på hur mycket laddade de är. Vid full laddning finns det risk att batteriet tappar mer maximal kapacitet än vid ej full laddning. Eftersom det laddas ur under lagring så kan det vid lagring med nästan tom laddning göra att batteriet går under 2,7V per cell. Om detta sker går batteriet in ett “djupt urladdningstillstånd” och kommer då inte gå att ladda igen. För ett exempel så rekommenderar Apple att om deras produkter ska förvaras längre tid utan användning ska detta ske vid cirka 50\% laddning. \cite{apple}
+Vid lagring av batterier kan de över lång tid tappa kapacitet, hur mycket beror på vilken laddning de har. Vid full laddning finns det risk att batteriet tappar mer maximal kapacitet än vid ej full laddning. Eftersom det laddas ur under lagring så kan det vid lagring med nästan tom laddning göra att batteriet går under 2,7V per cell. Om detta sker går batteriet in ett ''djupt urladdningstillstånd'' och kommer då inte gå att ladda igen. För ett exempel så rekommenderar Apple att om deras produkter ska förvaras längre tid utan användning ska detta ske vid cirka 50\% laddning. \cite{apple}
 
-Slitage på Li-ion batterier beror på många olika faktorer. Bland annat spelar temperatur på batteriet roll. Höga temperaturer gör att slitage på batteriet kommer ske med ökande hastighet, men även låga temperaturer påverkar batteriets livslängd negativt. Låga temperaturer har visats ha störst negativ effekt vid uppladdning av batteriet. \cite{ageing}
+Slitage på litiumjonbatterier beror på många olika faktorer. Bland annat spelar temperatur på batteriet roll. Höga temperaturer gör att slitage på batteriet kommer ske med ökande hastighet, men även låga temperaturer påverkar batteriets livslängd negativt. Låga temperaturer har visats ha störst negativ effekt vid uppladdning av batteriet. \cite{ageing}
 
-Laddning av batterier är ett utav de moment som sliter på batterier signifikant. En utav de effekter som påverkar livstiden mest \cite{charging} och som ger upphov till permanenta skador på batteriet är såkallad “Lithium plating”. Detta sker då det blir en litiummetall beläggning på anoden.\cite{nasa} Detta är en icke reversibel process och betyder då att batteriet permantent förlora kapacitet. För att minimera denna effekt ska laddning inte ske vid låga temperaturer och med låg ström under de första samt sista 10\% av laddningen. \cite{charging-p}
+Laddning av batterier är ett av de moment som sliter på batterier signifikant. En av de effekter som påverkar livstiden mest \cite{charging} och som ger upphov till permanenta skador på batteriet är så kallad “Lithium plating”. Detta sker då det blir en litiummetallbeläggning på anoden.\cite{nasa} Detta är en icke reversibel process och betyder då att batteriet permanent förlora kapacitet. För att minimera denna effekt ska laddning inte ske vid låga temperaturer och med låg ström under de första samt sista 10\% av laddningen. \cite{charging-p}
 
-Intressant att notera är att den typen av uppladningsteknik som används utav laddare till hemelektronik idag inte gör på detta sätt.\cite{apple} De laddar istället med konstant ström från början tills att 4,7V finns i varje cell och byter därefter till konstant spänning. Detta görs troligen eftersom dagens batteri trots detta har en livstid på ungefär 1 000 cykler, och tillverkarna har då prioriterat snabbhet över livstid.
+Intressant att notera är att den typen av laddningsteknik som används i laddare för hemelektronik idag inte gör på detta sätt.\cite{apple} De laddar istället med konstant ström från början tills dess att 4,7V finns i varje cell och byter därefter till konstant spänning. Detta görs troligen eftersom dagens batteri trots detta har en livstid på ungefär 1 000 cykler, och tillverkarna har då prioriterat snabbhet över livstid.
 
-\subsection{Säkerhet}
+\subsubsection{Säkerhet}
 Li-ion batterier kan av många olika anledningar gå sönder. De vanligaste är felaktigheter i produktion eller att användaren på något sätt utsätter batteriet för för stora påfrestningar. Dessa påfrestningar kan vara för hög eller låg temperatur, överladdning, brand, kortslutning eller mekaniska påfrestningar så som tryck. \cite{lihazard}
 
 När ett Li-ion batteri går sönder finns det stor risk att det expanderar, blir varmt och i vissa fall även börjar brinna eller till och med exploderar.
 
-Li-ion batterier kan, utav slitage genom litihum plating, internet kortslutas.\cite{nasa} Då detta händer finns det risk för att batteriet blir mycket varmt, expanderar, börjar brinna eller exploderar. 
+Li-ion batterier kan, av slitage genom litihum plating, internt kortslutas.\cite{nasa} Då detta händer finns det risk för att batteriet blir mycket varmt, expanderar, börjar brinna eller exploderar. 
 
-Då ett batteri utsätts för öppen låg har forskning gjord av FAA \cite{fire-faa} visat att batterier från olika tillverkar beter sig i stort sätt likadant. Deras experiment visar att de först ventilerar en del av elektrolyten i batteriet. Denna vätska antändes sedan och bilda då en egen brandhärd. Vidare säger de att “Occasionally, the pressure release ports failed to operate correctly, causing buildup of pressure inside the cell case until the casing failed. When this occurred, the cell literally exploded …”
+Då ett batteri utsätts för öppen låga har forskning gjord av FAA \cite{fire-faa} visat att batterier från olika tillverkare beter sig i stort sätt likadant. Deras experiment visar att de först ventilerar en del av elektrolyten i batteriet. Denna vätska antänds sedan och bildar då en egen brandhärd. Vidare säger de att ''Occasionally, the pressure release ports failed to operate correctly, causing buildup of pressure inside the cell case until the casing failed. When this occurred, the cell literally exploded …''
 
-Dessa experiement utförda av FAA visade också hur snabbt brandförloppet är. Efter 45 sekunder började batterierna att ventilera elektrolyt och 65 sekunder in antändes även vätskan. I denna studie fastslogs även att lågan som li-ion batterier ger upphov till är tillräckligt varm för att antända annat vanligt packmaterial som ofta finns i lastrum.\cite{fire-faa}
+Dessa experiment utförda av FAA visade också hur snabbt brandförloppet är. Efter 45 sekunder började batterierna att ventilera elektrolyt och 65 sekunder in antändes även vätskan. I denna studie fastslogs även att lågan som li-ion batterier ger upphov till är tillräckligt varm för att antända annat vanligt packmaterial som ofta finns i lastrum.\cite{fire-faa}
 
-På grund utav detta är batterier av li-ion typ klassade som farligt gods då de transporteras i större mängd. Det finns också ytterligare risk då de transporteras via flygplan. Detta då en brand i li-ion batterier kan göra att trycket ökar. Detta gör i sådant fall att med så få som 4 battericeller kan trycket i lastrummet öka så mycket att lastrummet måste öppna ventiler för att hålla tryckskillnad inom säkra nivåer. Detta kommer i sin tur att göra det svårare för det automatiska brand försvarssystem som finns installerat.\cite{fire-faa}
+På grund utav detta är batterier av li-ion typ klassade som farligt gods då de transporteras i större mängd. Det finns också ytterligare risk då de transporteras via flygplan. Detta då en brand i li-ion batterier kan göra att trycket ökar. Detta gör i sådant fall att med så få som 4 battericeller kan trycket i lastrummet öka så mycket att lastrummet måste öppna ventiler för att hålla tryckskillnad inom säkra nivåer. Detta kommer i sin tur att göra det svårare för det automatiska brandförsvarssystem som finns installerat.\cite{fire-faa}
 
 Ett uppmärksammat fall med li-ion batterier och säkerhet är Boeings plan 787 “Dreamliner”. Där fanns det ett problem med li-ion batterier i cockpit som orsakade rökutveckling under flera flygningar. I detta fall har man inte kunnat identifierat problemet som gör att batterierna började brinna. Detta trots stora tester och 25 000 timmars tester av batterierna innan lansering av planet. Problemet löstes sedemera genom en ny batteridesign samt en brandsäker annordning som också kunde avvärja rök från cockpit.\cite{dreamliner}
 
 \subsection{Servon}
+Servon används framförallt i robotar och automatiserade system. De är väl lämpade för när man kräver en motor som kan vara stilla och ändå hålla kvar sin last utan att bli överhettade. 
+
+Ett servo består av tre delar: en servomotor som kan vara antingen en AC-motor eller den DC-motor, en positionssensor som mäter servomotorns position samt en kontrollenhet som styr motorn. Kontrollenheten jämför konstant felet mellan det önskade vinkelutslaget och den vinkel positionssensor mäter upp och styr sedan servomotorn för att minimera detta fel. Detta kallas att systemet är återkopplat. Den stora fördelen med ett servo är just att den är återkopplad då återkopplningen gör att servot kan hantera olika tunga laster och yttre påverkningar utan att ställa sig fel, vilket lätt händer med öppna system. 
+
+Servots styrsignal brukar vara elektrisk pulsbredd som skickas till den med jämna mellanrum. Detta kallas för att den styrs med PWM (Pulse width modulation). Pulsbredden skickas vanligen från en mikrokontroller eller en mikroprocessor och omvandlas av servot till ett vinkelutslag som den sedan ställer in sig på. Vinkelomfånget för ett servo är oftast 180 grader. 
+
+På enklare PWM-styrda servomotorer är det omöjligt att kontrollera acceleration och deacceleration vid rörelser om man inte styr strömmen som går till servomotorn. Det är däremot vanligt att en servomotor har inbyggd så kallad PID-regulator, vilket gör så att motorn går snabbt när det är långt till den önskade positionen och saktar ner ju närmare målet den kommer, så att det inte blir ett tvärstopp eller vrålstart. Tvärstopp och vrålstarter vill man undvika eftersom det blir hackigt och det kan bli för stora belastningar på systemet. 
+
+
+
+\subsubsection{Hur styr man ett servo?}
+
+Servomotorer styrs som ovan nämnt genom återkoppling, där det önskade värdet jämförs med det riktiga värdet. Skillnaden mellan dessa värden förstärks, omvandlas och används för att driva motorn i den rikting så att felet minskas. Den önskade vinkeln anges med så kallad PWM och innebär att man skickar en elektrisk puls vars varaktighet bestämmer läget på motorn. Denna puls upprepas med en given frekvens. Ifall man slutar skicka en puls kommer servot att stå kvar i den position den är i, så länge den inte rubbas av en utomstående kraft. Oftast vill man inte att servot ska kunna rubbas och därför fortsätter man att skicka samma puls tills dess att man vill att servots position ska ändras. 
+
+Hos en del servon kan man ändra på parametrarna för hur den ska fungera. Man kan då ställa in hur flera max-värden som t.ex. hur varm den får bli, hur snabbt den får gå, vilket vridmoment den får ha och hur hårt den ska bromsa in innan den når det önskade värdet. Dessa servon är dock inte PWM-styrda utan styrs seriellt genom att man skickar meddelanden som ändrar en parameter hos servot till ett visst värde. 
+
+Om man vill styra flera servon samtidigt, till exempel ifall man vill styra en robotarm med flera rörliga leder, har man stor fördel av att använda de lite mer avancerade servon som kommunicerar seriellt med half duplex. Dessa servon kan nämligen parallellkopplas och styrs individuellt genom att varje servo tilldelas ett unikt identifikationsnummer. När man vill styra ett servo skickar man ett meddelande till alla servon men endast det servo vars ID stämmer överens med ID:t angivet i meddelandet svarar. Man kan även skicka ett meddelande till flera ID:n samtidigt och dessutom med olika värden till vart och ett av servona. 
+
+Dessa servon kan man dessutom programmera och ändra på många parametrar för att ändra till exempel hastighet, max vridmoment, inbromsning, max temperatur, begränsa vinkelomfånget och så vidare.
+
+
 
 \section{Fördjupning}
+
+\subsection{Dynamixel AX-12A}
+
+Dynamixel AX-12A är de servon som används i robotarmarna på ISY. Dynamixel AX-12A servona styrs med UART från en mikroprocessor. Signalen måste dock omvandlas till halvduplex innan den når servona. Detta innebär att man behöver använda en extern krets så att det finns en direction port, en transmit port samt en recieve port kopplade till mikroprocessorn. Kretsen omvandlar sedan så att endast en signal går till servona, detta görs för att Dynamixel AX-12A även har en inbyggd funktion att kunna svara på meddelanden den tar emot. Vilken av transmit port och recieve port som är aktiv väljs genom att sätta direction port till antingen 1 eller 0. Halvduplex medför alltså att endast en enhet får skicka data i taget. \cite{dyn-manual}
+
+Kommunikation sker med två olika typer av datapaket. De kallas instruktionspaket och statuspaket. Instruktionspaket skickas från mikroprocessorn till servot medan statuspaket skickas från servo till mikroprocessor. Instruktionspaketet skickas från transmit porten på mikroprocessorn samtidigt som direction port är satt i ''sändläge'', i detta fall en etta. När servot tar emot ett meddelande svarar denna med ett statuspaket som tas emot av mikroprocessorn på recieveporten samtidigt som direction port är i ''mottagningsläge'', i detta fall en nolla. Ett instruktionspaket måste se ut på ett visst sätt för att servot ska kunna tolka det. I grova drag ser instruktionspaketet ut så här:
+
+[Startbytes] [ID] [Längd] [Instruktion] [Parametrar] [Kontrollsiffra]
+
+Servot svarar sedan med ett statuspaket som ser ut enligt:
+
+[Startbytes] [ID] [Längd] [Felkod] [Parametrar] [Kontrollsiffra]
+
+Funktioner för att sätta upp portar och register i microprocessorn samt för att skicka och ta emot paket behöver implementeras i mikroprocessorn för att kunna använda servot. 
 
 \section{Resultat och slutsatser}
 Li-ion batterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
 
 Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
+
+Ett alternativ till ett servo kan vara en så kallad stegmotor. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. Den är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan ej ta hänsyn till ifall den skulle råka skippa ett steg eller ifall man skulle tvinga den till fel läge eller andra störningar och dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda.
+
 
 \begin{thebibliography}{9}
 \bibitem{glaize13} C. Glaize, S. Geniès, \emph{Lithium Batteries and other Electrochemical Storage Systems}\\ Wiley-ISTE, 2013
@@ -172,6 +210,10 @@ Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då ba
 \\The Aerospace Corporation, 2010
 \\https://batteryworkshop.msfc.nasa.gov/presentations/1-Lithium\_Plating\_AZimmerman.pdf 
 
+\bibitem{dyn-manual} \emph{User's Manual Dynamixel AX-12} \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
+
+\bibitem{ana-servo} Anaheim Automation, Inc, \emph{Servo motor guide}\\
+ http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php
 
 \end{thebibliography}
 \end{document} 
