@@ -185,6 +185,7 @@ Om man vill styra flera servon samtidigt, till exempel ifall man vill styra en r
  
 Dessa servon kan man dessutom programmera och ändra på många parametrar för att ändra till exempel hastighet, max vridmoment, inbromsning, max temperatur, begränsa vinkelomfånget och så vidare.
  
+Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvik just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
  
  
 \section{Fördjupning}
@@ -193,7 +194,7 @@ Dessa servon kan man dessutom programmera och ändra på många parametrar för 
  
 Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
  
-    Figur: Kopplningschema för att koppla ihop en AVR med Dynamixel~AX-12A.
+                      Figur: Kopplningschema för att koppla ihop en AVR med Dynamixel~AX-12A.
  
 Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan. PD0 är på ATmega1284P en mottagningspin och PD1 är sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om kopplar man ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
@@ -214,7 +215,9 @@ Li-ion batterier kan anses vara säkra för vardaglig användning, även om de s
  
 Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
  
-Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvik just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
+Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap. 
+
+Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon i någon form redan har denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på den lite mer avancerade servon som till exempel Dynamixel AX-12A.  
 
 
 \newpage
