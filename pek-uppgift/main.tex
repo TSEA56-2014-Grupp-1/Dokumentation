@@ -120,11 +120,11 @@ För katoden är reaktionen:
 \\
 \centerline{\ce{LiMO2 <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + xLi^+ + xe}}
 
-Där n är 6, 12 eller 18. M är Co, Ni, Fe eller W beroende på batteri. Under en laddning eller urladdning kan alltså \ce{LiC6}, \ce{LiC12} eller \ce{LiC18} att bildas eller ?????lösas upp?????? på anoden. \cite{formler} 
+Där n är 6, 12 eller 18. M är Co, Ni, Fe eller W beroende på batteri. Under en laddning eller urladdning kan alltså \ce{LiC6}, \ce{LiC12} eller \ce{LiC18} att bildas eller förbrukas på anoden. \cite{formler} 
 
 Det är dessa kemsiksa reaktioner som ger ström från batteriet, då reaktionen på anoden under urladdning ger ifrån sig en elektron, medans katoden behöver en elektron för att genomföra sin reaktion. Detta kommer då driva en ström genom lasten som läggs på batteriet.
 
-För att dessa reaktioner ska kunna äga rum måste det finns yta på anoden och katoden där de olika ämnena kan reagera med varandra. Om dessa ytor skulle minska kommer också kapaciteten på batteriet att minska. Effekter som kan göra att ytan på andoden och katoden minska finns beskrivet vidare i \ref{slitage}.
+För att dessa reaktioner ska kunna äga rum måste det finns yta på anoden och katoden där de olika ämnena kan reagera med varandra. Om dessa ytor skulle minska kommer också kapaciteten på batteriet att minska. Effekter som kan göra att ytan på andoden och katoden minskar finns beskrivet vidare i \ref{slitage}.
 
 \subsubsection{Laddning}
 För laddning av batterier finns det två olika tekniker. En är att hålla en konstant ström till batteriet och den andra att hålla en konstant spänning till batteriet. Eftersom litiumjonbatterier är mycket känsliga mot för hög spänning är det vanligt att en kombination av de båda används.
@@ -137,6 +137,7 @@ Livstid hos batterier mäts främst i antalet cykler de klarar av innan de når 
 Vid lagring av batterier kan de över lång tid tappa kapacitet, hur mycket beror på vilken laddning de har. Vid full laddning finns det risk att batteriet tappar mer maximal kapacitet än vid ej full laddning. Eftersom det laddas ur under lagring så kan det vid lagring med nästan tom laddning göra att batteriet går under 2,7~V per cell. Om detta sker går batteriet in ett ''djupt urladdningstillstånd'' och kommer då inte gå att ladda igen. För ett exempel så rekommenderar Apple att om deras produkter ska förvaras längre tid utan användning ska detta ske vid cirka 50~\% laddning. \cite{apple}
 
 \subsubsection{Slitage}
+\label{slitage}
 Slitage på litiumjonbatterier beror på många olika faktorer. Bland annat spelar temperatur på batteriet roll. Höga temperaturer gör att slitage på batteriet kommer ske med ökande hastighet, men även låga temperaturer påverkar batteriets livslängd negativt. Låga temperaturer har visats ha störst negativ effekt vid uppladdning av batteriet. \cite{ageing}
 
 Laddning av batterier är ett av de moment som sliter på batterier signifikant. En av de effekter som påverkar livstiden mest \cite{charging} och som ger upphov till permanenta skador på batteriet är så kallad “Lithium plating”. Detta sker då det blir en litiummetallbeläggning på anoden.\cite{nasa} Detta är en icke reversibel process och betyder då att batteriet permanent förlora kapacitet. För att minimera denna effekt ska laddning inte ske vid låga temperaturer och med låg ström under de första samt sista 10~\% av laddningen. \cite{charging-p}
@@ -145,7 +146,7 @@ Intressant att notera är att den typen av laddningsteknik som används i laddar
 
 Under laddning är det också viktigt att laddaren inte överladdar batteriet. Ett batteri räknas som överladdat då spänningen överstiger 4,2~V per cell. Detta påverkar batteriet negativt på flera olika sätt, säkerhetsaspekten på detta problem beskrivs senare i avsnittet \ref{säkerhet}.
 
-Om ett batteri blir överladdat kommer detta också att påverka batteriet negativt. Detta genom att ändra vilka typer av litiumjoner som finns i elektrolyten. För att mäta detta har forskare i rapporten \cite{overcharging-type} användt det faktum att dessa joner har olika storlek. Det ger då olika diffraktionsmönster då batteriet genomstrålas i en neutronkanon. Detta gjorde då att vilken mängd joner av olika typ som finns kunde utskiljas. För ett batteri som inte blivit överladdat finns koncentrationen av olika joner i figur \ref{fig:linormal}.
+Om ett batteri blir överladdat kommer detta att ge slitage på batteriet. Detta genom att ändra vilka typer av litiumjoner som finns i elektrolyten. För att mäta detta har forskare i rapporten \cite{overcharging-type} användt det faktum att dessa joner har olika storlek. Det ger då olika diffraktionsmönster då batteriet genomstrålas i en neutronkanon. Detta gjorde då att vilken mängd joner av olika typ som finns kunde utskiljas. För ett batteri som inte blivit överladdat finns koncentrationen av olika joner i figur \ref{fig:linormal}.
 
 \nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning.}{linormal}{0.8}
 
@@ -157,19 +158,19 @@ Som tidigare beskrivet är det den kemiska reaktionen av \ce{LiC_{x}} som ger st
 
 \subsubsection{Säkerhet}
 \label{säkerhet}
-Li-ion batterier kan av många olika anledningar gå sönder. De vanligaste är felaktigheter i produktion eller att användaren på något sätt utsätter batteriet för för stora påfrestningar. Dessa påfrestningar kan vara för hög eller låg temperatur, överladdning, brand, kortslutning eller mekaniska påfrestningar så som tryck. \cite{lihazard}
+Li-ion batterier kan av många olika anledningar gå sönder. De vanligaste är felaktigheter i produktion eller att användaren på något sätt utsätter batteriet för allt för stora påfrestningar. Dessa påfrestningar kan vara för hög eller låg temperatur, överladdning, brand, kortslutning eller mekaniska påfrestningar så som tryck. \cite{lihazard}
 
 När ett Li-ion batteri går sönder finns det stor risk att det expanderar, blir varmt och i vissa fall även börjar brinna eller till och med exploderar.
 
 Li-ion batterier kan, av slitage genom litihum plating, internt kortslutas.\cite{nasa} Då detta händer finns det risk för att batteriet blir mycket varmt, expanderar, börjar brinna eller exploderar.
 
-Då ett batteri laddas är det ur säkerhetssynpunkt också viktigt att det inte överladdas. Då dett händer finns det risk för att batteriet internt kortsluts, vilket gör att energi frigörs till värme under kort tid. Experiment som utförts \cite{overcharging} visar att det krävs laddning till cirka 5.3~V innan ett batteri kommer explodera. De batterier som testades hade då en yttre temperatur på mellan 105 och 112~grader.
+Då ett batteri laddas är det ur säkerhetssynpunkt också viktigt att det inte överladdas. Då detta händer finns det risk för att batteriet internt kortsluts, vilket gör att energi frigörs till värme under kort tid. Experiment som utförts \cite{overcharging} visar att det krävs laddning till cirka 5.3~V innan ett batteri kommer explodera. De batterier som testades hade då en yttre temperatur på mellan 105 och 112~grader.
 
 Då ett batteri utsätts för öppen låga har forskning gjord av FAA (Federal Aviation Administration) \cite{fire-faa} visat att batterier från olika tillverkare beter sig i stort sätt likadant. Deras experiment visar att de först ventilerar en del av elektrolyten i batteriet. Denna vätska antänds sedan och bildar då en egen brandhärd. Vidare säger de att ''Occasionally, the pressure release ports failed to operate correctly, causing buildup of pressure inside the cell case until the casing failed. When this occurred, the cell literally exploded …''
 
-Dessa experiment utförda av FAA visade också hur snabbt brandförloppet är. Efter 45~sekunder började batterierna att ventilera elektrolyt och 65~sekunder in i förloppet antändes även vätskan. I denna studie fastslogs även att lågan som li-ion batterier ger upphov till är tillräckligt varm för att antända annat vanligt packmaterial som ofta finns i lastrum.\cite{fire-faa}
+Dessa experiment utförda av FAA visade också hur snabbt brandförloppet är. Efter 45~sekunder började batterierna att ventilera elektrolyt och 65~sekunder in i förloppet antändes även vätskan. I denna studie fastslogs även att lågan som litiumjonbatterier ger upphov till är tillräckligt varm för att antända annat vanligt packmaterial som ofta finns i lastrum.\cite{fire-faa}
 
-På grund utav detta är batterier av li-ion typ klassade som farligt gods då de transporteras i större mängd. Det finns också ytterligare risk då de transporteras via flygplan. Detta då en brand i li-ion batterier kan göra att trycket ökar. Detta gör i sådant fall att med så få som 4 battericeller kan trycket i lastrummet öka så mycket att lastrummet måste öppna ventiler för att hålla tryckskillnad inom säkra nivåer. Detta kommer i sin tur att göra det svårare för det automatiska brandförsvarssystem som finns installerat.\cite{fire-faa}
+På grund utav detta är batterier av litiumjon typ klassade som farligt gods då de transporteras i större mängd. Det finns också ytterligare risk då de transporteras via flygplan. Detta då en brand i llitiumjonbatterier kan göra att trycket ökar. Detta gör i sådant fall att med så få som 4 battericeller kan trycket i lastrummet öka så mycket att lastrummet måste öppna ventiler för att hålla tryckskillnaden inom säkra nivåer. Detta kommer i sin tur att göra det svårare för det automatiska brandförsvarssystem som finns installerat.\cite{fire-faa}
 
 Ett uppmärksammat fall med li-ion batterier och säkerhet är Boeings plan~787~“Dreamliner”. Där fanns det ett problem med li-ion batterier i cockpit som orsakade rökutveckling under flera flygningar. I detta fall har man inte kunnat identifierat problemet som gör att batterierna började brinna. Detta trots omfattande tester och 25 000~timmars tester av batterierna innan lansering av planet. Problemet löstes sedemera genom en ny batteridesign samt en brandsäker annordning som också kunde avvärja rök från cockpit.\cite{dreamliner}
 
@@ -240,7 +241,7 @@ Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då ba
 
 Laddning och användning av ett litiumjonbatteri ska inte ske vid låga temperaturer, då detta ger permanenta skador på batteriet som påverkar kapaciteten negativt. För att minimera slitage ska också laddning ske med låg ström under de första samt sista 10~\% laddningen. Det ska också ske med en laddare som har funktion för att se till att batteriet inte blir överladdat. Detta då en överalddning, som tidigare beskrivet, påverkar maximala kapaciteten negativt.
 
-När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperatur ökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperatur ökning är klart märkbar. Om detta sker ska användning av batteriet omedelbart att upphöra.
+När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperaturökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperaturökningen är klart märkbar. Om detta sker ska användning av batteriet omedelbart att upphöra.
 
 Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap.
 
