@@ -98,10 +98,10 @@ Följande frågeställningar ska besvaras i denna uppgift:
 
 \item Hur kan man få ett servo att röra sig utan kraftiga ryck?
 \end{itemize}
-\section{Kunskapsbas}
+\section{Teori}
 För att samla och inhämta information har gruppen använt sig av vetenskapliga publikationer och litteratur som behandlar ämnena. Detta avsnitt sammanfattar den information som har insamlats.
 
-\subsection{Litiumjonbatterier}
+\subsection{Litium-jon-batterier}
 Litium-jon-batterier utnyttjar det faktum att litium är ett av de mest elektronegativa ämnena som finns, och när en elektron lämnar en litiumatom frigörs en stor mängd energi. Detta gör att batterier som använder litiums jonövergång kan få väldigt hög energidensitet och prestanda.
 
 Som i alla batterier används två elektriskt isolerade elektroder, omslutna av en elektrolyt som sammankopplar dem kemiskt. Elektrolyten och materialen i elektroderna möjliggör att kemiska jämviktsreaktioner kan äga rum, och vilken riktning reaktionerna går i avgörs av om det finns en extern potentialskillnad mellan elektroderna eller om de är kortslutna, exempelvis genom någon last, se figur \ref{fig:reaction}. \cite{glaize13}
@@ -174,6 +174,15 @@ På grund utav detta är batterier av litiumjon typ klassade som farligt gods d�
 
 Ett uppmärksammat fall med li-ion batterier och säkerhet är Boeings plan~787~“Dreamliner”. Där fanns det ett problem med li-ion batterier i cockpit som orsakade rökutveckling under flera flygningar. I detta fall har man inte kunnat identifierat problemet som gör att batterierna började brinna. Detta trots omfattande tester och 25 000~timmars tester av batterierna innan lansering av planet. Problemet löstes sedemera genom en ny batteridesign samt en brandsäker annordning som också kunde avvärja rök från cockpit.\cite{dreamliner}
 
+\subsection{Aktuell forskning kring litium-jon-batterier}
+Att förbättra dagens batteriteknik är ett aktivt forskningsområde som engagerar många akademiker och forskningscentra i världen. Även om dagens litium-jon-batterier är världsledande på marknaden när det handlar om energitäthet idag så börjar de närma sig sin maxgräns vad gäller kapacitet per vikt, och för att möta dagens behov av renare energialternativ och energiförvaring krävs radikala förbättringar i batteritekniken. \cite{better-battery} 
+
+Man kan tänka sig tre huvudsätt att angripa problemet att bygga vidare på och förbättra dagens litium-jon-batterier. Antingen kan man arbeta med att utveckla den teknik som finns idag med litium som laddningsbärande ämne, eller så kan man forska på att utveckla andra typer av kemiska batterier som använder andra ämnen, och slutligen kan man leta efter helt andra sätt att lagra energi på som inte använder kemiska reaktioner. I det här avsnittet behandlas ett urval av den forskning som bedrivs på dessa tre områden idag.
+
+\subsubsection{Att förbättra litium-jon-batterier}
+Ett sätt att öka energitätheten och sänka kostnaderna för batterier som fortfarande använder litium som laddningsbärare är att modifiera batteridesignen till att använda alternativa elektrodmaterial och elektrolyter. Ett exempel på detta är litium-svavel-batterier som byter ut 
+
+
 \subsection{Servon}
  
 En servomotor (här förkortat servo) är en slags motor vars funktion är att kunna anta fördefinierade  vinklar och hålla denna vinkel tills ett ny vinkel anges. De används alltså inte för att driva hjulen på en bil eller propellern på ett flygplan utan servon används framförallt i robotar, automatiserade system  och fjärrstyrda enheter där till exempel ett flygplans roder ska anta ett visst läge eller en robotarm skall plocka upp ett provrör . Servon är väl lämpade för när man kräver en motor som kan vara stilla och ändå hålla kvar sin last utan att bli överhettade. 
@@ -200,15 +209,13 @@ Dessa servon kan man dessutom programmera och ändra på många parametrar för 
  
 Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvika just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
  
-\section{Fördjupning}
- 
-\subsection{Dynamixel AX-12A}
+\subsubsection{Dynamixel AX-12A}
  
 Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
  
-\nyBild{Kopplingschema-UART-till-halv-duplex.png}{ Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}{Dynamixel AX-12A}{0.8} 
+\nyBild{Kopplingschema-UART-till-halv-duplex.png}{ \emph{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}}{fig:ax12-koppling}{0.8} 
 
-Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan. PD0 kan på ATmega1284P konfigureras som en mottagningspin i UART och PD1 kan konfigureras som sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på i princip vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om kopplar man ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
+Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan i figur \ref{fig:ax12-koppling}. PD0 kan på ATmega1284P konfigureras som en mottagningspin i UART och PD1 kan konfigureras som sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på i princip vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om man kopplar ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
 Kommunikationen mellan servona och mikroprocessorn sker med två olika typer av datapaket. De kallas instruktionspaket och statuspaket. Instruktionspaket skickas från mikroprocessorerna och innehåller instruktioner till servona som till exempel kan vara att de ska anta en viss position eller att de ska röra sig med en viss hastighet. Statuspaket skickas från servo till mikroprocessor och innehåller data om att servot har tagit emot instruktionen och eventuellt aktuell position eller liknande, beroende på vad instruktionen var. Instruktionspaketet skickas från sändningsporten på mikroprocessorn samtidigt som riktningsporten är satt i ''sändläge'', i detta fall en etta. När servot tar emot ett meddelande svarar denna med ett statuspaket som tas emot av mikroprocessorn på mottagningsporten samtidigt som riktningsporten är i ''mottagningsläge'', i detta fall en nolla. 
 
@@ -294,6 +301,8 @@ http://www.sigbi.se/system/Produkter/Servomotor/Ezi-SERVO/Ezi-SERVO-BT
 
 \bibitem{formler} Q. Wang, P. Ping, X. Zhao, G. Chu, J. Sun, C. Chen, \emph{Thermal runaway caused fire and explosion of lithium ion battery}
 \\ Journal of Power Sources, volym 208, juni 2012, sidor 210-224
+
+\bibitem{better-battery} R. Van Noorden, \emph{The rechargeable revolution: A better battery} \\ Nature, volym 507, mars 2014, sidor 26-28
 
 \end{thebibliography}
 \end{document} 
