@@ -30,8 +30,8 @@
 \newcommand{\LIPSdokumentansvarig}{LIPS Designspecifikation}
 
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
-\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
-\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-28 13 68, 3B:528, tomass@isy.liu.se}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomas.svensson@liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-28 13 68, 3B:528, tomas.svensson@liu.se}
 \newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
 
 
@@ -79,7 +79,9 @@
 \setcounter{page}{1}
 
 \section{Inledning}
-Denna skrivuppgift tjänar till att fördjupa projektgruppens kunskaper i några områden som är relevanta för projektet. I detta dokument behandlas batterier och servon.
+Denna skrivuppgift tjänar till att fördjupa projektgruppens kunskaper i några områden som är relevanta för projektet. Projektet består utav att bygga en helt autonom lagerrobot. I denna robot finns flertalet servon, framförallt i armen som kommer plocka upp och lämna av föremål. En del av denna uppgift ägnas därav till en fördjupning inom just servon.
+
+Roboten måste även ha ström för att kunna drivas, detta kommer göras med litiumjonbatterier. Därför är den första delen av denna fördjupning en beskrivning av dessa batterier, hur de fungerar, hur de ska användas på bästa sätt och vilka risker som finns med denna typ av batteri.
 
 \section{Problemformulering}
 Följande frågeställningar ska besvaras i denna uppgift:
@@ -108,7 +110,7 @@ Som i alla batterier används två elektriskt isolerade elektroder, omslutna av 
 
 De kemiska reaktioner som sker inuti batteriet i uppladdning och urladdning är följande för hela förloppet:
 
-\centerline{\ce{LiMO2 <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + xLi^+ + xe}}
+\centerline{\ce{LiMo2 + nC <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + Li_{x}C_{n}}}
 
 För anoden är reaktionen:
 \\
@@ -116,9 +118,13 @@ För anoden är reaktionen:
 
 För katoden är reaktionen:
 \\
-\centerline{\ce{LiMo2 + nC <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + Li_{x}C_{n}}}
+\centerline{\ce{LiMO2 <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + xLi^+ + xe}}
 
-Där x är 6, 12 eller 18. M är Co, Ni, Fe eller W beroende på batteri. Under en laddning eller urladdning kan alltså \ce{LiC6}, \ce{LiC12} eller \ce{LiC18} att bildas eller ?????lösas upp.?????? \cite{formler}
+Där n är 6, 12 eller 18. M är Co, Ni, Fe eller W beroende på batteri. Under en laddning eller urladdning kan alltså \ce{LiC6}, \ce{LiC12} eller \ce{LiC18} att bildas eller ?????lösas upp?????? på anoden. \cite{formler} 
+
+Det är dessa kemsiksa reaktioner som ger ström från batteriet, då reaktionen på anoden under urladdning ger ifrån sig en elektron, medans katoden behöver en elektron för att genomföra sin reaktion. Detta kommer då driva en ström genom lasten som läggs på batteriet.
+
+För att dessa reaktioner ska kunna äga rum måste det finns yta på anoden och katoden där de olika ämnena kan reagera med varandra. Om dessa ytor skulle minska kommer också kapaciteten på batteriet att minska. Effekter som kan göra att ytan på andoden och katoden minska finns beskrivet vidare i \ref{slitage}.
 
 \subsubsection{Laddning}
 För laddning av batterier finns det två olika tekniker. En är att hålla en konstant ström till batteriet och den andra att hålla en konstant spänning till batteriet. Eftersom litiumjonbatterier är mycket känsliga mot för hög spänning är det vanligt att en kombination av de båda används.
@@ -139,9 +145,15 @@ Intressant att notera är att den typen av laddningsteknik som används i laddar
 
 Under laddning är det också viktigt att laddaren inte överladdar batteriet. Ett batteri räknas som överladdat då spänningen överstiger 4,2~V per cell. Detta påverkar batteriet negativt på flera olika sätt, säkerhetsaspekten på detta problem beskrivs senare i avsnittet \ref{säkerhet}.
 
-Vid överladdning kommer batteriets komposition av olika litiumjoner att ändras. Ett batteri som blivit överladdat kommer att ha mindre \ce{LiC6} jämnfört med ett batteri som inte blivit överladdat. Ett överladdade batteriet kommer istället innehålla mer \ce{LiC12} samt \ce{LiC18} \cite{overcharging-type}. Det syns även efter urladdning att mer \ce{LiC12} samt \ce{LiC18} finns i ett överladdade batteriet jämnfört med ett icke överladdat batteri, då det knappt innehåller \ce{LiC_{x}} alls \cite{overcharging-type}. Denna effekt framträdde då ett batteri blivit överladdat till över 4.5~V.
+Om ett batteri blir överladdat kommer detta också att påverka batteriet negativt. Detta genom att ändra vilka typer av litiumjoner som finns i elektrolyten. För att mäta detta har forskare i rapporten \cite{overcharging-type} användt det faktum att dessa joner har olika storlek. Det ger då olika diffraktionsmönster då batteriet genomstrålas i en neutronkanon. Detta gjorde då att vilken mängd joner av olika typ som finns kunde utskiljas. För ett batteri som inte blivit överladdat finns koncentrationen av olika joner i figur \ref{fig:linormal}.
 
-Som tidigare beskrivet är det den kemiska reaktionen av \ce{LiC_{x}} som ger ström från batteriet. Detta innebär att ett överladdat batteri inte kommer ge ifrån sig all sin laddning, eftersom \ce{LiC12} samt \ce{LiC18} finns kvar även om batteriet är urladdat. 
+\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning.}{linormal}{0.8}
+
+Ett batteri som blivit överladdat kommer att ha mindre \ce{LiC6} jämnfört med ett batteri som inte blivit överladdat. Ett överladdade batteriet kommer istället innehålla mer \ce{LiC12} samt \ce{LiC18} \cite{overcharging-type}, se figur \ref{fig:lioverchargd}. Det syns även efter urladdning att mer \ce{LiC12} samt \ce{LiC18} finns i ett överladdade batteriet jämnfört med ett icke överladdat batteri, då det knappt innehåller \ce{LiC_{x}} alls \cite{overcharging-type}. Denna effekt framträdde då ett batteri blivit överladdat till över 4.5~V.
+
+\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning.}{lioverchargd}{0.8}
+
+Som tidigare beskrivet är det den kemiska reaktionen av \ce{LiC_{x}} som ger ström från batteriet. Detta innebär att ett överladdat batteri inte kommer ge ifrån sig all sin laddning, eftersom \ce{LiC12} samt \ce{LiC18} finns kvar även om batteriet är urladdat.
 
 \subsubsection{Säkerhet}
 \label{säkerhet}
@@ -199,26 +211,27 @@ Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX
 Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan. PD0 är på ATmega1284P en mottagningspin och PD1 är sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om kopplar man ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
 Kommunikationen mellan servona och mikroprocessorn sker med två olika typer av datapaket. De kallas instruktionspaket och statuspaket. Instruktionspaket skickas från mikroprocessorerna och innehåller instruktioner till servona som till exempel kan vara att de ska anta en viss position eller att de ska röra sig med en viss hastighet. Statuspaket skickas från servo till mikroprocessor och innehåller data om att servot har tagit emot instruktionen och eventuellt aktuell position eller liknande, beroende på vad instruktionen var. Instruktionspaketet skickas från transmit porten på mikroprocessorn samtidigt som direction port är satt i ''sändläge'', i detta fall en etta. När servot tar emot ett meddelande svarar denna med ett statuspaket som tas emot av mikroprocessorn på recieveporten samtidigt som direction port är i ''mottagningsläge'', i detta fall en nolla. Ett instruktionspaket måste se ut på ett visst sätt för att servot ska kunna tolka det. I grova drag ser instruktionspaketet ut så här:
- 
+
 [Startbytes] [ID] [Längd] [Instruktion] [Parametrar] [Kontrollsiffra]
- 
+
 Servot svarar sedan med ett statuspaket som ser ut enligt:
- 
+
 [Startbytes] [ID] [Längd] [Felkod] [Parametrar] [Kontrollsiffra]
- 
+
 Funktioner för att sätta upp portar och register i microprocessorn samt för att använda dess UART med korrekt bandbredd och så vidare behöver implementeras i mikroprocessorn för att kunna använda servot. 
  
- 
- 
 \section{Resultat och slutsatser}
-Li-ion batterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
- 
+Litiumjonbatterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
+
 Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
- 
-Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap. 
 
-Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon i någon form redan har denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på den lite mer avancerade servon som till exempel Dynamixel AX-12A.  
+Laddning och användning av ett litiumjonbatteri ska inte ske vid låga temperaturer, då detta ger permanenta skador på batteriet som påverkar kapaciteten negativt. För att minimera slitage ska också laddning ske med låg ström under de första samt sista 10~\% laddningen. Det ska också ske med en laddare som har funktion för att se till att batteriet inte blir överladdat. Detta då en överalddning, som tidigare beskrivet, påverkar maximala kapaciteten negativt.
 
+När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperatur ökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperatur ökning är klart märkbar. Om detta sker ska användning av batteriet omedelbart att upphöra.
+
+Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap.
+
+Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon i någon form redan har denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på den lite mer avancerade servon som till exempel Dynamixel AX-12A. 
 
 \newpage
 
@@ -261,7 +274,7 @@ http://www.sigbi.se/system/Produkter/Servomotor/Ezi-SERVO/Ezi-SERVO-BT
 \bibitem{overcharging-type} N. Sharma, V. Peterson, \emph{Overcharging a lithium-ion battery: Effect on the Li$_{x}$C$_{6}$ negative electrode determined by in situ neutron diffraction}
 \\ Journal of Power Sources, volym 244, december 2013 , sidor 695-701
 
-\bibitem{overcharging} R. A. Leising, M. J. Palazzo, E. Sans Takeuchi, K. J. Takeuchi, \emph{A study of the overcharge reaction of litihium-ion batteries}
+\bibitem{overcharging} R. A. Leising, M. J. Palazzo, E. Sans Takeuchi, K. J. Takeuchi, \emph{A study of the overcharge reaction of lithium-ion batteries}
 \\ Journal of Power Sources, volym 97-98, juli 2001, sidor 681-683
 
 \bibitem{formler} Q. Wang, P. Ping, X. Zhao, G. Chu, J. Sun, C. Chen, \emph{Thermal runaway caused fire and explosion of lithium ion battery}
