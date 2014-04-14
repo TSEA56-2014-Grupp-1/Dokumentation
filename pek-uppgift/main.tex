@@ -98,13 +98,14 @@ Följande frågeställningar ska besvaras i denna uppgift:
 
 \item Hur kan man få ett servo att röra sig utan kraftiga ryck?
 \end{itemize}
+
 \section{Teori}
 För att samla och inhämta information har gruppen använt sig av vetenskapliga publikationer och litteratur som behandlar ämnena. Detta avsnitt sammanfattar den information som har insamlats.
 
 \subsection{Litium-jon-batterier}
 Litium-jon-batterier utnyttjar det faktum att litium är ett av de mest elektronegativa ämnena som finns, och när en elektron lämnar en litiumatom frigörs en stor mängd energi. Detta gör att batterier som använder litiums jonövergång kan få väldigt hög energidensitet och prestanda.
 
-Som i alla batterier används två elektriskt isolerade elektroder, omslutna av en elektrolyt som sammankopplar dem kemiskt. Elektrolyten och materialen i elektroderna möjliggör att kemiska jämviktsreaktioner kan äga rum, och vilken riktning reaktionerna går i avgörs av om det finns en extern potentialskillnad mellan elektroderna eller om de är kortslutna, exempelvis genom någon last, se figur \ref{fig:reaction}. \cite{glaize13}
+Som i alla batterier används två elektriskt isolerade elektroder, omslutna av en elektrolyt som sammankopplar dem kemiskt. Elektrolyten och materialen i elektroderna möjliggör att kemiska jämviktsreaktioner kan äga rum, och vilken riktning reaktionerna går i avgörs av om det finns en extern potentialskillnad mellan elektroderna eller om de är sammankopplade, exempelvis genom någon last, se figur \ref{fig:reaction}. \cite{glaize13}
 
 \nyBild{Reaktionsforlopp.png}{Flöde av ström och joner vid laddning och urladdning}{reaction}{0.8}
 
@@ -148,11 +149,11 @@ Under laddning är det också viktigt att laddaren inte överladdar batteriet. E
 
 Om ett batteri blir överladdat kommer detta att ge slitage på batteriet. Detta genom att ändra vilka typer av litiumjoner som finns i elektrolyten. För att mäta detta har forskare i rapporten \cite{overcharging-type} användt det faktum att dessa joner har olika storlek. Det ger då olika diffraktionsmönster då batteriet genomstrålas i en neutronkanon. Detta gjorde då att vilken mängd joner av olika typ som finns kunde utskiljas. För ett batteri som inte blivit överladdat finns koncentrationen av olika joner i figur \ref{fig:linormal}.
 
-\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning.}{linormal}{0.8}
+\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning}{linormal}{0.8}
 
 Ett batteri som blivit överladdat kommer att ha mindre \ce{LiC6} jämnfört med ett batteri som inte blivit överladdat. Ett överladdade batteriet kommer istället innehålla mer \ce{LiC12} samt \ce{LiC18} \cite{overcharging-type}, se figur \ref{fig:lioverchargd}. Det syns även efter urladdning att mer \ce{LiC12} samt \ce{LiC18} finns i ett överladdade batteriet jämnfört med ett icke överladdat batteri, då det knappt innehåller \ce{LiC_{x}} alls \cite{overcharging-type}. Denna effekt framträdde då ett batteri blivit överladdat till över 4.5~V.
 
-\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning.}{lioverchargd}{0.8}
+\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning}{lioverchargd}{0.8}
 
 Som tidigare beskrivet är det den kemiska reaktionen av \ce{LiC_{x}} som ger ström från batteriet. Detta innebär att ett överladdat batteri inte kommer ge ifrån sig all sin laddning, eftersom \ce{LiC12} samt \ce{LiC18} finns kvar även om batteriet är urladdat.
 
@@ -185,11 +186,11 @@ Ett sätt att öka energitätheten och sänka kostnaderna för batterier som for
 
 \subsection{Servon}
  
-En servomotor (här förkortat servo) är en slags motor vars funktion är att kunna anta fördefinierade  vinklar och hålla denna vinkel tills ett ny vinkel anges. De används alltså inte för att driva hjulen på en bil eller propellern på ett flygplan utan servon används framförallt i robotar, automatiserade system  och fjärrstyrda enheter där till exempel ett flygplans roder ska anta ett visst läge eller en robotarm skall plocka upp ett provrör . Servon är väl lämpade för när man kräver en motor som kan vara stilla och ändå hålla kvar sin last utan att bli överhettade. 
+En servomotor (här förkortat servo) är en slags motor vars funktion är att kunna anta fördefinierade  vinklar och hålla denna vinkel tills ett ny vinkel anges. De används alltså inte för att driva hjulen på en bil eller propellern på ett flygplan. Servon används istället framförallt i robotar, automatiserade system  och fjärrstyrda enheter där till exempel ett flygplans roder ska anta ett visst läge eller en robotarm skall plocka upp ett provrör. Servon är väl lämpade för när man kräver en motor som kan vara stilla och ändå hålla kvar sin last utan att bli överhettade. 
  
-Ett servo består av tre delar: en servomotor som kan vara antingen en AC-motor, DC-motor , eller en stegmotor, en positionssensor som mäter servomotorns position samt en kontrollenhet som styr motorn.  Kontrollenheten jämför ständigt skillnaden mellan det önskade vinkelutslaget och den vinkel positionssensor mäter upp och styr sedan servomotorn för att minimera denna skillnad. Detta kallas för att systemet är återkopplat. Den stora fördelen med ett servo är just att den är återkopplad då återkopplingen gör att servot kan hantera olika tunga laster och yttre påverkningar utan att ställa sig fel, vilket lätt händer med öppna system. 
+Ett servo består av tre delar: en servomotor som kan vara antingen en AC-motor, DC-motor, eller en stegmotor, en positionssensor som mäter servomotorns position samt en kontrollenhet som styr motorn.  Kontrollenheten jämför ständigt skillnaden mellan det önskade vinkelutslaget och den vinkel positionssensor mäter upp och styr sedan servomotorn för att minimera denna skillnad. Detta kallas för att systemet är återkopplat. Den stora fördelen med ett servo är just att den är återkopplad då återkopplingen gör att servot kan hantera olika tunga laster och yttre påverkningar utan att ställa sig fel, vilket lätt händer med öppna system. 
  
-Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2.5 ms lång. En 1.5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel ATmels AVR-processorer som används flitigt på av studenterna på ISY:s projektkurser.
+Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 0,5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2,5 ms lång. En 1,5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel ATmels AVR-processorer som används flitigt av studenterna på ISY:s projektkurser.
  
 På enklare PWM-styrda servomotorer är det ej möjligt att kontrollera acceleration och deacceleration vid rörelser om man inte faktiskt styr strömmen som går till servomotorn när den startar och när den närmar sig slutmålet. Det är dock omständigt att göra utan att upprepat mäta servots position vilket kräver vinkelhastighetssensorer och dessutom komponenter för att styra strömmen. Det krävs även att man kan styra strömmen till servomotorn utan att ändra strömmen till kontrollenheten och positionssensor vilket är svårt eftersom dessa komponenter vanliga är inbyggda i servot. Däremot är det vanligt att en servomotor har inbyggd så kallad PID-regulator, vilket gör så att motorn går snabbt när det är långt till den önskade positionen och saktar ner ju närmare målet den kommer, så att hastig acceleration och deacceleration undviks. Detta vill man undvika eftersom systemet lätt blir hackigt och det kan bli väldigt stora belastningar på systemet. 
  
@@ -201,7 +202,7 @@ En PID-regulator är en regulator som ofta används i återkopplade system framf
  
 Servomotorer styrs som ovan nämnt genom återkoppling, där det önskade värdet ständigt  jämförs med det av positionssensor uppmätta värdet. Skillnaden mellan dessa värden förstärks, omvandlas och används för att driva motorn i den riktning som gör att felet minskas. Den önskade vinkeln anges med så kallad PWM och innebär att man skickar en elektrisk puls vars varaktighet bestämmer läget på motorn. Denna puls upprepas med en given frekvens. Ifall man slutar skicka en puls kommer servot att stå kvar i den position den är i, så länge den inte rubbas av en utomstående kraft. Oftast vill man inte att servot ska kunna rubbas och därför fortsätter man att skicka samma puls tills dess att man vill att servots position ska ändras. 
  
-Men det finns även mer avancerade servon som har en egen liten inbyggd dator i sen. På dessa servon kan man ändra diverse egenskaper efter vad den ska användas till. Man kan till exempel ställa in gränser för hur varm motorn får bilden får bli, hur snabbt den får gå, vilket vridmoment den får ha och hur hårt den ska deaccelererars innan den når det önskade värdet. Dessa servon är dock inte PWM-styrda utan styrs seriellt genom att man skickar data till dem som ändrar på vald parameter hos servona till ett visst värde. 
+Men det finns även mer avancerade servon som har en egen liten inbyggd dator i sig. På dessa servon kan man ändra diverse egenskaper efter vad den ska användas till. Man kan till exempel ställa in gränser för hur varm motorn får bilden får bli, hur snabbt den får gå, vilket vridmoment den får ha och hur hårt den ska deaccelererars innan den når det önskade värdet. Dessa servon är dock inte PWM-styrda utan styrs seriellt genom att man skickar data till dem som ändrar på vald parameter hos servona till ett visst värde. 
  
 Om man vill styra flera servon samtidigt, till exempel ifall man vill styra en robotarm med flera rörliga leder, har man stor fördel av att använda de lite mer avancerade servon som kommunicerar seriellt med halv duplex. Dessa servon kan nämligen parallellkopplas och de styrs individuellt genom att varje servo tilldelas ett unikt identifikationsnummer. När man vill styra ett servo skickar man således ett meddelande till alla servon men endast det servo vars ID stämmer överens med ID:t angivet i meddelandet svarar. Man kan även skicka ett meddelande till flera ID:n samtidigt och dessutom med olika värden till var och ett av servona. 
  
@@ -211,9 +212,9 @@ Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkopplin
  
 \subsubsection{Dynamixel AX-12A}
  
-Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
+Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv duplex. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
  
-\nyBild{Kopplingschema-UART-till-halv-duplex.png}{ \emph{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}}{fig:ax12-koppling}{0.8} 
+\nyBild{Kopplingschema-UART-till-halv-duplex.png}{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}{fig:ax12-koppling}{0.8} 
 
 Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan i figur \ref{fig:ax12-koppling}. PD0 kan på ATmega1284P konfigureras som en mottagningspin i UART och PD1 kan konfigureras som sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på i princip vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om man kopplar ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
@@ -231,7 +232,7 @@ I börjar av alla meddelanden skickas två startbytes för att tala om alla enhe
 
 Efter ID-byten skickas längden på meddelandet, så att enheterna vet hur många parametrar den ska lyssna efter. Längden beräknas genom att summera antalet parametrar och addera med 2.
 
- Efter längden anges den instruktion man vill att servot ska utföra. Det finns i huvudsak fyra användbara instruktioner för att kommunicera med ett servo. De är ping, vilken används för att ta emot ett servos statuspaket, läs data, vilken används för att läsa av en av parametrarna i kontrollregistret, skriv data, som skriver data till en av parametrarna i kontrollregistret samt resest, som återställer servots parametrar till fabriksinställningarna. Det finns utöver dessa även en instruktion för att skriva till samma parameter på olika servos kontrollregister i ett och samma instruktionspaket. 
+Efter längden anges den instruktion man vill att servot ska utföra. Det finns i huvudsak fyra användbara instruktioner för att kommunicera med ett servo. De är ping, vilken används för att ta emot ett servos statuspaket, läs data, vilken används för att läsa av en av parametrarna i kontrollregistret, skriv data, som skriver data till en av parametrarna i kontrollregistret samt resest, som återställer servots parametrar till fabriksinställningarna. Det finns utöver dessa även en instruktion för att skriva till samma parameter på olika servos kontrollregister i ett och samma instruktionspaket. 
 
 För statuspaket gäller inte instruktionsbyten utan istället skickas en felkod, som talar om ifall någonting har gått snett.
 
@@ -239,7 +240,7 @@ Den första parametern som följer efter instruktionen indikerar vilken plats i 
 
 Till sist följer en kontrollbyte vars värde räknas ut genom att summera värdet på byte ID, längd, instruktion och parametrar. Denna summa inverteras sedan binärt (ettor och nollor byter plats) och bildar då kontrollsiffran.
 
-Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ändra och ytterligare 10 parametrar som endast kan avläsas. 
+Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ytterligare 10 parametrar som endast kan avläsas. 
  
 \section{Resultat och slutsatser}
 Litiumjonbatterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
@@ -248,7 +249,7 @@ Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då ba
 
 Laddning och användning av ett litiumjonbatteri ska inte ske vid låga temperaturer, då detta ger permanenta skador på batteriet som påverkar kapaciteten negativt. För att minimera slitage ska också laddning ske med låg ström under de första samt sista 10~\% laddningen. Det ska också ske med en laddare som har funktion för att se till att batteriet inte blir överladdat. Detta då en överalddning, som tidigare beskrivet, påverkar maximala kapaciteten negativt.
 
-När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperaturökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperaturökningen är klart märkbar. Om detta sker ska användning av batteriet omedelbart att upphöra.
+När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperaturökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperaturökningen är klart märkbar. Om detta sker ska användning av batteriet omedelbart upphöra.
 
 Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap.
 
