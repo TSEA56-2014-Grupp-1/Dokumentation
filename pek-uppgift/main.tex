@@ -179,7 +179,7 @@ En servomotor (här förkortat servo) är en slags motor vars funktion är att k
  
 Ett servo består av tre delar: en servomotor som kan vara antingen en AC-motor, DC-motor , eller en stegmotor, en positionssensor som mäter servomotorns position samt en kontrollenhet som styr motorn.  Kontrollenheten jämför ständigt skillnaden mellan det önskade vinkelutslaget och den vinkel positionssensor mäter upp och styr sedan servomotorn för att minimera denna skillnad. Detta kallas för att systemet är återkopplat. Den stora fördelen med ett servo är just att den är återkopplad då återkopplingen gör att servot kan hantera olika tunga laster och yttre påverkningar utan att ställa sig fel, vilket lätt händer med öppna system. 
  
-Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2.5 ms lång. En 1.5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel Atmels AVR-processorer som används flitigt på av studenterna på ISY:s projektkurser.
+Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2.5 ms lång. En 1.5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel ATmels AVR-processorer som används flitigt på av studenterna på ISY:s projektkurser.
  
 På enklare PWM-styrda servomotorer är det ej möjligt att kontrollera acceleration och deacceleration vid rörelser om man inte faktiskt styr strömmen som går till servomotorn när den startar och när den närmar sig slutmålet. Det är dock omständigt att göra utan att upprepat mäta servots position vilket kräver vinkelhastighetssensorer och dessutom komponenter för att styra strömmen. Det krävs även att man kan styra strömmen till servomotorn utan att ändra strömmen till kontrollenheten och positionssensor vilket är svårt eftersom dessa komponenter vanliga är inbyggda i servot. Däremot är det vanligt att en servomotor har inbyggd så kallad PID-regulator, vilket gör så att motorn går snabbt när det är långt till den önskade positionen och saktar ner ju närmare målet den kommer, så att hastig acceleration och deacceleration undviks. Detta vill man undvika eftersom systemet lätt blir hackigt och det kan bli väldigt stora belastningar på systemet. 
  
@@ -197,8 +197,7 @@ Om man vill styra flera servon samtidigt, till exempel ifall man vill styra en r
  
 Dessa servon kan man dessutom programmera och ändra på många parametrar för att ändra till exempel hastighet, max vridmoment, inbromsning, max temperatur, begränsa vinkelomfånget och så vidare.
  
-Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvik just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
- 
+Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvika just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
  
 \section{Fördjupning}
  
@@ -206,19 +205,33 @@ Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkopplin
  
 Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
  
-                      Figur: Kopplningschema för att koppla ihop en AVR med Dynamixel~AX-12A.
+\nyBild{Kopplingschema-UART-till-halv-duplex.png}{ Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}{Dynamixel AX-12A}{0.8} 
+
+Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan. PD0 kan på ATmega1284P konfigureras som en mottagningspin i UART och PD1 kan konfigureras som sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på i princip vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om kopplar man ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
-Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan. PD0 är på ATmega1284P en mottagningspin och PD1 är sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om kopplar man ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
- 
-Kommunikationen mellan servona och mikroprocessorn sker med två olika typer av datapaket. De kallas instruktionspaket och statuspaket. Instruktionspaket skickas från mikroprocessorerna och innehåller instruktioner till servona som till exempel kan vara att de ska anta en viss position eller att de ska röra sig med en viss hastighet. Statuspaket skickas från servo till mikroprocessor och innehåller data om att servot har tagit emot instruktionen och eventuellt aktuell position eller liknande, beroende på vad instruktionen var. Instruktionspaketet skickas från transmit porten på mikroprocessorn samtidigt som direction port är satt i ''sändläge'', i detta fall en etta. När servot tar emot ett meddelande svarar denna med ett statuspaket som tas emot av mikroprocessorn på recieveporten samtidigt som direction port är i ''mottagningsläge'', i detta fall en nolla. Ett instruktionspaket måste se ut på ett visst sätt för att servot ska kunna tolka det. I grova drag ser instruktionspaketet ut så här:
+Kommunikationen mellan servona och mikroprocessorn sker med två olika typer av datapaket. De kallas instruktionspaket och statuspaket. Instruktionspaket skickas från mikroprocessorerna och innehåller instruktioner till servona som till exempel kan vara att de ska anta en viss position eller att de ska röra sig med en viss hastighet. Statuspaket skickas från servo till mikroprocessor och innehåller data om att servot har tagit emot instruktionen och eventuellt aktuell position eller liknande, beroende på vad instruktionen var. Instruktionspaketet skickas från sändningsporten på mikroprocessorn samtidigt som riktningsporten är satt i ''sändläge'', i detta fall en etta. När servot tar emot ett meddelande svarar denna med ett statuspaket som tas emot av mikroprocessorn på mottagningsporten samtidigt som riktningsporten är i ''mottagningsläge'', i detta fall en nolla. 
 
-[Startbytes] [ID] [Längd] [Instruktion] [Parametrar] [Kontrollsiffra]
+Dynamixel~AX-12A:s egenskaper så som position, rörelsehastighet, vridmoment och ID kontrolleras av parametrar i ett kontrollregister som finns hos respektive servo. Med ett instruktionspaket kan man antingen avläsa vad som står i dessa register eller ändra på parametrarna i registret och därmed få servot att röra på sig. Ett instruktionspaket måste se ut på ett visst sätt för att servot ska kunna tolka det. I grova drag ser ett instruktionspaket ut så här:\\
 
-Servot svarar sedan med ett statuspaket som ser ut enligt:
+[Startbytes] [ID] [Längd] [Instruktion] [Parametrar] [Kontrollsiffra]\\
 
-[Startbytes] [ID] [Längd] [Felkod] [Parametrar] [Kontrollsiffra]
+Servot svarar sedan med ett statuspaket som ser ut enligt:\\
 
-Funktioner för att sätta upp portar och register i microprocessorn samt för att använda dess UART med korrekt bandbredd och så vidare behöver implementeras i mikroprocessorn för att kunna använda servot. 
+[Startbytes] [ID] [Längd] [Felkod] [Parametrar] [Kontrollsiffra]\\
+
+I börjar av alla meddelanden skickas två startbytes för att tala om alla enheter att nu kommer det ett meddelande. Varje startbyte är alltid 0xFF, det vill säga åtta stycken 1:or och totalt skickas alltså 16 stycket 1:or innan meddelandet börjar. Efter startbytesen skickas i ett instruktionspaket ett ID till den enhet meddelandet är avsett för. I statuspaketen skickar servona med sitt eget ID, för att tala om vem det är som svarar. Ifall ett instruktionspaket ska skickas till flera enheter samtidigt anges ID-byten med 0xFE som gör att alla enheter lyssnar. 
+
+Efter ID-byten skickas längden på meddelandet, så att enheterna vet hur många parametrar den ska lyssna efter. Längden beräknas genom att summera antalet parametrar och addera med 2.
+
+ Efter längden anges den instruktion man vill att servot ska utföra. Det finns i huvudsak fyra användbara instruktioner för att kommunicera med ett servo. De är ping, vilken används för att ta emot ett servos statuspaket, läs data, vilken används för att läsa av en av parametrarna i kontrollregistret, skriv data, som skriver data till en av parametrarna i kontrollregistret samt resest, som återställer servots parametrar till fabriksinställningarna. Det finns utöver dessa även en instruktion för att skriva till samma parameter på olika servos kontrollregister i ett och samma instruktionspaket. 
+
+För statuspaket gäller inte instruktionsbyten utan istället skickas en felkod, som talar om ifall någonting har gått snett.
+
+Den första parametern som följer efter instruktionen indikerar vilken plats i registret som skall behandlas. Om instruktionen var att skriva till ett register är nästa parameter vilket värde som skall skrivas till registret. 
+
+Till sist följer en kontrollbyte vars värde räknas ut genom att summera värdet på byte ID, längd, instruktion och parametrar. Denna summa inverteras sedan binärt (ettor och nollor byter plats) och bildar då kontrollsiffran.
+
+Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ändra och ytterligare 10 parametrar som endast kan avläsas. 
  
 \section{Resultat och slutsatser}
 Litiumjonbatterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
@@ -263,10 +276,11 @@ Att få ett servo att röra sig utan ryck är både enklare och svårare än vad
 \\The Aerospace Corporation, 2010
 \\https://batteryworkshop.msfc.nasa.gov/presentations/1-Lithium\_Plating\_AZimmerman.pdf 
 
-\bibitem{dyn-manual} \emph{User's Manual Dynamixel AX-12} \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
+\bibitem{dyn-manual} \emph{User's Manual Dynamixel AX-12}
+ \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
 
-\bibitem{ana-servo} Anaheim Automation, Inc, \emph{Servo motor guide}\\
- http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php
+\bibitem{ana-servo} Anaheim Automation, Inc, \emph{Servo motor guide}
+\\ http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php
 
 \bibitem{sigbi} SiGBi System AB, Inc, \emph{Servomotor - Ezi-SERVO BTe}\\
 http://www.sigbi.se/system/Produkter/Servomotor/Ezi-SERVO/Ezi-SERVO-BT
