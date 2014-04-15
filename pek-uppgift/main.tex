@@ -64,6 +64,7 @@
 \renewcommand*\contentsname{Innehåll}
 \begin{spacing}{0.5}
 \tableofcontents{}
+
 \end{spacing}
 \newpage
 
@@ -99,7 +100,7 @@ Följande frågeställningar ska besvaras i denna uppgift:
 
 \item Hur kan man få ett servo att röra sig utan kraftiga ryck?
 
-\item Hur styr man servon av typen Dynamixel AX-12A?
+\item Hur styr man servon av typen Dynamixel AX-12A som används i robotarmarna på ISY:s projektkurser?
 \end{itemize}
 
 \section{Teori}
@@ -223,7 +224,7 @@ Om man vill styra flera servon samtidigt, till exempel ifall man vill styra en r
  
 Dessa servon kan man dessutom programmera och ändra på många parametrar för att ändra till exempel hastighet, max vridmoment, inbromsning, max temperatur, begränsa vinkelomfånget och så vidare.
  
-Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den är öppen, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvika just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
+Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkoppling. Stegmotorn är även den PWM-styrd men vars rörelse är uppdelad i ett givet antal steg, och styrs genom att den hoppar ett visst antal steg för att ställa in sig på den önskade positionen. En vanlig stegmotor är betydligt enklare och billigare än en servomotor eftersom den har öppen styrning, det vill säga att den helt saknar positionssensorn och återkopplingen. Stegmotorn kan alltså ej ta hänsyn till ifall den skulle råka skippa ett steg eller att man tvinga den till fel läge eller andra störningar. Dess position blir därför inte lika pålitlig. Den saknar också möjligheten till mjuk acceleration och deceleration. Däremot är de ofta hållbara och enkla att använda. Om man återkopplar en stegmotor får man ett servo med mycket bra egenskaper jämfört med en konventionell AC-servomotor.  Särskilt i system med hög vilofriktion är skillnaden påtaglig eftersom AC-servona då ofta åker förbi målet för att sedan snabbt korrigeras tillbaka, eller eventuellt åker väldigt långsamt för att undvika just denna ”översläng”. Stegservona är betydligt mer pricksäkra i sådana system. 
  
 \subsubsection{Dynamixel AX-12A}
  
@@ -281,72 +282,73 @@ Forskningen inriktas på en rad olika områden, då det finns många olika metod
 Alla dessa forskningsansträngningar strävar efter att ta fram alternativ till konventionella litium-jon-batterier som är mer energieffektiva och billigare. Alla har de fördelar och nackdelar, men det alternativet som gruppen bedömer vara mest lovande för att ersätta litium-jon-batterier i fordon är att använda litium-svavel-batterier. Superkondensatorer är också mycket intressanta och används redan i fordon för att ge en extra tillförsel av energi under korta tidsperioder, gruppen tror dock inte att de är tillräckligt energitäta i nuläget för att kunna få plats i en elbil och samtidigt ha tillräckligt med kapacitet för att konkurrera med dagens litium-jon-batterier som huvudlagring av energi. 
 
 \subsection{Hur fungerar ett enkelt servo?}
-Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap.
+Ett servo består av en motor, en positionssensor och en kontrollenhet som reglerar motorns position. Tack vare positionssensorn och kontrollenheten har ett servo inbyggd återkoppling så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. Även om man ändrar dess position när strömmen är av kommer den alltid hiita till den position som anges när strömmen slås på igen. En vanlig stegmotor eller liknande har ej denna egenskap, eftersom den inte kan jämföra sin egen position med verkligheten.
 
 \subsection{Hur kan man få ett servo att röra sig utan kraftiga ryck?}
 Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon redan har någon form av denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på de lite mer avancerade servon som till exempel Dynamixel AX-12A. På Dynamixel AX-12A kan både hastighet och i vilken grad servot skall bromsas in ändras genom att ändra korrekt värde på servots kontrollregister. 
 
+\subsection{Hur styr man servon av typen Dynamixel AX-12A som används i robotarmarna på ISY:s projektkurser?}
+Dynamixel AX-12A är inte PWM-styrda som många andra servor är. Dynamixel AX-12A har istället en egen dator inbyggd och servot styrs efter vilka värden som finns i dess kontrollregister. Man kommunicerar med Dynamixel AX-12A seriellt via halv duplex för att ändra värdena i kontrollregistret. En mikroprocessor kan användas för kommunikationen till Dynamixel AX-12A men då behöver styrsignalen omvandlas från mikroprocessorns UART till servots halv duplex, i de fall mikroprocessorerna saknar inbyggt stöd för halv duplex kommunikation.
 \newpage
 
 \begin{thebibliography}{9}
-\bibitem{glaize13} C. Glaize, S. Geniès, \emph{Lithium Batteries and other Electrochemical Storage Systems}\\ Wiley-ISTE, 2013
+\addcontentsline{toc}{section}{Referenser}
+\bibitem{glaize13} C. Glaize, S. Geniès, 2013, \emph{Lithium Batteries and other Electrochemical Storage Systems}\\ Wiley-ISTE, 2013
 
-\bibitem{apple} Apple Inc, \emph{Apple Notebooks battery}
-\\ http://www.apple.com/batteries/notebooks.html
+\bibitem{apple} Apple Inc, 2014, \emph{Apple Notebooks battery}
+\\ http://www.apple.com/batteries/notebooks.html, hämtad 2014-03-20
 
-\bibitem{ageing} J. Vetter, P. Novák, M.R. Wagner, K.-C. Möller, J.O. Besenhard, M. Winter, M. Wohlfahrt-Mehrens, C. Vogler, A. Hammouche, \emph{Ageing mechanisms in lithium-ion batteries}
+\bibitem{ageing} J. Vetter, P. Novák, M.R. Wagner, K.-C. Möller, J.O. Besenhard, M. Winter, M. Wohlfahrt-Mehrens, C. Vogler, A. Hammouche, 2005, \emph{Ageing mechanisms in lithium-ion batteries}
 \\ Journal of Power Sources, volym 147, utgåva 1-2, september 2005, sidor 269-281
 
-\bibitem{charging} S.S. Zhang, K. Xu, T.R. Jow, \emph{Study of the charging process of a LiCoO$_{2}$-based Li-ion battery}
+\bibitem{charging} S.S. Zhang, K. Xu, T.R. Jow, 2006, \emph{Study of the charging process of a LiCoO$_{2}$-based Li-ion battery}
 \\ Journal of Power Sources, volym 160, utgåva 2, oktober 2006, sidor 1349-1354
 
-\bibitem{charging-p} S.S. Zhang, \emph{The effect of the charging protocol on the cycle life of a Li-ion battery}
+\bibitem{charging-p} S.S. Zhang, 2006, \emph{The effect of the charging protocol on the cycle life of a Li-ion battery}
 \\ Journal of Power Sources, volym 161, utgåva 2, oktober 2006, sidor 1385-1391
 
-\bibitem{fire-faa} H. Webster, \emph{Flammability Assessment of Bulk-Packed, Rechargeable Lithium-Ion Cells in Transport Category Aircraft}
+\bibitem{fire-faa} H. Webster, 2006, \emph{Flammability Assessment of Bulk-Packed, Rechargeable Lithium-Ion Cells in Transport Category Aircraft}
 \\DOT/FAA/AR-06/38, september 2006, Final Report
 
-\bibitem{dreamliner} N. Williard, W. He, C. Hendricks, M. Pecht, \emph{Lessons Learned from the 787 Dreamliner Issue on Lithium-Ion Battery Reliability}
+\bibitem{dreamliner} N. Williard, W. He, C. Hendricks, M. Pecht, 2013, \emph{Lessons Learned from the 787 Dreamliner Issue on Lithium-Ion Battery Reliability}
 \\Energies, september 2013
 
-\bibitem{lihazard} C. Mikolajczak, M. Kahn, K. White, R. Thomas, \emph{Lithium-Ion Batteries Hazard and Use Assessment}
+\bibitem{lihazard} C. Mikolajczak, M. Kahn, K. White, R. Thomas, 2011, \emph{Lithium-Ion Batteries Hazard and Use Assessment}
 \\Springer, 2011
 
 \bibitem{nasa} A. Zimmerman, M. Quinzio, \emph{Lithium Plating in Lithium-Ion Cells}
 \\The Aerospace Corporation, 2010
-\\https://batteryworkshop.msfc.nasa.gov/presentations/1-Lithium\_Plating\_AZimmerman.pdf 
+\\https://batteryworkshop.msfc.nasa.gov/presentations/1-Lithium\_Plating\_AZimmerman.pdf, hämtad 2014-03-20 
 
-\bibitem{dyn-manual} \emph{User's Manual Dynamixel AX-12}
- \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
+\bibitem{dyn-manual} Robotis, 2006, \emph{User's Manual Dynamixel AX-12}
+ \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf, hämtad 2014-03-20
 
-\bibitem{ATmega1284P} \emph{ATmega 1284P Data sheet}
-\\2009 Atmel Corporation
-\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/atmega1284p.pdf
+\bibitem{ATmega1284P} Atmel Corporation, 2009, \emph{ATmega 1284P Data sheet}
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/atmega1284p.pdf, hämtad 2014-03-20
 
-\bibitem{ana-servo} Anaheim Automation, Inc, \emph{Servo motor guide}
-\\Robotis 2006-06-14 
-\\ http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php
+\bibitem{ana-servo} Anaheim Automation Inc., 2011, \emph{Servo motor guide}
+\\ http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php, hämtad 2014-03-20
 
 \bibitem{sigbi} SiGBi System AB, Inc, \emph{Servomotor - Ezi-SERVO BTe}\\
-http://www.sigbi.se/system/Produkter/Servomotor/Ezi-SERVO/Ezi-SERVO-BT
+http://www.sigbi.se/system/Produkter/Servomotor/Ezi-SERVO/Ezi-SERVO-BT, hämtad 2014-04-11
 
-\bibitem{overcharging-type} N. Sharma, V. Peterson, \emph{Overcharging a lithium-ion battery: Effect on the Li$_{x}$C$_{6}$ negative electrode determined by in situ neutron diffraction}
+\bibitem{overcharging-type} N. Sharma, V. Peterson, 2013, \emph{Overcharging a lithium-ion battery: Effect on the Li$_{x}$C$_{6}$ negative electrode determined by in situ neutron diffraction}
 \\ Journal of Power Sources, volym 244, december 2013 , sidor 695-701
 
-\bibitem{overcharging} R. A. Leising, M. J. Palazzo, E. Sans Takeuchi, K. J. Takeuchi, \emph{A study of the overcharge reaction of lithium-ion batteries}
+\bibitem{overcharging} R. A. Leising, M. J. Palazzo, E. Sans Takeuchi, K. J. Takeuchi, 2001, \emph{A study of the overcharge reaction of lithium-ion batteries}
 \\ Journal of Power Sources, volym 97-98, juli 2001, sidor 681-683
 
-\bibitem{formler} Q. Wang, P. Ping, X. Zhao, G. Chu, J. Sun, C. Chen, \emph{Thermal runaway caused fire and explosion of lithium ion battery}
+\bibitem{formler} Q. Wang, P. Ping, X. Zhao, G. Chu, J. Sun, C. Chen, 2012, \emph{Thermal runaway caused fire and explosion of lithium ion battery}
 \\ Journal of Power Sources, volym 208, juni 2012, sidor 210-224
 
-\bibitem{better-battery} R. Van Noorden, \emph{The rechargeable revolution: A better battery} \\ Nature, volym 507, mars 2014, sidor 26-28
+\bibitem{better-battery} R. Van Noorden, 2014, \emph{The rechargeable revolution: A better battery} \\ Nature, volym 507, mars 2014, sidor 26-28
 
-\bibitem{li-s} M. Song, Y. Zhang, E. J. Cairns, \emph{A Long-Life, High-Rate Lithium/Sulfur Cell: A Multifaceted Approach to Enhancing Cell Performance} \\ Nano Lett., 13, 2013, sidor 5891-5899
+\bibitem{li-s} M. Song, Y. Zhang, E. J. Cairns, 2013, \emph{A Long-Life, High-Rate Lithium/Sulfur Cell: A Multifaceted Approach to Enhancing Cell Performance} \\ Nano Lett., 13, 2013, sidor 5891-5899
 
-\bibitem{capacitors} A. Yu, V. Chabot, J. Zhang, \emph{Electrochemical supercapacitors for energy storage and delivery} \\ Taylor \& Francis, 2013
+\bibitem{capacitors} A. Yu, V. Chabot, J. Zhang, 2013, \emph{Electrochemical supercapacitors for energy storage and delivery} \\ Taylor \& Francis, 2013
 
-\bibitem{litium-in-cars} J. Voelcker, \emph{Lithium Batteries Take to the Road} \\
-http://spectrum.ieee.org/green-tech/advanced-cars/lithium-batteries-take-to-the-road
+\bibitem{litium-in-cars} J. Voelcker, 2007, \emph{Lithium Batteries Take to the Road} \\
+http://spectrum.ieee.org/green-tech/advanced-cars/lithium-batteries-take-to-the-road, hämtad 2014-04-15
 
 \end{thebibliography}
 \end{document} 
