@@ -9,7 +9,7 @@
 \usepackage{tabularx}
 \usepackage{mhchem}
 
-\title{Fördjupningsuppgift i kommunikation och konstruktion}
+\title{Fördjupning i litium-jon-batterier respektive servomotorer}
 \input{LIPS.tex}
 
 
@@ -35,9 +35,9 @@
 \newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
 
 
-\newcommand{\LIPSdokumenttyp}{Fördjupningsuppgift \\ i \\ kommunikation och konstruktion}
+\newcommand{\LIPSdokumenttyp}{Fördjupning i Litium-jon-batterier \\ respektive Servomotorer}
 \newcommand{\LIPSredaktor}{Karl Linderhed, Patrik Nyberg och Erik Nybom}
-\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSversion}{0.2}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 \newcommand{\LIPSgranskare}{}
@@ -70,8 +70,8 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 %\addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-  \LIPSversionsinfo{0.1}{2014-03-25}{Första utkast för stilgranskning}{KL}{}
-  %\LIPSversionsinfo{1.0}{2014-03-18}{Ändringar efter handledares granskning.}{KL}{-}
+  \LIPSversionsinfo{0.1}{2014-03-25}{Första utkast för stilgranskning}{KL,PaN,EN}{}
+  \LIPSversionsinfo{0.2}{2014-04-15}{Färdigställande inför inlämning}{KL,PaN,EN}{-}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -84,6 +84,7 @@ Denna skrivuppgift tjänar till att fördjupa projektgruppens kunskaper i några
 Roboten måste även ha ström för att kunna drivas, detta kommer göras med litiumjonbatterier. Därför är den första delen av denna fördjupning en beskrivning av dessa batterier, hur de fungerar, hur de ska användas på bästa sätt och vilka risker som finns med denna typ av batteri.
 
 \section{Problemformulering}
+\label{sec:problem}
 Följande frågeställningar ska besvaras i denna uppgift:
 \begin{itemize}
 \item Hur fungerar litiumjonbatterier?
@@ -181,7 +182,19 @@ Att förbättra dagens batteriteknik är ett aktivt forskningsområde som engage
 Man kan tänka sig tre huvudsätt att angripa problemet att bygga vidare på och förbättra dagens litium-jon-batterier. Antingen kan man arbeta med att utveckla den teknik som finns idag med litium som laddningsbärande ämne, eller så kan man forska på att utveckla andra typer av kemiska batterier som använder andra ämnen, och slutligen kan man leta efter helt andra sätt att lagra energi på som inte använder kemiska reaktioner. I det här avsnittet behandlas ett urval av den forskning som bedrivs på dessa tre områden idag.
 
 \subsubsection{Att förbättra litium-jon-batterier}
-Ett sätt att öka energitätheten och sänka kostnaderna för batterier som fortfarande använder litium som laddningsbärare är att modifiera batteridesignen till att använda alternativa elektrodmaterial och elektrolyter. Ett exempel på detta är litium-svavel-batterier som byter ut 
+Ett sätt att öka energitätheten och sänka kostnaderna för batterier som fortfarande använder litium som laddningsbärare är att modifiera batteridesignen till att använda alternativa elektrodmaterial och elektrolyter. Ett exempel på detta är en typ av litium-svavel-batterier som byter ut elektroderna mot en av rent litium och en av en blandning av svavel, grafenoxid och cetrimoniumbromid (förkortat CTAB, en ingrediens i vissa bakteriedödande medel).\cite{li-s}
+
+I en artikel i American Chemical Societys tidsskrift \emph{Nano Letters} beskrivs hur forskare med denna design nyligen har lyckats uppnå väldigt hög prestanda. De har lyckats framställa batterier som inte bara är lättare än konventionella litium-jon-batterier, utan också har en livslängd på över 1500 cykler och som kan urladdas med 6C (C motsvarar strömmen som laddar upp eller ur batteriets kapacitet på en timme, exempelvis kan ett batteri på 1000 mAh som listats som 6C ge 6 A). \cite{li-s}
+
+\subsubsection{Andra typer av kemiska batterier}
+Litium har fördelen som laddningsbärare i batterier att det är väldigt reaktivt och den lättaste metallen som finns. Dock bär varje litiumjon endast på en laddning och om ett batteri använde ett annat ämne som låter sig joniseras lika lätt men som bär på fler laddningar skulle man kunna öka prestandan per viktenhet substantiellt. Ett koncept som forskare jobbar på är att ersätta litium med magnesium, vars joner bär på två laddningar. Problemet som finns idag är dock att magnesium dras mycket starkare till syreatomer i de organiska elektrolyter som används, och har därför inte så hög urladdningshastighet som man skulle önska. Detta skulle kunna åtgärdas med nya kombinationer av elektrolyter och elektrodmaterial, och forskare jobbar därför mycket med datorsimuleringar för att hitta en optimal design. \cite{better-battery}
+
+Ett radikalt annorlunda angreppssätt är att bygga batterier som använder den omkringliggande luften som en del i de kemiska reaktionerna. De kallas \emph{air-breathing batteries}, Li-O, och använder syre från luften som får flöda genom en porös kolelektrod. Detta ger mer utrymme i batterierna och mindre vikt eftersom det bara behövs en metallelektrod av litium. Man har dock haft stora problem med att undvika oönskade sidoreaktioner inuti batterierna som degraderar prestandan, vissa batterier har haft livslängder på under 50 cykler. Enligt artikeln \emph{A better battery} i tidsskriften Nature har många forskare gett upp tanken på Li-O som batteriteknik. \cite{better-battery}
+
+Det finns dock forskningsrön som tyder på att den billigare varianten Na-O, som använder natrium istället för litium, är betydligt bättre i många avseenden och har markant mindre inverkan från sidoreaktioner. Det återstår att se hur forskningen kring detta kommer att utvecklas i framtiden. \cite{better-battery}
+
+\subsubsection{Andra tekniker för att lagra energi}
+En kondensator kan på många sätt fungera som ett batteri. Den kan laddas upp och laddas ur och behåller sin laddning när den inte belastas. Den stora skillnaden mot batterier är att energin inte lagras kemiskt i molekylbindningar, utan elektriskt i ett elektriskt fält. Detta gör att kondensatorer kan laddas upp och laddas ur väldigt snabbt och är därför attraktiva för användning i tillämpningar som kräver snabb laddning och hög strömstyrka. Kondensatorer som har kapaciteter som närmar sig de hos dagens batterier kallas super- eller ultrakondensatorer. En användning av superkondensatorer idag är i moderna hybridfordon och bussar där energi från inbromsningar lagras och används när extra effekt behövs.\cite{capacitors}
 
 
 \subsection{Servon}
@@ -190,7 +203,7 @@ En servomotor (här förkortat servo) är en slags motor vars funktion är att k
  
 Ett servo består av tre delar: en servomotor som kan vara antingen en AC-motor, DC-motor, eller en stegmotor, en positionssensor som mäter servomotorns position samt en kontrollenhet som styr motorn.  Kontrollenheten jämför ständigt skillnaden mellan det önskade vinkelutslaget och den vinkel positionssensor mäter upp och styr sedan servomotorn för att minimera denna skillnad. Detta kallas för att systemet är återkopplat. Den stora fördelen med ett servo är just att den är återkopplad då återkopplingen gör att servot kan hantera olika tunga laster och yttre påverkningar utan att ställa sig fel, vilket lätt händer med öppna system. 
  
-Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 0,5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2,5 ms lång. En 1,5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel ATmels AVR-processorer som används flitigt av studenterna på ISY:s projektkurser.
+Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 0,5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2,5 ms lång. En 1,5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel Atmels AVR-processorer som används flitigt av studenterna på ISY:s projektkurser.
  
 På enklare PWM-styrda servomotorer är det ej möjligt att kontrollera acceleration och deacceleration vid rörelser om man inte faktiskt styr strömmen som går till servomotorn när den startar och när den närmar sig slutmålet. Det är dock omständigt att göra utan att upprepat mäta servots position vilket kräver vinkelhastighetssensorer och dessutom komponenter för att styra strömmen. Det krävs även att man kan styra strömmen till servomotorn utan att ändra strömmen till kontrollenheten och positionssensor vilket är svårt eftersom dessa komponenter vanliga är inbyggda i servot. Däremot är det vanligt att en servomotor har inbyggd så kallad PID-regulator, vilket gör så att motorn går snabbt när det är långt till den önskade positionen och saktar ner ju närmare målet den kommer, så att hastig acceleration och deacceleration undviks. Detta vill man undvika eftersom systemet lätt blir hackigt och det kan bli väldigt stora belastningar på systemet. 
  
@@ -214,7 +227,7 @@ Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkopplin
  
 Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv duplex. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
  
-\nyBild{Kopplingschema-UART-till-halv-duplex.png}{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}{fig:ax12-koppling}{0.8} 
+\nyBild{Kopplingschema-UART-till-halv-duplex.png}{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}{ax12-koppling}{0.8} 
 
 Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan i figur \ref{fig:ax12-koppling}. PD0 kan på ATmega1284P konfigureras som en mottagningspin i UART och PD1 kan konfigureras som sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på i princip vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om man kopplar ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
@@ -243,16 +256,32 @@ Till sist följer en kontrollbyte vars värde räknas ut genom att summera värd
 Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ytterligare 10 parametrar som endast kan avläsas. 
  
 \section{Resultat och slutsatser}
-Litiumjonbatterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga.
+Gruppen har strävat efter att besvara de frågeställningar som ställdes i avsnitt \ref{sec:problem}. Här följer sammanfattningar av vad man kommit fram till och även diskussion av resultaten i förekommande fall.
 
-Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
+\subsection{Hur fungerar litium-jon-batterier?}
+Ett litium-jon-batteri består av två elektroder av olika ämnen som omsluts av ett elektrolyt så att litiumjoner kan vandra genom elektrolyten och driva en ström genom batteriet. Elektroderna kan vara av många olika typer, men vanligt är att man använder litiummanganoxid och grafit, och ett elektrolyt av litiumsalt upplöst i ett organiskt lösningsmedel.\cite{litium-in-cars}
 
-Laddning och användning av ett litiumjonbatteri ska inte ske vid låga temperaturer, då detta ger permanenta skador på batteriet som påverkar kapaciteten negativt. För att minimera slitage ska också laddning ske med låg ström under de första samt sista 10~\% laddningen. Det ska också ske med en laddare som har funktion för att se till att batteriet inte blir överladdat. Detta då en överalddning, som tidigare beskrivet, påverkar maximala kapaciteten negativt.
+\subsection{Vilka risker finns vid användning och laddning av litium-jon-batterier?}
+Litiumjonbatterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batteriena utsätts för öppen låga. Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
 
 När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperaturökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperaturökningen är klart märkbar. Om detta sker ska användning av batteriet omedelbart upphöra.
 
+\subsection{Hur påverkas livstiden hos ett batteri av användning och laddningsmönster}
+Laddning och användning av ett litiumjonbatteri ska inte ske vid låga temperaturer, då detta ger permanenta skador på batteriet som påverkar kapaciteten negativt. För att minimera slitage ska också laddning ske med låg ström under de första samt sista 10~\% laddningen. Det ska också ske med en laddare som har funktion för att se till att batteriet inte blir överladdat. Detta då en överladdning, som tidigare beskrivet, påverkar maximala kapaciteten negativt.
+
+\subsection{Vilken forskning bedrivs om batterier i nuläget?}
+Forskningen inriktas på en rad olika områden, då det finns många olika metoder för att förbättra batteritekniken. Gruppen har funnit följande exempel på forskning som bedrivs i nuläget:
+\begin{itemize}
+\item Nya material i litiumbatterier, såsom litium-svavel-batterier och litium-syre/litium-luft-batterier.
+\item Andra laddningsbärande ämnen än litium, såsom magnesiumbatterier och natrium-luft-batterier.
+\item Andra lagringstekniker än kemiska batterier, såsom superkondensatorer.
+\end{itemize}
+Alla dessa forskningsansträngningar strävar efter att ta fram alternativ till konventionella litium-jon-batterier som är mer energieffektiva och billigare. Alla har de fördelar och nackdelar, men det alternativet som gruppen bedömer vara mest lovande för att ersätta litium-jon-batterier i fordon är att använda litium-svavel-batterier. Superkondensatorer är också mycket intressanta och används redan i fordon för att ge en extra tillförsel av energi under korta tidsperioder, gruppen tror dock inte att de är tillräckligt energitäta i nuläget för att kunna få plats i en elbil och samtidigt ha tillräckligt med kapacitet för att konkurrera med dagens litium-jon-batterier som huvudlagring av energi. 
+
+\subsection{Hur fungerar ett enkelt servo?}
 Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap.
 
+\subsection{Hur kan man få ett servo att röra sig utan kraftiga ryck?}
 Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon i någon form redan har denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på den lite mer avancerade servon som till exempel Dynamixel AX-12A. 
 
 \newpage
@@ -304,6 +333,13 @@ http://www.sigbi.se/system/Produkter/Servomotor/Ezi-SERVO/Ezi-SERVO-BT
 \\ Journal of Power Sources, volym 208, juni 2012, sidor 210-224
 
 \bibitem{better-battery} R. Van Noorden, \emph{The rechargeable revolution: A better battery} \\ Nature, volym 507, mars 2014, sidor 26-28
+
+\bibitem{li-s} M. Song, Y. Zhang, E. J. Cairns, \emph{A Long-Life, High-Rate Lithium/Sulfur Cell: A Multifaceted Approach to Enhancing Cell Performance} \\ Nano Lett., 13, 2013, sidor 5891-5899
+
+\bibitem{capacitors} A. Yu, V. Chabot, J. Zhang, \emph{Electrochemical supercapacitors for energy storage and delivery} \\ Taylor \& Francis, 2013
+
+\bibitem{litium-in-cars} J. Voelcker, \emph{Lithium Batteries Take to the Road} \\
+http://spectrum.ieee.org/green-tech/advanced-cars/lithium-batteries-take-to-the-road
 
 \end{thebibliography}
 \end{document} 
