@@ -99,7 +99,7 @@ Följande frågeställningar ska besvaras i denna uppgift:
 
 \item Hur kan man få ett servo att röra sig utan kraftiga ryck?
 
-\item Hur styr man servon av typen Dynamixel AX-12A som används i robotarmar på ISY:s projektkurser?
+\item Hur styr man servon av typen Dynamixel AX-12A som används i robotarmarna på ISY:s projektkurser?
 \end{itemize}
 
 \section{Teori}
@@ -205,7 +205,7 @@ En servomotor (här förkortat servo) är en slags motor vars funktion är att k
  
 Ett servo består av tre delar: en servomotor som kan vara antingen en AC-motor, DC-motor, eller en stegmotor, en positionssensor som mäter servomotorns position samt en kontrollenhet som styr motorn.  Kontrollenheten jämför ständigt skillnaden mellan det önskade vinkelutslaget och den vinkel positionssensor mäter upp och styr sedan servomotorn för att minimera denna skillnad. Detta kallas för att systemet är återkopplat. Den stora fördelen med ett servo är just att den är återkopplad då återkopplingen gör att servot kan hantera olika tunga laster och yttre påverkningar utan att ställa sig fel, vilket lätt händer med öppna system. 
  
-Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 0,5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2,5 ms lång. En 1,5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel Atmels AVR-processorer som används flitigt av studenterna på ISY:s projektkurser.
+Ett servo styrs oftast  med hjälp av en elektrisk styrsignal vars pulsbredd som skickas till den med jämna mellanrum avgör vinkel vinkel servot skall ställa in sig på. Ett klassiskt hobbyservo, vars vinkelomfång vanligtvis är 180 grader, ställer in sig på 0 grader om man skickar en puls som är 0,5 ms lång och det ställer in sig på 180 grader om man skickar en puls som är 2,5 ms lång. En 1,5 ms lång puls gör således att servot ställer in sig i mitten mellan båda ändlägena. Pulser däremellan ger en vinkel på motsvarande sätt. Pulsen bör skickas var 20:e ms fram tills dess att servot har ställt in sig på rätt läge, vilket kan ta upp till en halv sekund om servot skall gå från 0 grader till 180 grader. \cite{hobbyservo} Detta brukar kallas för att servot styrs med PWM (Pulse width modulation). Pulsen skickas vanligen från en mikrokontroller eller en mikroprocessor, till exempel Atmels AVR-processorer som används flitigt av studenterna på ISY:s projektkurser.
  
 På enklare PWM-styrda servomotorer är det ej möjligt att kontrollera acceleration och deacceleration vid rörelser om man inte faktiskt styr strömmen som går till servomotorn när den startar och när den närmar sig slutmålet. Det är dock omständigt att göra utan att upprepat mäta servots position vilket kräver vinkelhastighetssensorer och dessutom komponenter för att styra strömmen. Det krävs även att man kan styra strömmen till servomotorn utan att ändra strömmen till kontrollenheten och positionssensor vilket är svårt eftersom dessa komponenter vanliga är inbyggda i servot. Däremot är det vanligt att en servomotor har inbyggd så kallad PID-regulator, vilket gör så att motorn går snabbt när det är långt till den önskade positionen och saktar ner ju närmare målet den kommer, så att hastig acceleration och deacceleration undviks. Detta vill man undvika eftersom systemet lätt blir hackigt och det kan bli väldigt stora belastningar på systemet. 
  
@@ -318,6 +318,9 @@ Att få ett servo att röra sig utan ryck är både enklare och svårare än vad
 
 \bibitem{dyn-manual} \emph{User's Manual Dynamixel AX-12}
  \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
+
+\bibitem{hobbyservo} Servostyrning
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/servostyrning.pdf, hämtad 2014-03-19
 
 \bibitem{ATmega1284P} \emph{ATmega 1284P Data sheet}
 \\2009 Atmel Corporation
