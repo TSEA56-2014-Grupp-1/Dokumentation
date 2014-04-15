@@ -98,6 +98,8 @@ Följande frågeställningar ska besvaras i denna uppgift:
 \item Hur fungerar ett enkelt servo?
 
 \item Hur kan man få ett servo att röra sig utan kraftiga ryck?
+
+\item Hur styr man servon av typen Dynamixel AX-12A?
 \end{itemize}
 
 \section{Teori}
@@ -150,11 +152,11 @@ Under laddning är det också viktigt att laddaren inte överladdar batteriet. E
 
 Om ett batteri blir överladdat kommer detta att ge slitage på batteriet. Detta genom att ändra vilka typer av litiumjoner som finns i elektrolyten. För att mäta detta har forskare i rapporten \cite{overcharging-type} användt det faktum att dessa joner har olika storlek. Det ger då olika diffraktionsmönster då batteriet genomstrålas i en neutronkanon. Detta gjorde då att vilken mängd joner av olika typ som finns kunde utskiljas. För ett batteri som inte blivit överladdat finns koncentrationen av olika joner i figur \ref{fig:linormal}.
 
-\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning}{linormal}{0.8}
+\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning, tagen från \cite{overcharging-type}}{linormal}{0.8}
 
 Ett batteri som blivit överladdat kommer att ha mindre \ce{LiC6} jämnfört med ett batteri som inte blivit överladdat. Ett överladdade batteriet kommer istället innehålla mer \ce{LiC12} samt \ce{LiC18} \cite{overcharging-type}, se figur \ref{fig:lioverchargd}. Det syns även efter urladdning att mer \ce{LiC12} samt \ce{LiC18} finns i ett överladdade batteriet jämnfört med ett icke överladdat batteri, då det knappt innehåller \ce{LiC_{x}} alls \cite{overcharging-type}. Denna effekt framträdde då ett batteri blivit överladdat till över 4.5~V.
 
-\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning}{lioverchargd}{0.8}
+\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning, tagen från \cite{overcharging-type}}{lioverchargd}{0.8}
 
 Som tidigare beskrivet är det den kemiska reaktionen av \ce{LiC_{x}} som ger ström från batteriet. Detta innebär att ett överladdat batteri inte kommer ge ifrån sig all sin laddning, eftersom \ce{LiC12} samt \ce{LiC18} finns kvar även om batteriet är urladdat.
 
@@ -227,7 +229,7 @@ Ett alternativ till ett servo kan vara en så kallad stegmotor utan återkopplin
  
 Dynamixel~AX-12A är de servon som används i robotarmarna på ISY. Dynamixel~AX-12A servona styrs med halv duplex. Halv duplex innebär att det endast finns en signal för att skicka och ta emot data på. Det betyder att endast en enhet kan skicka data i taget annars krockar signalerna och datan blir korrupt. Det finns inget inbyggt stöd för halv duplex på de flesta mikroprocessorer men man kan använda mikroprocessorernas UART funktion som använder två kanaler, en för att sända och en för att ta emot data, och sedan koppla ihop dessa enligt kopplingsschemat nedan. Då styr man sedan vilken kanal på mikroprocessorn som är ansluten till servonas kanal med hjälp av en tredje signal, en styrsignal,  som sätts till låg när man vill ta emot data och hög när man vill skicka data. 
  
-\nyBild{Kopplingschema-UART-till-halv-duplex.png}{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A}{ax12-koppling}{0.8} 
+\nyBild{Kopplingschema-UART-till-halv-duplex.png}{Kopplingschema för att koppla ihop en AVR med Dynamixel AX-12A. Bilder tagna från \cite{dyn-manual} och \cite{ATmega1284P}} {ax12-koppling}{0.8} 
 
 Ett exempel på hur koppling från en ATmega 1284P:s UART till servonas halv duplex kan se ut syns ovan i figur \ref{fig:ax12-koppling}. PD0 kan på ATmega1284P konfigureras som en mottagningspin i UART och PD1 kan konfigureras som sändningspin. Från PD2 går styrsignalen, men den kan egentligen sitta på i princip vilken pin som helst. SN74LS241 är en liten IC-krets med 8 tristate buffers i (i princip elektriska strömbrytare) där fyra av dem sluts när en styrsignal är plus och fyra av dem när en styrsignal är negativ. Om man kopplar ihop de två styrsignalerna och väljer en av varje grupp kan men hjälp av styrsignalen växla mellan dem.\cite{dyn-manual}
  
@@ -253,7 +255,7 @@ Den första parametern som följer efter instruktionen indikerar vilken plats i 
 
 Till sist följer en kontrollbyte vars värde räknas ut genom att summera värdet på byte ID, längd, instruktion och parametrar. Denna summa inverteras sedan binärt (ettor och nollor byter plats) och bildar då kontrollsiffran.
 
-Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ytterligare 10 parametrar som endast kan avläsas. 
+Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ytterligare 10 parametrar som endast kan avläsas. \cite{dyn-manual}
  
 \section{Resultat och slutsatser}
 Gruppen har strävat efter att besvara de frågeställningar som ställdes i avsnitt \ref{sec:problem}. Här följer sammanfattningar av vad man kommit fram till och även diskussion av resultaten i förekommande fall.
@@ -282,7 +284,7 @@ Alla dessa forskningsansträngningar strävar efter att ta fram alternativ till 
 Ett servo är en motor med en positionssensor och återkopplning så att det alltid jämför sin egen position med den position som det ska anta. Detta gör att även ifall man tvingar servot till fel position kommer den alltid att ställa sig rätt igen när man släpper. En vanlig stegmotor eller liknande har ej denna egenskap.
 
 \subsection{Hur kan man få ett servo att röra sig utan kraftiga ryck?}
-Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon i någon form redan har denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på den lite mer avancerade servon som till exempel Dynamixel AX-12A. 
+Att få ett servo att röra sig utan ryck är både enklare och svårare än vad man kan tro. Det är enklare eftersom i princip alla servon redan har någon form av denna funktion inbyggd. Däremot går det inte att i efterhand ändra på dess egenskaper på de vanliga servona utan detta går endast på de lite mer avancerade servon som till exempel Dynamixel AX-12A. På Dynamixel AX-12A kan både hastighet och i vilken grad servot skall bromsas in ändras genom att ändra korrekt värde på servots kontrollregister. 
 
 \newpage
 
@@ -317,7 +319,12 @@ Att få ett servo att röra sig utan ryck är både enklare och svårare än vad
 \bibitem{dyn-manual} \emph{User's Manual Dynamixel AX-12}
  \\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
 
+\bibitem{ATmega1284P} \emph{ATmega 1284P Data sheet}
+\\2009 Atmel Corporation
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/atmega1284p.pdf
+
 \bibitem{ana-servo} Anaheim Automation, Inc, \emph{Servo motor guide}
+\\Robotis 2006-06-14 
 \\ http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php
 
 \bibitem{sigbi} SiGBi System AB, Inc, \emph{Servomotor - Ezi-SERVO BTe}\\
