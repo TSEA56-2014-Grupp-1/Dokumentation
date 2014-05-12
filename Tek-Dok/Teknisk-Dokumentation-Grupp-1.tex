@@ -88,63 +88,18 @@ Beskriv vad den används till.}
 \section{Systemöversikt}
 \emph{Ett översiktligt blockschema och en beskrivning av hela systemet.}
 
-\section{Gemensamma funktioner}
-Detta avsnitt beskriver olika funktioner som inbegriper eller används av flera olika moduler.
-
-\subsection{Protokoll för seriell kommunikation mellan robot och PC}
-\label{sec:bt-protokoll}
-Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika sorters paket. Varje typ av data som skickas har ett fördefinierat unikt paket-id, som indikerar för en mottagare hur datan ska hanteras. Paket-id:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
-
-\nyBild{Bluetooth-protokoll.png}{Ett paket i den seriella kommunikationen mellan robot och PC.}{btpaket}{0.8}
-
-Antalet
-
-\subsection{USART}
-\label{sec:usart}
-AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot bytes över en seriell lina.
-
-Biblioteket använder en byte-buffer för att lagra mottagen data. Till buffern hör två pekare, en läspekare och en skrivpekare, som pekar till olika element i buffern och flyttas upp när man läser eller skriver i buffern. Genom att pekarna endast kan anta värden mellan 0 och 255, samma antal värden som det finns element i buffern, fås funktionalitet som i en ringbuffer eftersom pekarnas värden svämmar över till 0 när de ökas från 255.
-
-När avbrottet som indikerar att en byte har tagits emot kommer skrivs den byte som har tagits emot in i buffern på den position som skrivpekaren pekar på. Därefter ökas pekarens värde ett steg.
-
-\nyBild{USART-buffer.png}{Byte-buffern som USART-biblioteket använder, och vilken data som räknas som tillgänglig och ej ännu läst. En ruta föreställer en byte.}{usartbuffer}{0.6}
-
-För att läsa en byte från buffern anropas funktionen \verb|usart_read_byte|. Den undersöker om det finns någon data tillgänglig som inte redan har lästs (med andra ord, om läs- och skrivpekaren skiljer sig från varandra, se figur \ref{fig:usartbuffer}). I annat fall väntar den tills dess att det finns data, dock som mest under en bestämd timeout-tid. När det finns data läser den in en byte från den position i buffern som läspekaren pekar på till en variabel, och stegar upp läspekaren med ett steg.
-
-För att skicka data används funktionen \verb|usart_write_byte| som undersöker om den inbyggda USART-modulens statusflaggor tillåter att man skickar data, och i sådana fall ger funktionen en byte till USART-modulen som direkt matar ut den på den seriella linan. Går det inte att skicka väntar funktionen till dess att det går innan den skriver datan till USART-modulen.
-
-\subsection{Intern buss}
-\label{sec:bus}
-
-\section{Sensorenhet}
-\emph{Det här och de följande avsnitten innehåller mera detaljerade blockscheman och beskrivningar av varje modul.
-Tänk på läsbarheten och växla mellan figurer och text.}
-\section{Chassienhet}
-
-\section{Armenhet}
-
-\section{Kommunikationsenhet}
-Kommunikationsenheten är robotens gränssnitt för interaktion med omvärlden och har två uppgifter. Den ska:
-\begin{itemize}
-\item agera som ett gränssnitt mot LCD-displayen och möjliggöra att alla delsystem kan skriva ut information på den.
-\item hantera den seriella kommunikationen över Bluetooth och möjliggöra att roboten kan skicka och ta emot information till och från PC-gränssnittet.
-\end{itemize}
-
-\subsection{Seriell kommunikation över Bluetooth}
-Anslutningen till datorn görs med bluetoothmodemet \emph{BlueSMiRF Gold} som är monterat på roboten. På PC-sidan skapas vid parkoppling med modemet en virtuell serieport, som emulerar en fysisk COM-port eller motsvarande. Kommunikationen sker sedan över denna port som om den vore en vanlig RS-232-port. 
-
-På robotsidan används AVR-processorns inbyggda modul för UART, och det gemensamma biblioteket för USART som används av flera delsystem -- se avsnitt \ref{sec:usart}. Följande parametrar ställs in i det protokollet som roboten använder:
-\begin{itemize}
-\item Datahastigheten är 115 200 bps.
-\item Data skickas som 8-bitars värden utan någon paritetsbit.
-\item Ingen flödeshantering eller handskakning används.
-\item Varje värde om 8 bitar avslutas med en stoppbit.
-\end{itemize}
-
-Hur olika typer av information överförs mellan robot och PC beskrivs närmare i avsnitt \ref{sec:bt-protokoll}.
+\input{gemensam.tex}
+\input{komm.tex}
+\input{sensor.tex}
+\input{chassi.tex}
+\input{arm.tex}
 
 
-\section{PC-gränssnitt}
+
+
+
+
+
 
 \section{Slutsatser}
 \emph{Vilka förbättringar skulle kunna göras?}
