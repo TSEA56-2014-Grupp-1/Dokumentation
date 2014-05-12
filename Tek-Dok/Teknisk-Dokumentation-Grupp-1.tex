@@ -75,34 +75,63 @@
 \setcounter{page}{1}
 
 \section{Inledning}
-Bakgrund och syfte
+\emph{Bakgrund och syfte}
+
 
 \section{Produktbeskrivning}
-En bild på produkten och en beskrivning av hur den fungerar.
-Beskriv vad den används till.
+\emph{En bild på produkten och en beskrivning av hur den fungerar.
+Beskriv vad den används till.}
 
 \section{Teori}
-Beskrivning av regleralgoritmer m.m.
+\emph{Beskrivning av regleralgoritmer m.m.}
 
 \section{Systemöversikt}
-Ett översiktligt blockschema och en beskrivning av hela systemet.
+\emph{Ett översiktligt blockschema och en beskrivning av hela systemet.}
 
-\section{Modulerna}
-Innehåller mera detaljerade blockschemor och beskrivningar av varje modul.
-Tänk på läsbarheten och växla mellan figurer och text.
+\section{Gemensamma funktioner}
+Detta avsnitt beskriver olika funktioner som inbegriper eller används av flera olika moduler.
 
-\subsection{Sensorenhet}
+\subsection{Protokoll för seriell kommunikation mellan robot och PC}
+\label{sec:bt-protokoll}
 
-\subsection{Chassienhet}
+\subsection{USART}
+\label{sec:usart}
 
-\subsection{Armenhet}
+\subsection{Intern buss}
+\label{sec:bus}
 
-\subsection{Kommunikationsenhet}
+\section{Sensorenhet}
+\emph{Det här och de följande avsnitten innehåller mera detaljerade blockschemor och beskrivningar av varje modul.
+Tänk på läsbarheten och växla mellan figurer och text.}
+\section{Chassienhet}
 
-\subsection{PC-gränssnitt}
+\section{Armenhet}
+
+\section{Kommunikationsenhet}
+Kommunikationsenheten är robotens gränssnitt för interaktion med omvärlden och har två uppgifter. Den ska:
+\begin{itemize}
+\item agera som ett gränssnitt mot LCD-displayen och möjliggöra att alla delsystem kan skriva ut information på den.
+\item hantera den seriella kommunikationen över Bluetooth och möjliggöra att roboten kan skicka och ta emot information till och från PC-gränssnittet.
+\end{itemize}
+
+\subsection{Seriell kommunikation över Bluetooth}
+Anslutningen till datorn görs med bluetoothmodemet BlueSMiRF Gold som är monterat på roboten. På PC-sidan skapas vid parkopplingen med modemet en virtuell serieport, som emulerar en fysisk COM-port eller motsvarande. Kommunikationen sker sedan över denna port som om den vore en vanlig RS-232-port. 
+
+På robotsidan används AVR-processorns inbyggda modul för UART, och det gemensamma biblioteket för USART som används av flera delsystem -- se avsnitt \ref{sec:usart}. Följande parametrar ställs in i det protokollet som roboten använder:
+\begin{itemize}
+\item Datahastigheten är 115 200 bps.
+\item Data skickas som 8-bitars värden utan någon paritetsbit.
+\item Ingen flödeshantering eller handskakning används.
+\item Varje värde om 8 bitar avslutas med en stoppbit.
+\end{itemize}
+
+Hur olika typer av information överförs mellan robot och PC beskrivs närmare i avsnitt \ref{sec:bt-protokoll}.
+
+
+\section{PC-gränssnitt}
 
 \section{Slutsatser}
-Vilka förbättringar skulle kunna göras?
+\emph{Vilka förbättringar skulle kunna göras?}
 
 \newpage
 \section*{Referenser}
