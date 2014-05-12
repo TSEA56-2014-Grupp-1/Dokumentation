@@ -7,8 +7,23 @@ Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika sor
 
 \nyBild{Bluetooth-protokoll.png}{Ett paket i den seriella kommunikationen mellan robot och PC.}{btpaket}{0.8}
 
-Antalet
+Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrollsumman ingår i paketet. Paketlängden säger alltså egentligen "Antalet bytes som är kvar efter mig".
 
+Kontrollsumman bildas genom att summera värdet av alla bytes i paketet, exklusive kontrollsumman själv, trunkera summan till 8 bitar, och invertera värdet bitvis.
+
+Följande tabell beskriver vilka paket som kan skickas:
+
+\begin{center}
+\begin{table}
+
+\begin{tabularx}{\textwidth}{|l|X|p{5cm}|}
+\hline
+ID-beteckning & Beskrivning & Parametrar, ordningsnummer i parameterföljden inom parentes \\ \hline
+PKT\_STOP & Stoppar all rörelse hos roboten & Inga \\ \hline
+\end{tabularx}
+\end{table}
+
+\end{center}
 \subsection{USART}
 \label{sec:usart}
 AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot bytes över en seriell lina.
