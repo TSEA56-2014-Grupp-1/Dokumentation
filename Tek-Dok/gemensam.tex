@@ -3,27 +3,23 @@ Detta avsnitt beskriver olika funktioner som inbegriper eller används av flera 
 
 \subsection{Protokoll för seriell kommunikation mellan robot och PC}
 \label{sec:bt-protokoll}
-Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika sorters paket. Varje typ av data som skickas har ett fördefinierat unikt paket-id, som indikerar för en mottagare hur datan ska hanteras. Paket-id:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
+Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika typer av paket. Varje typ av data som skickas har ett fördefinierat unikt paket-id, som indikerar för en mottagare hur datan ska hanteras. Paket-id:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
 
-\nyBild{Bluetooth-protokoll.png}{Ett paket i den seriella kommunikationen mellan robot och PC.}{btpaket}{0.8}
+\nyBild{Bluetooth-protokoll.png}{Ett paket i den seriella kommunikationen mellan robot och PC, varje ruta är en byte lång.}{btpaket}{0.8}
 
-Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrollsumman ingår i paketet. Paketlängden säger alltså egentligen "Antalet bytes som är kvar efter mig".
+Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrollsumman ingår i paketet. Paketlängden indikerar alltså hur många bytes som finns kvar i paketet efter paketlängden.
 
-Kontrollsumman bildas genom att summera värdet av alla bytes i paketet, exklusive kontrollsumman själv, trunkera summan till 8 bitar, och invertera värdet bitvis.
+Kontrollsumman bildas genom att summera värdena av alla bytes i paketet, exklusive kontrollsumman själv, trunkera summan till 8 bitar, och invertera värdet bitvis.
 
-Följande tabell beskriver vilka paket som kan skickas:
-
-\begin{center}
-\begin{table}
-
+\begin{table}[H]
 \begin{tabularx}{\textwidth}{|l|X|p{5cm}|}
 \hline
-ID-beteckning & Beskrivning & Parametrar, ordningsnummer i parameterföljden inom parentes \\ \hline
-PKT\_STOP & Stoppar all rörelse hos roboten & Inga \\ \hline
+\textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
+PKT\_STOP & Indikerar att roboten ska stoppa all rörelse. & Inga \\ \hline
 \end{tabularx}
+\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
 \end{table}
 
-\end{center}
 \subsection{USART}
 \label{sec:usart}
 AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot bytes över en seriell lina.
