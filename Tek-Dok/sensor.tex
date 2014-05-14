@@ -1,3 +1,10 @@
 \section{Sensorenhet}
 \emph{Det här avsnittet ska innehålla mera detaljerade blockscheman och beskrivningar av modulen.
 Tänk på läsbarheten och växla mellan figurer och text.}
+
+\subsection{Funktion}
+Sensorenhetens uppgift är att samla in rådata från de olika sensorerna och formatera denna till användbar information. På begäran av andra delsystem skickar sensorenheten ut data via bussen. Sensorenheten är utrustad
+med en linjesensor vars uppgift är att ge information om robotens befinnande i förhållande till tejplinjen. Informationen används som styrdata och skickas över bussen i form av en tyngdpunkt till chassimodulen för styrreglering.
+
+Vidare är roboten bestyckad med två stycken sidoskannrar på vardera sida om den. Dessa används för att lokalisera objektet roboten ska plocka upp. Om ett föremål hittas räknar sensorenheten ut en koordinat för föremålet och skickar koordinaten över bussen till armenheten.
+
