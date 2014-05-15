@@ -48,12 +48,20 @@ Den RFID-läsare som kommer att användas är en “Parallax Serial”, denna kr
 \subsection{Sidoskanner}
 Sidoskannerns uppgift är att hitta det objekt som ska plockas upp när roboten har stannat vid en plockstation.  
 
+ där utsignalen går låg på "compare match".  vilket innebär att utsignalen blir hög i och med att en timer börjar räknar tills timervärdet matchar ett värde i ett visst register, eller tills den når ett takvärde. Timern fortsätter räkna upp även om signalen blivit noll då den nått registervärdet. 
+
+ innan den börjar om 
+
+
 Sidoskannern består av två avståndssensorer, på höger-respektive vänster sida av roboten, monterade på varsitt servo. Servona styrs med snabb pulsbreddsmodulering. Servot får en puls var 20:e~millisekund och pulsbredden avgör vilket läge servot antar. En pulsbredd på ungefär 0.5~ms motsvarar servots ursprungsläge och en pulsbredd på ungefär 2.5~ms motsvarar max vinkelutslag. Detta varierar dock något från servo till servo.
+För att få servot att svepa från en sida till en annan används en stegvariabel som har en pulsbredd motsvarande en grad. För att erhålla denna pulsbredd används:
+$$Step = \frac{f_{clk}(f_{pwm\_min} - f_{pwm\_max})}{180 N f_{pwm\_min} f_{pwm\_max}}$$
+
+
 För att ge servot en puls var 20:e~millisekund, som motsvarar 50~Hz, används formeln:
-$$f_{pwm} = \frac{f_{clk_I/O}}{N(1 + TOP)}$$
+$$f_{pwm} = \frac{f_{clk\_I/O}}{N(1 + TOP)}$$
 
-
-Ur formeln beräknas också vilka frekvenser som motsvarar ursprungsläge respektive maxvinkelutslag. Med vetskapen om dessa frekvenser bestämdes sedan ...
+Med vetskap om vilk
 
 
  Enheten ska ha en tabell över vilka pulstider som motsvarar vilka vinklar på servot. För att ställa servot i en vinkel som ligger mellan de vinklar som finns i tabellen så kommer enheten beräkna en approximerad pulsbredd med hjälp av linjärinterpolering.
