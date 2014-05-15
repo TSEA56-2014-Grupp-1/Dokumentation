@@ -1,3 +1,71 @@
 \section{Armenhet}
-\emph{Det här avsnittet ska innehålla mera detaljerade blockscheman och beskrivningar av modulen.
-Tänk på läsbarheten och växla mellan figurer och text.}
+
+Robotens arm är av modell PhantomX Reactor från Trossen Robotics, som är en servostyrd arm med 4 rotationsleder och en griphand varpå det sitter totalt 7~st AX-12A-servon. Armen kontrolleras av en microprocessor, ATmega 1284, genom att parallellkoppla servona till en seriell UART-port. Kommunikationen till servona sker via half duplex via en tri state buffer. Armen har en maximal räckvidd på 38~cm och en bas med  300~grader rotationsfrihet.
+
+\subsection{Funktion}
+
+Armen kan styras manuellt via PC-programvaran och kan köras i autonomt läge. Enhetens huvudprogram är avvaktande tills dess att kommando skickas till enheten vilket kan antingen vara ett manuellt styrningskommando eller en order från chassienheten att ta hand om upplockning av objekt.
+
+\subsubsection{Manuellt läge} 
+
+Vid manuellt läge får armen ingen upplockningsorder från chassienheten och väntar därför endast efter ett styrkommando från PC. Från PC får den ett kommando att röra sig i en viss riktning i koordinatsystemet visat i figur \ref{fig:arminverskinematik}.
+
+Användaren kan välja att röra armen i djupled (Y-axeln), i höjd (Z-axeln), rotera runt Z-axeln eller öppna och stänga klon. Vid ett styrkommando rör sig armen i den angivna riktningen tills dess att ett kommando om att stanna rörelse i den riktingen ges från PC eller om den nått max-läget. Rörelse görs genom att kontinuerligt beräkna hur vinkeln av vardera led på armen skall ändras för att röra sig ett litet steg i den beordrade riktningen, detta görs genom beräkningar i inverterad kinematik (se \ref{inverskinematik}), sedan gör lederna en vinkelförändring för att sedan repetera enligt ovan.
+
+Armen kan också via PC automatiskt röra sig till ett förbestämt läge, ett startläge, där rörelsen även här beräknas med inverterad kinematik till den position som startläget har. Först rör sig armen rakt upp från det nuvarande läget för att sedan röra sig till den position som startläget har, detta för att eliminera risken att stöta i chassit och virkorten.
+
+\subsubsection{Autonomt läge}
+
+Vid autonomt läge avvaktar armenheten tills dess att chassit har identifierat att vi befinner oss på en plockstation som är aktuell för upplockning eller avlämning. Vid station får armenheten en order, plocka upp eller lämna av objekt till höger eller till vänster. När ordern inkommer och armen inte redan håller i ett föremål tillkallar den sensorenheten att med, beroende på vilken sida stationen befinner sig på, en av sidoscannrarna söka igenom upplockningszonen. Håller armen redan i ett föremål rör den sig till samma koordinat som för upplockningen av samma objekt, släpper föremålet och rör sig sedan tillbaka till startläget för att sist skicka bekräftelse till chassit med status om avlämning lyckats.
+
+Sensorenheten kommer, när den är klar med sidoscannrarna, skicka tillbaka ett kommando till armenheten med en vinkel och ett avstånd till föremålet, om den hittat något, annars meddelar den att zonen är tom. Med vinkeln och avståndet beräknar armenheten först en koordinat till objektet och sedan, med inverterad kinematik, hur armens olika leder behöver röra på sig för att nå koordinaten. Armen rör sig sedan mot objektet och väntar på att servona ska nå slutdestinationen, genom att fråga servona om de rör på sig, för att sedan gripa tag och röra sig tillbaka till startläget. Armenheten sparar sedan koordinaten där den plockat upp föremål, vilket används som avlämningsposition, och skickar bekräftelse till chassienheten om att upplockning av föremål lyckats. 
+
+\subsubsection{Inverterad kinematik}
+\label{inverskinematik}
+
+BEHÖVS SKRIVAS OM, KOPIERAT FRÅN DEC-SPEC
+
+Positioner anges i ett koordinatsystem relativt armens bas. X anger avstånd i sidled, Y anger avstånd i djupled och Z anger avstånd i höjdled. Armens gripklo hålls horisontell mot underlaget. Då armens rotation i XY-planet endast styrs av armbasens rotation kan det inverterade kinematikproblemet reduceras till ett tvådimensionellt problem. Eftersom gripleden ska hållas horisontell kan även denna led tas ur ekvationen, då den anpassas efter de övriga två ledernas position.
+
+\nyBild{Figur_arm_--_inveterad_kinematik.png}{Figur över koordinatsystem och vinklar som definierar armens läge.}{arminverskinematik}{1}
+
+I figur \ref{fig:arminverskinematik} ses att origo ligger över marknivå. $\gamma$ kommer vara inställd i den riktning som armen ska röra sig i för att nå föremålet. $\beta$ kommer se till att hålla $L_{3}$ horisontell mot marknivån.
+
+$$
+\begin{pmatrix}
+	x \\
+	y
+\end{pmatrix}
+ = 
+\begin{pmatrix}
+	L_{1}cos(\alpha_{1}) + L_{2}cos(\alpha_{1} + \alpha_{2} - \pi) \\
+	L_{1}sin(\alpha_{1}) + L_{2}sin(\alpha_{1} + \alpha_{2} - \pi)
+\end{pmatrix}$$
+
+\subsection{Kopplingsschema}
+\nyBild{kopplingsschema-arm}{Kopplingsschema över delsystem arm}{kopparm}{1}
+
+
+\subsection{Komponenter}
+
+\begin{packed_itemize}
+\item 1 x PhantomX Reactor arm med 7st AX-12A-servon
+\item 1 x 3-state buffer (74LS241)
+\item 1 x ATMega1284P, huvudprocessor
+\item 1 x EXO-3, kristalloscillator (16~MHz)
+\item 1 x Knapp med Resistor, för pullup av reset
+\item 1 x Kondensator, för fördröjning av resetpullup vid start
+\end{packed_itemize}
+
+
+\subsection{Översiktlig beskrivning av programmet}
+
+Programmet kommunicerar med servona över UART via funktioner som finns i ett delat bibliotek för denna typ av kommunikation. Servona styrs genom att skriva på deras minnen, där en skrivning på särskilld plats i minnet leder till en särskilld instruktion till servot. För att skriva eller läsa från servona skapas i programmet först ett paket, med utseende beroende på instruktion, med samtliga bitar som ska skickas för att sedan seriellt skicka dem via UART. Vid en överföring, borstett från när instruktion skickas till alla servon, väntar programmet på att få svar från servot för att kunna diagnostisera om instruktionen kunnat genomföras eller för att tyda en avläsning av servominne. Svar omhändertas genom väntan på mottagningsavbrott på armenheten därpå inkommande data lagras i en mottagningsbuffer som läses av så fort den inte är tom.
+
+Eftersom armenheten är avvaktande utför huvudprogrammet endast instruktioner när statusflaggor blivit satta genom funktionskallelser från andra enheter på bussen. 
+
+Med hjälp av inverterad kinematik kan programmet beräkna vilka vinklar armens servon ska anta för att armens gripklo ska anta en given position.
+
+Nedanstående figur visar vilka bibliotek som programmet består av. Grönmarkerade lådor innebär att de kan delas med andra delar av roboten. Lådor som ligger ovanför en annan låda bygger på den lådans funktioner. Exempelvis är servostyrning och servoläsning beroende av funktioner för att kommunicera över UART.
+
+\nyBild{Programstruktur_arm.png}{Övergripande bild över armenhetens programbibliotek.}{armprogrambibliotek}{0.8}
