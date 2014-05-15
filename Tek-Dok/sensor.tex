@@ -8,3 +8,63 @@ med en linjesensor vars uppgift är att ge information om robotens befinnande i 
 
 Vidare är roboten bestyckad med två stycken sidoskannrar på vardera sida om den. Dessa används för att lokalisera objektet roboten ska plocka upp. Om ett föremål hittas räknar sensorenheten ut en koordinat för föremålet och skickar koordinaten över bussen till armenheten.
 
+\subsection{Kopplingsschema}
+bild
+
+\subsection{Komponenter}
+\begin{packed_itemize}
+\item 1 x ATmega1284P, huvudprocessor
+\item 1 x refelxsensormodul
+\item 2 x 16-kanals multiplexrar
+\item 1 x RFID-läsarer (Parallax Serial)
+\item 2 x avståndssensorer (GP2D120)
+\item 2 x resistorer (18~k\ohm), för lågpassfilter
+\item 2 x kondensatorer (100~nF), för lågpassfilter
+\end{packed_itemize}
+
+\subsection{Sensorer}
+Sensorenheten använder tre olika sensortyper: avståndssensor, linjesensor och RFID-läsare.
+Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning"
+
+\subsubsection{Avståndssensorer}
+Avståndssensorerna används till robotens sidoskannrar. De mäter avstånd genom att skicka ut infrarött ljus som sedan reflekteras tillbaka i en PSD, Position Sensitive Detector. Avståndssensorerna som används fungerar för avstånd mellan \mbox{$4-30$ cm}. Eftersom de först mäter ett digitalt värde och sedan skickar ut en analog spänning uppstår brus på utsignalen. Detta brus är relativt högfrekvent varför det filtreras bort med hjälp av ett lågpassfilter innan signalen når processorn. Se kopplingsschema, figur \ref{fig:senskoppling}.
+
+En avläsning från en avståndssensor görs genom att omvandla sensorns analoga utspänning till ett digitalt värde. När A/D-omvandlingen är klar får sensorenheten ett avbrott där den jämför den A/D-omvanldade spänningen med en tabell över kända avstånd och spänningar för att översätta den till ett avstånd i millimeter. Värden som inte finns i tabellen beräknas med linjärinterpolering. 
+
+Avståndssensorerna är någorlunda precisa i sina mätningar inom intervallet de är specificerade för. Men när en koordinat för ett föremål ska kalkyleras baserat på avståndssensorns uppmätta värden blir små avvikelser ännu mer kritiskt. Olika föremål och underlag kan få avståndssensorn att ge ut olika spänningar för samma avstånd. IR-ljuset som sänds ut har också en viss spridning men genom att montera avståndssensor i vertikalled minskar spridningspåverkan. Se figur \ref{fig:sidoskanner-montering}
+
+\subsubsection{Linjesensor}
+Reflexsensormodulen består av en uppsättning IR-dioder och fototransistorer för att mäta ljusheten hos underlaget. Eftersom reflexsensormodulen består av 11~stycken separata IR-dioder och fototransistorer används en multiplexer och en demultiplexer för att styra sensorn. Demultiplexern driver IR-dioderna och multiplexern används för att ta in insignalerna från fototransistorerna. Linjesensorn kommer att vara kopplad i enlighet med kopplingsschemat i figur \ref{fig:senskoppling}.
+
+Reflexsensorn ger ut en analog spänning som är omvänt proportionell mot underlagets reflekterande ljusstyrka. En inläsning från linjesensorn sker genom ett funktionsanrop (via avbrott från A/D-omvandlaren) till linjesensorinläsningsfunktionen som finns på sensorenheten. När denna funktion anropas uppdateras en uppsättning variabler som är lagrade i en vektor. Vektorn är 11 element lång, där varje element representerar en reflexsensor.
+
+När uppdateringen av linjesensorn startas för första gången är muxarna som styr linjesensorn inställda så att reflexsensorn längst till vänster väljs. Efter detta startas A/D-omvandling på kanal~0. När A/D-omvandlingen är färdig kommer ett avbrott (ADIF) att genereras vilket triggar en avbrottsrutin.
+
+I denna avbrottsrutin skrivs det A/D-omvandlade värdet in på korrekt plats i linjesensorns datavektor. Denna plats motsvarar den valda linjesensorns position på sensormatrisen. Därefter upprepas samma process för nästkommande reflexsensor. Figur \ref{fig:senslinjeflöde} illustrerar processen för att uppdatera linjesensorns data.
+
+\subsubsection{RFID-läsare}
+Den RFID-läsare som kommer att användas är en “Parallax Serial”, denna kräver två pinnar på processorn enligt kopplingsschema i figur \ref{fig:senskoppling}.
+
+\subsection{Sidoskanner}
+Sidoskannerns uppgift är att hitta det objekt som ska plockas upp när roboten har stannat vid en plockstation.  
+
+Sidoskannern består av två avståndssensorer, på höger-respektive vänster sida av roboten, monterade på varsitt servo. Servona styrs med snabb pulsbreddsmodulering. Servot får en puls var 20:e~millisekund och pulsbredden avgör vilket läge servot antar. En pulsbredd på ungefär 0.5~ms motsvarar servots ursprungsläge och en pulsbredd på ungefär 2.5~ms motsvarar max vinkelutslag. Detta varierar dock något från servo till servo.
+För att ge servot en puls var 20:e~millisekund, som motsvarar 50~Hz, används formeln:
+$$f_{pwm} = \frac{f_{clk_I/O}}{N(1 + TOP)}$$
+
+
+Ur formeln beräknas också vilka frekvenser som motsvarar ursprungsläge respektive maxvinkelutslag. Med vetskapen om dessa frekvenser bestämdes sedan ...
+
+
+ Enheten ska ha en tabell över vilka pulstider som motsvarar vilka vinklar på servot. För att ställa servot i en vinkel som ligger mellan de vinklar som finns i tabellen så kommer enheten beräkna en approximerad pulsbredd med hjälp av linjärinterpolering.
+
+\subsection{Översiktlig beskrivning av programmet}
+
+\subsubsection{Inläsning från avståndssensorer}
+
+
+
+
+
+
+
