@@ -27,7 +27,7 @@ BEHÖVS SKRIVAS OM, KOPIERAT FRÅN DEC-SPEC
 
 Positioner anges i ett koordinatsystem relativt armens bas. X anger avstånd i sidled, Y anger avstånd i djupled och Z anger avstånd i höjdled. Armens gripklo hålls horisontell mot underlaget. Då armens rotation i XY-planet endast styrs av armbasens rotation kan det inverterade kinematikproblemet reduceras till ett tvådimensionellt problem. Eftersom gripleden ska hållas horisontell kan även denna led tas ur ekvationen, då den anpassas efter de övriga två ledernas position.
 
-\nyBild{Figur_arm_--_inveterad_kinematik.png}{Figur över koordinatsystem och vinklar som definierar armens läge.}{arminverskinematik}{1}
+%\nyBild{Figur_arm_--_inveterad_kinematik.png}{Figur över koordinatsystem och vinklar som %definierar armens läge.}{arminverskinematik}{1}
 
 I figur \ref{fig:arminverskinematik} ses att origo ligger över marknivå. $\gamma$ kommer vara inställd i den riktning som armen ska röra sig i för att nå föremålet. $\beta$ kommer se till att hålla $L_{3}$ horisontell mot marknivån.
 
@@ -43,7 +43,7 @@ $$
 \end{pmatrix}$$
 
 \subsection{Kopplingsschema}
-\nyBild{kopplingsschema-arm}{Kopplingsschema över delsystem arm}{kopparm}{1}
+%\nyBild{kopplingsschema-arm}{Kopplingsschema över delsystem arm}{kopparm}{1}
 
 
 \subsection{Komponenter}
@@ -68,4 +68,4 @@ Med hjälp av inverterad kinematik kan programmet beräkna vilka vinklar armens 
 
 Nedanstående figur visar vilka bibliotek som programmet består av. Grönmarkerade lådor innebär att de kan delas med andra delar av roboten. Lådor som ligger ovanför en annan låda bygger på den lådans funktioner. Exempelvis är servostyrning och servoläsning beroende av funktioner för att kommunicera över UART.
 
-\nyBild{Programstruktur_arm.png}{Övergripande bild över armenhetens programbibliotek.}{armprogrambibliotek}{0.8}
+%\nyBild{Programstruktur_arm.png}{Övergripande bild över armenhetens programbibliotek.}{armprogrambibliotek}{0.8}

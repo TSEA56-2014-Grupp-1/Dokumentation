@@ -9,7 +9,7 @@ med en linjesensor vars uppgift är att ge information om robotens befinnande i 
 Vidare är roboten bestyckad med två stycken sidoskannrar på vardera sida om den. Dessa används för att lokalisera objektet roboten ska plocka upp. Om ett föremål hittas räknar sensorenheten ut en koordinat för föremålet och skickar koordinaten över bussen till armenheten.
 
 \subsection{Kopplingsschema}
-bild
+\nyBild{kopplingsschema_sensor.png}{Kopplingsschema för sensorenheten}{senskoppling.}{0.6}
 
 \subsection{Komponenter}
 \begin{packed_itemize}
@@ -27,7 +27,8 @@ Sensorenheten använder tre olika sensortyper: avståndssensor, linjesensor och 
 Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning"
 
 \subsubsection{Avståndssensorer}
-Avståndssensorerna används till robotens sidoskannrar. De mäter avstånd genom att skicka ut infrarött ljus som sedan reflekteras tillbaka i en PSD, Position Sensitive Detector. Avståndssensorerna som används fungerar för avstånd mellan \mbox{$4-30$ cm}. Eftersom de först mäter ett digitalt värde och sedan skickar ut en analog spänning uppstår brus på utsignalen. Detta brus är relativt högfrekvent varför det filtreras bort med hjälp av ett lågpassfilter innan signalen når processorn. Se kopplingsschema, figur \ref{fig:senskoppling}.
+Avståndssensorerna används till robotens sidoskannrar. De mäter avstånd genom att skicka ut infrarött ljus som sedan reflekteras tillbaka i en PSD, Position Sensitive Detector. Avståndssensorerna som används fungerar för avstånd mellan \mbox{$4-30$ cm}. Eftersom de först mäter ett digitalt värde och sedan skickar ut en analog spänning uppstår brus på utsignalen. Detta brus är relativt högfrekvent varför det filtreras bort med hjälp av ett lågpassfilter innan signalen når processorn. Se kopplingsschema, figur \ref{senskoppling}.
+
 
 En avläsning från en avståndssensor görs genom att omvandla sensorns analoga utspänning till ett digitalt värde. När A/D-omvandlingen är klar får sensorenheten ett avbrott där den jämför den A/D-omvanldade spänningen med en tabell över kända avstånd och spänningar för att översätta den till ett avstånd i millimeter. Värden som inte finns i tabellen beräknas med linjärinterpolering. 
 
@@ -46,25 +47,14 @@ I denna avbrottsrutin skrivs det A/D-omvandlade värdet in på korrekt plats i l
 Den RFID-läsare som kommer att användas är en “Parallax Serial”, denna kräver två pinnar på processorn enligt kopplingsschema i figur \ref{fig:senskoppling}.
 
 \subsection{Sidoskanner}
-Sidoskannerns uppgift är att hitta det objekt som ska plockas upp när roboten har stannat vid en plockstation.  
+Sidoskannerns uppgift är att hitta det objekt som ska plockas upp när roboten har stannat vid en plockstation. Sidoskannern består av två avståndssensorer, på höger-respektive vänster sida om roboten, monterade på varsitt servo. Servona styrs med snabb pulsbreddsmodulering. Servot får en puls var 20:e~millisekund och pulsbredden avgör vilket läge servot antar. En pulsbredd på ungefär 0.5~ms motsvarar servots ursprungsläge och en pulsbredd på ungefär 2.5~ms motsvarar max vinkelutslag. Detta varierar dock något från servo till servo.
 
- där utsignalen går låg på "compare match".  vilket innebär att utsignalen blir hög i och med att en timer börjar räknar tills timervärdet matchar ett värde i ett visst register, eller tills den når ett takvärde. Timern fortsätter räkna upp även om signalen blivit noll då den nått registervärdet. 
+För att få ett servot att svepa över robotens ena sida ökas pulsbredden inkrementellt med en stegkonstant motsvarande ett servoutslag på en grad. För varje iteration, dvs för varje vinkel servot står i, kommer avståndssensorn lägga in 20 stycken A/D-omvandlade avståndsmätningar i en array för att sedan ta medianvärdet av mätningarna. Slutligen omvandlas värdet till ett avstånd i millimeter med interpolationsfunktionen. Om avståndet är inom en zon, baserat på armens räckvidd, innebär det att att inget föremål detekterats och servots vinkel stegas upp ytterligare en grad. 
 
- innan den börjar om 
+När avståndssensorn däremot påträffar ett föremål inom zonen sparas både vinkeln som servot står i och avståndet till föremålet undan innan sidoskannern stegar upp igen. För varje vinkel som avståndssensorerna fortfarande träffar föremålet sparas avståndet undan och slutligen även den sista vinkeln då den fortfarande träffade ett föremål.
 
-
-Sidoskannern består av två avståndssensorer, på höger-respektive vänster sida av roboten, monterade på varsitt servo. Servona styrs med snabb pulsbreddsmodulering. Servot får en puls var 20:e~millisekund och pulsbredden avgör vilket läge servot antar. En pulsbredd på ungefär 0.5~ms motsvarar servots ursprungsläge och en pulsbredd på ungefär 2.5~ms motsvarar max vinkelutslag. Detta varierar dock något från servo till servo.
-För att få servot att svepa från en sida till en annan används en stegvariabel som har en pulsbredd motsvarande en grad. För att erhålla denna pulsbredd används:
-$$Step = \frac{f_{clk}(f_{pwm\_min} - f_{pwm\_max})}{180 N f_{pwm\_min} f_{pwm\_max}}$$
-
-
-För att ge servot en puls var 20:e~millisekund, som motsvarar 50~Hz, används formeln:
-$$f_{pwm} = \frac{f_{clk\_I/O}}{N(1 + TOP)}$$
-
-Med vetskap om vilk
-
-
- Enheten ska ha en tabell över vilka pulstider som motsvarar vilka vinklar på servot. För att ställa servot i en vinkel som ligger mellan de vinklar som finns i tabellen så kommer enheten beräkna en approximerad pulsbredd med hjälp av linjärinterpolering.
+En medelvinkel av den första och sista vinkeln räknas ut och ett medianvärde för avståndet till föremålet. Medelvinkeln $\alpha$ och medianavståndet $L$ används sedan för att räkna ut en vinkel $\beta$ och ett avstånd, $R$, för armen till föremålet innan dessa skickas tillbaka till armenheten. Se figur \ref{fig:sidoskanner}
+\nyBild{sidoskanner.png}{Vänster sidoskanner.}{sidoskanner}{0.7}
 
 \subsection{Översiktlig beskrivning av programmet}
 
