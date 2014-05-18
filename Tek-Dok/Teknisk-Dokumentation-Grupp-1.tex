@@ -78,18 +78,37 @@
 \setcounter{page}{1}
 
 \section{Inledning}
-\emph{Bakgrund och syfte}
+Sju studenter vid Linköpings Universitet valde i deras kandidatprojektkurs TSEA56 att konstruera en automatiserad lagerrobot utifrån beställarens krav på design och funktion.
+
+Projektet gjordes med avsikten att ge studenterna bildning och erfarenhet att utifrån de kunskaper erhållna från tidigare kurser kunna genomföra ett omfattande uppdrag med samma metodik som förekommer i arbetslivet.
 
 
 \section{Produktbeskrivning}
-\emph{En bild på produkten och en beskrivning av hur den fungerar.
-Beskriv vad den används till.}
+Produkten är en robot ihopbyggd av ett chassi av plexiglas varpå fyra hjul, sensorer, en arm och kretskort är fastmonterad, utöver detta finns en programvara för övervakning och styrning av roboten.
+
+Roboten har som avsikt att användas i ett lager där den genom beordning manuellt eller autonomt hämtar och lämtar lagervaror. Lagerarbetet görs genom att följa svartmarkerad linje på marken där stationer är markerade med ett svart sträck rakt ut åt det håll stationen är tillsammans med en RFID-tag för att roboten att kunna identifiera stationen. Utefter preferens kan den styras manuellt med programvaran eller köra och hämta/lämna föremål automatiskt.
 
 \section{Teori}
 \emph{Beskrivning av regleralgoritmer m.m.}
 
 \section{Systemöversikt}
-\emph{Ett översiktligt blockschema och en beskrivning av hela systemet.}
+Roboten är uppbyggd av fyra olika delsystem (chassi, sensor, arm och kommunikation) som vart och ett har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har också en programvara till en dator utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt och i ett autonomt läge, här kan man välja om man endast vill ha automatisk linjeföljning, endast automatiskt föremålsupplockning eller om man vill ha all funktionallitet automatisk.
+
+\subsection{Delsystemsöversikt}
+Sensorenheten övervakar kontinuerligt de olika sensorerna roboten har och omvandla dess primärdata till systemanvändbara enheter för att sedan kunna skicka dessa vidare till andra delsystem vid förfrågan.
+
+Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den kan bli tillfrågad och skicka bekräftelse om de beslut som roboten gör samt status över de olika delsystemen och omgivningsobservationer.
+
+Chassienheten fungerar som det handlingsbeslutande organet på roboten. Den vet vid autonomt läge hur roboten ska agera vid olika situationer. Den styr också hjulen på roboten, det vill säga att den genom sensordata och reglering beräknar hastighet på hjulen för att kunna svänga och hålla kursen längst banan.
+
+Armenheten kan vid en avhämtningsstation, utifrån identifiering av var ett objekt befinner sig, kunna plocka upp detta med robotarmen som är monterad på chassit. Den har kontroll över samtliga servon och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led skall röra sig för nå objektet och för att plocka upp det.
+
+PC-programvaran visar upp ett instrumentbräde för användaren att både se robotens beslut samt statusinformation. Här kan också roboten styras med olika sorters kommandon som finns implementerad.
+
+\subsection{Sensorer och sensorplacering}
+
+En linjesensor sitter längst fram på roboten, nära marken. En RFID-läsare sitter parallellt med marken under roboten, då den endast har 7~cm läsavstånd till taggarna som ligger på marken. På vardera sida av roboten är en avståndssensor placerad på ett servo, för att skanna efter objekt att plocka upp.
+
 
 \input{gemensam.tex}
 \input{komm.tex}
