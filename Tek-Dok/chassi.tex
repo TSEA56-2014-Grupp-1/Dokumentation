@@ -1,3 +1,18 @@
 \section{Chassienhet}
 \emph{Det här avsnittet ska innehålla mera detaljerade blockscheman och beskrivningar av modulen.
 Tänk på läsbarheten och växla mellan figurer och text.}
+
+\subsection{Överblick}
+Chassienheten tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när och på vilken sida armen ska plocka upp och lämna av objekt. Chassienheten sköter styrningen med PD-regleringen med hjälp av den tyngdpunkt som den får av sensorenheten via bussen. Detta för att kunna följa en svart tejpad linje på marken. På chassienheten finns en omkopplare för att kunna välja mellan autonomt och manuellt läge samt en tryckknapp för att starta linjeföljningsproceduren. 
+
+\subsection{Funktion}
+
+\begin{packed_itemize}
+\item Kunna ta beslut och styras både autonomt och genom order från dator via kommunikationsenheten.
+\item Styra de två motorerna med PWM-styrning.
+\item Använda regleralgoritm för att kunna följa linjen utan att slingra sig fram.
+\item Hantera plockstationer genom att stanna och skicka kommandon till arm- och sensorenheten.
+\item Kunna vända autonomt.
+\item Mäta tid mellan stationer och m.h.a. detta ta beslut om att vända eller inte.
+\item Skicka styrbeslut till dator via kommunikationsenheten.
+\end{packed_itemize}
