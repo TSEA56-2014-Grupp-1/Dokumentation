@@ -34,45 +34,45 @@ Chassienheten tar alla övergripande beslut om vad som ska göras, t.ex. är det
 
 \subsection{Översiktlig beskrivning av programmet}
 
-Programmet på chassit  beräknar styrriktning med hjälp av tyngdpunkten den får från sensorenheten . Den hämtar nya värden från sensorenheten med jämna tidsintervall och med dessa uppdaterar motorstyrningen. Enheten räknar också hur många stationer den passerar innan det är tillbaka på stationen den började på. Detta för att veta när den är klar. Enheten lyssnar även alltid på styr- och stoppkommandon från PC:n.
+Programmet på chassit beräknar styrriktning med hjälp av tyngdpunkten den får från sensorenheten . Den hämtar nya värden från sensorenheten med jämna tidsintervall och med dessa uppdaterar motorstyrningen. Enheten räknar också hur många stationer den passerar innan den är tillbaka på stationen den började på. Detta för att roboten ska veta när den är klar. Enheten lyssnar även alltid på styr- och stoppkommandon från PC:n.
 
 Chassit får information om att roboten är på plockstation av sensorenheten i samma paket som den får tyngdpunkten. Vid plockstation stannar roboten och en begäran om att få RFID-tag skickas till sensorenheten. Efter detta skickas en instruktion till armenheten att antingen plocka upp eller lämna av föremål. Alla beslut skickas via kommunikationsenheten till datorn.
 
 
-%\nyBild{programfl_de_chassi.png}{Flödesdiagram för huvudprogram till chassienheten.}{chassiflöde}{0.7}
+\nyBild{huvudprogram.pdf}{Flödesdiagram för huvudprogram till chassienheten.}{chassiflöde}{0.7}
 
 \subsubsection{Följa linje samt motorkontroll}
 \label{följalinje}
 
-För att kontrollera hastighet till motorerna kommer snabb PWM att implementeras i roboten. Denna kommer att vara kopplad till en H-brygga (inbyggd i den givna plattformen)  som sköter matningen till själva motorerna. Motorerna kommer att uppdateras med en uppdateringsfrekvens på 1~kHz.
+För att kontrollera hastighet till motorerna används PWM-styrning med en uppdateringshastighet på 1~kHz.
 
-Eftersom systemets klocka kommer gå i 16~MHz måste timern ställas in så att den kan uppnå en period på 1~kHz i uppdateringsfrekvens. Detta uppnås genom att prescalern ($N$) till timern sätts till 1 samt att timern räknar till 15999 innan en ny period ska starta. 
+Eftersom systemets klocka kommer gå i 16~MHz måste timern ställas in så att den kan uppnå en period på 1~kHz i uppdateringsfrekvens. Detta uppnås genom att prescalern ($N$) till timern sätts till 8 samt att timern räknar till 1999 innan en ny period ska starta. 
 
-För att kunna göra linjeföljning utan att slingra sig fram måste en regleralgoritm implementeras. Den reglering som kommer att göras är en PD-reglering, enligt formlen:
+För att kunna göra linjeföljning utan att slingra sig fram implementeras en regleralgoritm. Den reglering som görs är en PD-reglering, enligt formlen:
 
 $$u[t] = K_{p}e[t] + K_{d}\frac{d}{dt}e[t]$$
 
 Om värdet är positivt/negativ ska motor på vänster/höger sida att bromsas medan den andra kör med full fart. För att beräkna motorkontrollen till PWM kommer följande formel användas.
 
-$$P[t] = 15999 - K_{total}u[t]$$
+$$P[t] = 1999 - K_{total}u[t]$$
 
-Där alltså $P[t]$ är värdet räknaren till vänster/höger motor ska räkna till. Den andra motorn kommer att gå på full hastighet, alltså är $P[t] = 15999$ för den motorn. Av dessa värden kommer $K_{p}$,$K_{d}$ och $K_{total}$ att kunna ändras för att optimera regleringen.
+Där alltså $P[t]$ är värdet räknaren till vänster/höger motor ska räkna till. Den andra motorn kommer att gå på full hastighet, alltså är $P[t] = 1999$ för den motorn. Av dessa värden kommer $K_{p}$,$K_{d}$ och $K_{total}$ att kunna ändras för att optimera regleringen.
 
 
-\subsubsection{Identifiering av plockstationer samt trippmätning}
+\subsubsection{Identifiering av plockstationer}
 
-Varje gång roboten stannar vid en plockstation kommer chassit att, via sensorenheten, läsa av plockstationens RFID-tagg. Värdet hos dessa RFID-taggar kommer sparas i en tabell innehållandes dels taggarnas värden och dels hur långt det är mellan taggarna tidsmässigt. Detta gör att roboten kan vända om vägen till plockstationen som den ska till blir kortare då.
+Varje gång roboten stannar vid en plockstation skickar chassit till sensorenheten att läsa av plockstationens RFID-tagg. Värdet hos dessa RFID-taggar sparas i en lista. Detta gör att roboten kan räkna hur många stationer som finns på banan och således vet den när den är klar.
 
 
 \subsubsection{Styrkommando}
 
-Chassit ska reagera på styrkommandon från bussen om brytaren är satt i manuellt läge. Ett styrkommando består av ett rattutslag och ett gaspådrag. Ett negativt rattutslag innebär vänstersväng och ett positivt innebär högersväng. Gaspådrag kan vara positivt och negativt, där positivt för roboten framåt och negativt för roboten bakåt. 
+Chassit reagerar alltid på styrkommandon från bussen även om brytaren är satt i autonomt läge. Detta för att kunna korrigera roboten ifall det skulle få för sig att göra något oväntat. Ett styrkommando består av en ändring i riktning och en ändring i gaspådrag. Gaspådrag kan vara positivt och negativt, där positivt för roboten framåt och negativt för roboten bakåt. 
 
 
 \subsubsection{Autonomt läge och start-/stoppkommando}
 
-När brytaren är i autonomt läge ska chassit reagera på startknappen som sitter på chassit. Startknappen påbörjar linjeföljning med hantering av plockstationer beskrivet i \ref{följalinje}.
+När brytaren är i autonomt läge reagerar chassit på startknappen som sitter på chassit. Startknappen påbörjar linjeföljning med hantering av plockstationer beskrivet i \ref{följalinje}.
 
 \subsection{Analys av prestanda och resurser}
 
-Chassienheten kommer behöva 3 timer. En för att mäta tid för trippmätaren, en för PWM-styrning av motorerna och en som ger avbrott för att begära linjesensordata med jämna intervall. En av ATmega1284:ans 8~bits-timers kommer att användas för att begära sensordata, och de två 16~bits-timrarna kommer att användas till trippmätare respektive PWM. I övrigt kommer chassit att beräkna gaspådrag till de olika motorerna med en regleralgoritm. Eftersom värdet på linjesensorn kommer uppdateras med intervall på 2~ms kommer det finnas tillräckligt med tid för att göra denna beräkning.
+Chassienheten använder 2 timers. En för PWM-styrning av motorerna och en som ger avbrott för att begära linjesensordata med jämna intervall. En av ATmega1284:ans 8~bits-timers används för att begära sensordata, och en 16~bits-timer används till PWM.
