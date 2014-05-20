@@ -1,5 +1,14 @@
 
 \section{Teknisk Beskrivning}
+
+Roboten är uppdelad i fyra olika delsystem med varsitt ansvarsområde som vart och ett löser ett tydligt delproblem. Det första av delsystemen, kallat chassit, kontrollerar motorer och har en regleralgoritm för att se till att roboten följer linjen. Denna enhet har även det övergripande ansvaret för roboten. Det betyder till exempel att den säger till delsystem arm då det är dags att plocka upp ett föremål. Detta innebär att den också ansvarar för föremål ställs ned och plockas upp på rätt station.
+
+Delsystem arm kontrollerar och styr de servon som sitter i robotarmen och ansvarar för funktionaliteten som krävs för att plocka upp samt sätta ner föremål vid plockstationerna.
+
+Sensorenheten är den enhet som samlar in den information som resten av roboten använder för att ta de styrbeslut som krävs för att slutföra uppgiften. Denna enhet fungerar passivt och svarar bara på förfrågningar av andra enheter och tar inga egna initiativ för att samla information.
+
+Kommunikationsenhetens uppgift är att kommunicera relevant information ut till omvärlden. Detta görs dels till datorn med hjälp av blåtand, och dels med hjälp av en display monterad på roboten. Även denna fungerar som en slav och ser endast till att skriva saker på displayen då någon säger åt den att göra detta. Den vidarebefordrar också data korrekt mellan robotens delsystem och en persondator via bussen samt blåtand.
+
 \nyBild{Robot_oversikt.png}{Förklaring av robotens delar}{Robot_översikt}{0.8}
 1
 %\begin{test}

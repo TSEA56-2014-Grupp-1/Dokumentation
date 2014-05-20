@@ -1,6 +1,9 @@
 
 
-\section{Sensor}
+\section{Problemformulering}
 
+Det problem som roboten i detta projekt ämnar att lösa uppstår i en tänkt lagersituation där ett antal föremål behöver flyttas runt mellan olika platser i lagret. För att roboten ska kunna navigera genom lagerutrymmet finns det en linje markerad med svart tejp på golvet. Längs med tejpen markeras de stationer där föremål ska plockas upp respektive lämnas av med hjälp av en bit tejp i en rät vinkel ut från den ursprungliga tejplinjen.
+Roboten måste även kunna avgöra huruvida ett föremål ska plockas upp eller lämnas av vid varje station. Därför är stationerna utrustade med var sin RFID-tagg innehållandes ett för stationen unikt identifikationsnummer. RFID (Radio Frequency Identification) är en teknik som kan användas för att lagra information på små lagringsmedia(Lägg i fotnot). RFID-taggarna används för att roboten ska veta ifall det finns föremål att plocka upp på stationen och vilket föremål som ska lämnas av vid vilken station.
+De grundläggande krav roboten måste uppfylla för att klara uppgiften inkluderar alltså bland annat att följa en linje, läsa av RFID-taggar samt att plocka upp föremål. Utöver dessa grundläggande krav är projektets tillämplighet på ett verkligt scenario i stor del avhängig på att kraven inte bara kan uppfyllas, utan även utföras autonomt. Av denna anledning så innefattar den utökade kravbilden, i kravspecifikationen markerad med lägre prioritet, i huvudsak krav vilka innebär en för roboten ökad autonomi.
 
-
+En ökad grad av autonomi innebär i detta projekt huvudsakligen att roboten klarar av att plocka upp samt sätta ned föremål utan mänsklig inblandning. Detta medför att uppgiftens komplexitet snabbt ökar då kravbilden utökas förbi den grundläggande funktionalitet som i kravspecifikationen är beskriven med prioritet 1. Robotens förmåga att plocka upp ett föremål autonomt kräver inte bara förmågan att kontrollera armen, utan även ett system för att insamla information om föremålets exakta position samt att översätta och vidarebefodra denna information till armen. Vidare måste armen i sin tur kunna röra sig i rummet med en sån precision att upplockning av föremål kan göras utan att en människa kontinuerligt korrigerar armens position.

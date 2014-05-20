@@ -2,5 +2,20 @@
 
 \section{Sensor}
 
+Sensorenheten har tre huvudsakliga uppgifter. Den är ansvarig för att ta fram data utifrån vilken roboten ska klara av att följa en linje samt hantera plockstationer. Vidare är dess uppgift att vid plockstationer tillhandahålla armenheten med koordinater till det objekt som ska plockas upp samt att läsa av RFID-taggarna som ligger på banan i samband med plockstationerna. Information om vilken RFID-tagg som ligger vid stationen vidarebefodras till chassienheten som utifrån detta avgör huruvida stationen i fråga är en plockstation eller avlämningsstation.
+
+För att följa en linje krävs för det första att sensorenheten klarar av att detektera tejplinjen. Detta åstadkommes med hjälp av en reflexsensormodul beståendes av elva separata reflexsensorer. En reflexsensor är i sin tur uppbyggd av en infraröd diod samt en fotokänslig transistor. Reflexsensormodulen är monterad längst fram på roboten ett par millimeter över golvet. När den infraröda dioden på varje reflexsensor tänds kommer detta ljus att studsa mot underlaget och ge upphov till en ström i transistorn. Ju mer ljus som reflekteras av underlaget, ju större kommer denna ström att vara. På detta sätt kan man då beräkna en tyngpunkt som motsvarar där linjen bör vara.
+
+Sensorenhetens uppgift i robotens linjeföljning är alltså att samla in och omvandla den data som fås från reflexsensormodulen på ett sådant sätt att chassienheten kan utnyttja denna för att styra roboten längs med linjen. Detta görs genom att koppla dioder respektive fototransistorer till två stycken multiplexrar. Dessa multiplexrar styrs av sensorenhetens processor och används för att genom en A/D-omvandlare ta in data från var och en av reflexsensorerna som sitter på reflexsensormodulen. Denna data lagras sedan i processorn som ett åtta bitar stort heltalsvärde. Det innebär att varje reflexsensor kommer att registrera ett värde mellan 0 och 255, där 255 betyder mörkt underlag och 0 innebär ljust underlag.
+
+Utifrån den data som lagrats i sensorenhetens processor beräknas sedan en tyngdpunkt på samma sätt som en linjetyngdpunkt i mekanik kan beräknas. Reflexsensorn ses som en linje där varje reflexsensors värde motsvarar tyngden för det segment av linjen den sitter på. Den tyngdpunkt som beräknas skalas till ett värde mellan 0 och 255, där 0 innebär att linjen ligger längst till vänster på sensorn och 255 innebär att linjen ligger längst till höger. 
+
+Sensorns andra uppgift, att lokalisera de objekt som ska plockas upp, görs med hjälp av två stycken sidoskannrar, en på höger respektive vänster sida av roboten. Varje sidoskanner består av ett servo av enklare modell på vilket en optisk avståndssensor sitter monterad. För att hitta objekt så stegas servot upp i små inkrement. Efter att servot har stegats upp läses avståndssensorn av. Ifall att avståndssensorn registrerar ett avstånd som är större än robotarmens räckvidd innebär detta att objektet inte finns i den aktuella vinkeln varpå servot stegas upp ytterligare.
+
+När sidoskannern för första gången läser av ett avstånd som är mindre än robotarmens räckvidd innebär detta att ett objekt har detekteras. För att hitta objektets mittpunkt stegas nu servot upp ytterligare tills dess att ett avstånd som återigen är större än robotarmens räckvidd detekteras. Objektets mittpunkt ligger då i den vinkel och avstånd som är mitt emellan de vinklar där objektet först och sist upptäcktes. För att dessa värden ska kunna användas av armenheten måste de först omvandlas för att vara anpassade till armens koordinatsystem som har sin nollpunkt i mitten av roboten, och inte ute på sidan där sidoskannrarna sitter. Exakt hur detta görs finns ingående beskrivet i den tekniska dokumentationen, se bilaga XX.
+
+RFID-inläsningen görs genom att RFID-läsaren aktiveras och efter cirka 150 ms skickar den ett 12 bytes långt inläst ID via USART till processorn som lagrar detta värde i en buffert. Värdet i bufferten läses av och jämförs mot de ID:n som redan finns lagrade i processorns minne. Då en träff på ett av de lagrade ID:na sker med det inlästa skickas den siffra som står på RFID-taggen till chassit. 
+
+
 
 
