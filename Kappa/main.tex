@@ -7,6 +7,8 @@
 \usepackage{mathtools}
 \usepackage{setspace}
 \usepackage{tabularx}
+\usepackage{svg}
+
 \title{Designspecifikation}
 \input{LIPS.tex}
 
@@ -76,15 +78,41 @@
 
 \section{Inledning}
 
+\nyBild{bana.pdf}{Översiktlig bild av bana och robot}{bana}{0.8}
 \section{Problemformulering}
 
 \section{Kunskapsbas}
 
 \section{Genomförande}
-
+\newpage
 \section{Teknisk Beskirvning}
+\nyBild{Robot_oversikt.png}{Förklaring av robotens delar}{Robot_översikt}{0.8}
+
+%\begin{test}
+%  \LIPSversionsinfo{0.1}{2014-05-20}{Första utkast.}{EN}{LN}
+%\end{test}
+%\newpage
+
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+   \textbf{Nr} &  \textbf{Komponent} &  \textbf{Förklaring} \\ \hline
+    1 & Microcontroller ATmega 1284P & Sensorenhetens processor \\ \hline
+ 2 & Omkopplare & Strömbrytare till batteriet \\ \hline
+ 3 & Resetknapp & Nollställer sensorenhetens processor \\ \hline
+ 4 & Microcontroller ATmega 1284P & Kommunikationsenhetens processor \\ \hline
+ 5 & Microcontroller ATmega 1284P & Armenhetens processor \\ \hline
+ 6 & Bluetoothenhet BlueSMiRF Gold &  För kommunikation mellan persondator och roboten\\ \hline
+ 7 & Resetknapp & Nollställer armenhetens processor \\ \hline
+ 8 & Startknapp för Auto-läge & För att starta autonom robotstyrning \\ \hline
+9 & Resetknapp & Nollställer chassienhetens processor \\ \hline
+10 & Microkontroller ATmega 1284P & Chassienhetens processor \\ \hline
+11 & Auto/manuell-omkopplare & För att växla mellan autonom och manuell styrning \\ \hline
+    \end{tabular}
+\end{center}
 
 \section{Chassi}
+\nyBild{chassi_huvudprogram.pdf}{Översiktlig bild av Chassits huvudprogram}{huvudprogram}{0.7}
 
 \section{Arm}
 
