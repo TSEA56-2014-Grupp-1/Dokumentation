@@ -9,13 +9,16 @@
 \usepackage{tabularx}
 \usepackage{svg}
 
-\title{Designspecifikation}
+\title{Kandidatprojektsrapport}
 \input{LIPS.tex}
 
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
 
+\usepackage{titlesec}
+\titlespacing{\section}{0pt}{30pt}{10pt}
 \frenchspacing
+
 
 \renewcommand{\thepage}{\roman{page}}
 
@@ -26,7 +29,7 @@
 
 \newcommand{\LIPSprojektgrupp}{Grupp 1}
 \newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
-\newcommand{\LIPSdokumentansvarig}{LIPS Kappa}
+\newcommand{\LIPSdokumentansvarig}{LIPS Kandidatrapport}
 
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
@@ -34,7 +37,7 @@
 \newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
 
 
-\newcommand{\LIPSdokumenttyp}{Kappa}
+\newcommand{\LIPSdokumenttyp}{Kandidatrapport}
 \newcommand{\LIPSredaktor}{Erik Nybom}
 \newcommand{\LIPSversion}{0.1}
 \newcommand{\LIPSdatum}{\dagensdatum}
@@ -78,31 +81,18 @@
 
 \newpage
 \input{Inledning}
-\newpage
 \input{Problemformulering}
-\newpage
 \input{Kunskapsbas}
-\newpage
 \input{Genomförande}
-\newpage
 \input{Teknisk_beskrivning}
-
-\newpage
 \input{Chassi.tex}
-\newpage
 \input{Arm.tex}
-\newpage
 \input{Sensor.tex}
-\newpage
 \input{Kommunikation.tex}
-\newpage
 \input{Fördjupningsuppgifter.tex}
 \newpage
 \input{Resultat}
-\newpage
 \input{Slutsatser}
-
-
 
 \newpage
 \begin{thebibliography}{9}

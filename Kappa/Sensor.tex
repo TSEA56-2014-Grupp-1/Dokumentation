@@ -1,6 +1,6 @@
 
 
-\section{Sensor}
+\subsection{Sensor}
 
 Sensorenheten har tre huvudsakliga uppgifter. Den är ansvarig för att ta fram data utifrån vilken roboten ska klara av att följa en linje samt hantera plockstationer. Vidare är dess uppgift att vid plockstationer tillhandahålla armenheten med koordinater till det objekt som ska plockas upp samt att läsa av RFID-taggarna som ligger på banan i samband med plockstationerna. Information om vilken RFID-tagg som ligger vid stationen vidarebefodras till chassienheten som utifrån detta avgör huruvida stationen i fråga är en plockstation eller avlämningsstation.
 
@@ -12,7 +12,7 @@ Utifrån den data som lagrats i sensorenhetens processor beräknas sedan en tyng
 
 Sensorns andra uppgift, att lokalisera de objekt som ska plockas upp, görs med hjälp av två stycken sidoskannrar, en på höger respektive vänster sida av roboten. Varje sidoskanner består av ett servo av enklare modell på vilket en optisk avståndssensor sitter monterad. För att hitta objekt så stegas servot upp i små inkrement. Efter att servot har stegats upp läses avståndssensorn av. Ifall att avståndssensorn registrerar ett avstånd som är större än robotarmens räckvidd innebär detta att objektet inte finns i den aktuella vinkeln varpå servot stegas upp ytterligare.
 
-När sidoskannern för första gången läser av ett avstånd som är mindre än robotarmens räckvidd innebär detta att ett objekt har detekteras. För att hitta objektets mittpunkt stegas nu servot upp ytterligare tills dess att ett avstånd som återigen är större än robotarmens räckvidd detekteras. Objektets mittpunkt ligger då i den vinkel och avstånd som är mitt emellan de vinklar där objektet först och sist upptäcktes. För att dessa värden ska kunna användas av armenheten måste de först omvandlas för att vara anpassade till armens koordinatsystem som har sin nollpunkt i mitten av roboten, och inte ute på sidan där sidoskannrarna sitter. Exakt hur detta görs finns ingående beskrivet i den tekniska dokumentationen, se bilaga XX.
+När sidoskannern för första gången läser av ett avstånd som är mindre än robotarmens räckvidd innebär detta att ett objekt har detekteras. För att hitta objektets mittpunkt stegas nu servot upp ytterligare tills dess att ett avstånd som återigen är större än robotarmens räckvidd detekteras. Objektets mittpunkt ligger då i den vinkel och avstånd som är mitt emellan de vinklar där objektet först och sist upptäcktes. För att dessa värden ska kunna användas av armenheten måste de först omvandlas för att vara anpassade till armens koordinatsystem som har sin nollpunkt i mitten av roboten, och inte ute på sidan där sidoskannrarna sitter. Exakt hur detta görs finns ingående beskrivet i den tekniska dokumentationen, se bilaga \ref{sec:tekdok}.
 
 RFID-inläsningen görs genom att RFID-läsaren aktiveras och efter cirka 150 ms skickar den ett 12 bytes långt inläst ID via USART till processorn som lagrar detta värde i en buffert. Värdet i bufferten läses av och jämförs mot de ID:n som redan finns lagrade i processorns minne. Då en träff på ett av de lagrade ID:na sker med det inlästa skickas den siffra som står på RFID-taggen till chassit. 
 

@@ -95,15 +95,15 @@ Roboten har som avsikt att användas i ett lager där den genom beordning manuel
 Roboten är uppbyggd av fyra olika delsystem (chassi, sensor, arm och kommunikation) som vart och ett har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har också en programvara till en dator utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt och i ett autonomt läge, här kan man välja om man endast vill ha automatisk linjeföljning, endast automatiskt föremålsupplockning eller om man vill ha all funktionallitet automatisk.
 
 \subsection{Delsystemsöversikt}
-Sensorenheten övervakar kontinuerligt de olika sensorerna roboten har och omvandla dess primärdata till systemanvändbara enheter för att sedan kunna skicka dessa vidare till andra delsystem vid förfrågan.
+Sensorenheten övervakar kontinuerligt de olika sensorerna roboten har och omvandlar den råa sensordatan till systemanvändbara enheter för att sedan kunna skicka dessa vidare till andra delsystem vid förfrågan.
 
-Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den kan bli tillfrågad och skicka bekräftelse om de beslut som roboten gör samt status över de olika delsystemen och omgivningsobservationer.
+Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den kan bli tillfrågad och skicka bekräftelse om de beslut som roboten gör samt status över de olika delsystemen och omgivningsobservationer. Vidare är kommunikationsenheten utrustad med en display vilken används för att visa upp en del av den sensordata som samlas in.
 
 Chassienheten fungerar som det handlingsbeslutande organet på roboten. Den vet vid autonomt läge hur roboten ska agera vid olika situationer. Den styr också hjulen på roboten, det vill säga att den genom sensordata och reglering beräknar hastighet på hjulen för att kunna svänga och hålla kursen längst banan.
 
 Armenheten kan vid en avhämtningsstation, utifrån identifiering av var ett objekt befinner sig, kunna plocka upp detta med robotarmen som är monterad på chassit. Den har kontroll över samtliga servon och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led skall röra sig för nå objektet och för att plocka upp det.
 
-PC-programvaran visar upp ett instrumentbräde för användaren att både se robotens beslut samt statusinformation. Här kan också roboten styras med olika sorters kommandon som finns implementerad.
+Den datorbaserade programvaran består av ett instrumentbräde där användaren kan se robotens vilka beslut som tas av roboten samt vilka sensordata de olika sensorerna tar in. Vidare kan roboten styras utifrån det grafiska gränssnittet, med avseende på både robotarm och chassi.
 
 \subsection{Sensorer och sensorplacering}
 
