@@ -7,9 +7,9 @@ Armenheten kontrollerar och styr de servon som sitter i robotarmen och ansvarar 
 
 Sensorenheten är den enhet som samlar in den information som resten av roboten använder för att ta de styrbeslut som krävs för att slutföra uppgiften. Denna enhet svarar bara på förfrågningar av andra enheter och tar inga egna initiativ för att börja samla information.
 
-Kommunikationsenhetens uppgift är att kommunicera relevant information ut till omvärlden. Detta görs dels till datorn med hjälp av blåtand, dels med hjälp av en skärm monterad på roboten. Även denna fungerar som en slav och skriver endast saker på skärmen då någon säger åt den att göra det. Den vidarebefordrar också data mellan robotens delsystem och en persondator via bussen samt blåtand.
+Kommunikationsenhetens uppgift är att kommunicera relevant information ut till omvärlden. Detta görs dels till datorn med hjälp av blåtand, dels med hjälp av en LCD-skärm monterad på roboten. Även denna fungerar som en slav och skriver endast saker på skärmen då någon säger åt den att göra det. Den vidarebefordrar också data mellan robotens delsystem och en persondator via bussen samt blåtand.
 
-\nyBild{Robot_oversikt.png}{Förklaring av robotens delar}{robotoversikt}{0.8}
+\nyBild{Robot_oversikt.png}{Översikt över robotens delar}{robotoversikt}{0.8}
 
 %\begin{test}
 %  \LIPSversionsinfo{0.1}{2014-05-20}{Första utkast.}{EN}{LN}
@@ -17,18 +17,18 @@ Kommunikationsenhetens uppgift är att kommunicera relevant information ut till 
 %\newpage
 
 Figur \ref{fig:robotoversikt} visar huvuddelarna på kretskorten med följande numrering:
-\begin{enumerate}
-\item Sensorenhetens processor
+\begin{packed_enumerate}
 \item Strömbrytare till batteriet
+\item Sensorenhetens processor
 \item Knapp för nollställning av sensorenhet
+\item Blåtandsmodem för kommunikation mellan robot och persondator
 \item Kommunikationsenhetens processor
 \item Armenhetens processor
-\item Blåtandsmodem för kommunikation mellan robot och persondator
 \item Knapp för nollställning av kommunikationsenhetens och armenhetens processorer
 \item Knapp för att påbörja linjeföljning i autonomt läge
 \item Knapp för nollställning av chassienhetens processor
 \item Chassienhetens processor
 \item Omkopplare för val av autonomt eller manuellt läge
-\end{enumerate}
+\end{packed_enumerate}
 
 
