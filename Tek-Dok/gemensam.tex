@@ -22,11 +22,11 @@ PKT\_STOP & Indikerar att roboten ska stoppa all rörelse. & Inga \\ \hline
 
 \subsection{USART}
 \label{sec:usart}
-AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot bytes över en seriell lina.
+AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot byte över en seriell lina.
 
 Biblioteket använder en byte-buffer för att lagra mottagen data. Till buffern hör två pekare, en läspekare och en skrivpekare, som pekar till olika element i buffern och flyttas upp när man läser eller skriver i buffern. Genom att pekarna endast kan anta värden mellan 0 och 255, samma antal värden som det finns element i buffern, fås funktionalitet som i en ringbuffer eftersom pekarnas värden svämmar över till 0 när de ökas från 255.
 
-När avbrottet som indikerar att en byte har tagits emot kommer skrivs den byte som har tagits emot in i buffern på den position som skrivpekaren pekar på. Därefter ökas pekarens värde ett steg.
+När avbrottet som indikerar att en byte har tagits emot skrivs den byte som har tagits emot in i buffern på den position som skrivpekaren pekar på. Därefter ökas pekarens värde ett steg.
 
 \nyBild{USART-buffer.png}{Byte-buffern som USART-biblioteket använder, och vilken data som räknas som tillgänglig och ej ännu läst. En ruta föreställer en byte.}{usartbuffer}{0.6}
 
