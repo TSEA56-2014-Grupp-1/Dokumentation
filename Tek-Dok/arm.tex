@@ -23,28 +23,94 @@ Sensorenheten kommer, när den är klar med sidoscannrarna, skicka tillbaka ett 
 \subsubsection{Inverterad kinematik}
 \label{inverskinematik}
 
-BEHÖVS SKRIVAS OM, KOPIERAT FRÅN DEC-SPEC
+Från sensorenheten ges armenheten en planpolär koordinat för objektet, dvs ett avstånd till föremålet och en vinkel för bottenplattan. Inverterad kinematik innebär att utifrån givna koordinater bestämma vinklar på robotarmens leder för att få armens spets att nå den givna koordinaten. För att reducera problemets komplexitet kunde armen, utifrån den givna vinkeln, ställa in sig mot föremålet och således förenkla det inverterade kinematikproblemet till ett tvådimensionellt sådant.
 
-Positioner anges i ett koordinatsystem relativt armens bas. X anger avstånd i sidled, Y anger avstånd i djupled och Z anger avstånd i höjdled. Armens gripklo hålls horisontell mot underlaget. Då armens rotation i XY-planet endast styrs av armbasens rotation kan det inverterade kinematikproblemet reduceras till ett tvådimensionellt problem. Eftersom gripleden ska hållas horisontell kan även denna led tas ur ekvationen, då den anpassas efter de övriga två ledernas position.
+Problemet som kvarstod blev således att utifrån tre ihopsatta leder finna en lösning för ledvinklarna så att spetsen av kedjan, gripklon, hamnar på den kända positionen för föremålet. Se figur \ref{fig:inv_kin}
 
-%\nyBild{Figur_arm_--_inveterad_kinematik.png}{Figur över koordinatsystem och vinklar som %definierar armens läge.}{arminverskinematik}{1}
+\nyBild{arm_figure.pdf}{2-dimensionell schematisk beskrivning över armen och dess leder.}{inv_kin}{0.7}
 
-I figur \ref{fig:arminverskinematik} ses att origo ligger över marknivå. $\gamma$ kommer vara inställd i den riktning som armen ska röra sig i för att nå föremålet. $\beta$ kommer se till att hålla $L_{3}$ horisontell mot marknivån.
+Genom att betrakta figur \ref{fig:inv_kin} som ett koordinatsystem med en $x$- och en $y$-axel ges gripklons position enligt ekvation \ref{eq:angle_to_coords}.
 
-$$
-\begin{pmatrix}
-	x \\
-	y
-\end{pmatrix}
- = 
-\begin{pmatrix}
-	L_{1}cos(\alpha_{1}) + L_{2}cos(\alpha_{1} + \alpha_{2} - \pi) \\
-	L_{1}sin(\alpha_{1}) + L_{2}sin(\alpha_{1} + \alpha_{2} - \pi)
-\end{pmatrix}$$
+\begin{equation}
+	\label{eq:angle_to_coords}
+	f(\boldsymbol{\alpha})
+	=
+	\begin{pmatrix}
+		L_{1}cos(\alpha_{1}) + L_{2}cos(\alpha_{1} + \alpha_{2}) + L_{3}cos(\alpha_{1} + \alpha_{2} + \alpha_{3})\\
+		L_{1}sin(\alpha_{1}) + L_{2}sin(\alpha_{1} + \alpha_{2}) + L_{3}sin(\alpha_{1} + \alpha_{2} + \alpha_{3})
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		T_x \\
+		T_y
+	\end{pmatrix}
+	,
+	\boldsymbol{\alpha}
+	\in
+	\mathbf{A}
+\end{equation}
+
+$f(\boldsymbol{\alpha})$ har en definitionsmängd $\mathbf{A}$ enligt ekvation \ref{eq:angle_to_coords_domain}. Bivillkoren i mängden $\mathbf{A}$ kommer direkt ifrån robotarmens datablad.
+
+\begin{equation}
+	\label{eq:angle_to_coords_domain}
+	\mathbf{A}
+	=
+	\Set{
+		\boldsymbol{\alpha} \in \mathbb{R}^{3} :
+			0 \leq \alpha_1 \leq \pi,
+			-\pi \leq \alpha_2 \leq 0,
+			\frac{-\pi}{2} \leq \alpha_3 \leq \frac{\pi}{2}}
+\end{equation}
+
+Målet är att finna en funktion $f^{-1}(x, y) = \boldsymbol{\alpha}$, vilket inte är helt lätt för tre leder.
+
+Först väljs $P$ någonstans längs cirkelperiferin runt $T$ med $L_3$ som radie. Valet kommer med fördel alltid ligga på samma höjd som $T$, vilket resulterar i att $L_3$ hålls parallell underlaget, såvida punkten $P$ inte krockar med roboten. Med en känd koordinat $P$ kan vinklarna $\alpha_{1}$ och $\alpha_{2}$ bestämas genom att lösa ekvationssystemet, se ekvation \ref{eq:theta1_linear_eq_solution}. För härledning av ekvationen, se bilaga XX
+
+\begin{equation}
+	\label{eq:theta1_linear_eq_solution}
+	\begin{pmatrix}
+		cos(\alpha_{1})\\
+		sin(\alpha_{1})
+	\end{pmatrix}
+	=
+	\frac{1}{L_1^2 + L_2^2 + 2 L_2 cos(\alpha_{2})}
+	\begin{pmatrix}
+		L_1 + L_2 cos(\alpha_{2}) & L_2 sin(\alpha_{2})\\
+		-L_2 sin(\alpha_{2}) & L_1 + L_2 cos(\alpha_{2})
+	\end{pmatrix}
+	\begin{pmatrix}
+		P_x \\
+		P_y
+	\end{pmatrix}
+\end{equation}
+
+När sinus- och cosinusvärdena är kända för både $\alpha_{1}$ och $\alpha_{2}$ kan den teckenkänsliga funktionen $atan2$ användas för att räkna ut vinklarna enligt ekvation \ref{eq:theta_p_solution}.
+
+\begin{equation}
+	\label{eq:theta_p_solution}
+	\begin{pmatrix}
+		\alpha_{1}\\
+		\alpha_{2}
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		atan2(sin(\alpha_{1}), cos(\alpha_{1}))\\
+		atan2(sin(\alpha_{2}), cos(\alpha_{2}))
+	\end{pmatrix}
+\end{equation}
+
+Eftersom $sin(\alpha_{2})$ har två lösningar uppstår således dubbla lösningar till ekvationssystemet. Därför är det viktigt att stämma av resultatet mot definitionsmängden $\mathbf{A}$.
+
+Väl punkten $P$ och $T$ samt vinklarna $\alpha_{1}$ och $\alpha_{2}$ är kända ges $\alpha_{3}$ enligt ekvation \ref{eq:calc_alpha3}. Därmed är beräkningarna är klara.
+
+\begin{equation}
+	\label{eq:calc_alpha3}
+\alpha_{3} = atan2(sin(T_y - P_y), cos(T_x - P_x)) - \alpha_{2} - \alpha_{1}
+\end{equation}
 
 \subsection{Kopplingsschema}
 %\nyBild{kopplingsschema-arm}{Kopplingsschema över delsystem arm}{kopparm}{1}
-
 
 \subsection{Komponenter}
 
@@ -56,7 +122,6 @@ $$
 \item 1 x Knapp med Resistor, för pullup av reset
 \item 1 x Kondensator, för fördröjning av resetpullup vid start
 \end{packed_itemize}
-
 
 \subsection{Översiktlig beskrivning av programmet}
 
