@@ -16,11 +16,12 @@ Vidare är roboten bestyckad med två stycken sidoskannrar på vardera sida om d
 \item 2 x avståndssensorer (GP2D120)
 \item 2 x resistorer (18~k\ohm), för lågpassfilter
 \item 2 x kondensatorer (100~nF), för lågpassfilter
+\item 1 x EXO-3, kristalloscillator (20 MHz)
 \end{packed_itemize}
 
 \subsection{Sensorer}
 Sensorenheten använder tre olika sensortyper: avståndssensor, linjesensor och RFID-läsare.
-Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning"
+Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning".
 
 \subsubsection{Avståndssensorer}
 Avståndssensorerna används till robotens sidoskannrar. De mäter avstånd genom att skicka ut infrarött ljus som sedan reflekteras tillbaka i en PSD, Position Sensitive Detector. Avståndssensorerna som används fungerar för avstånd mellan \mbox{$4-30$ cm}. Eftersom de först mäter ett digitalt värde och sedan skickar ut en analog spänning uppstår brus på utsignalen. Detta brus är relativt högfrekvent varför det filtreras bort med hjälp av ett lågpassfilter innan signalen når processorn. Se kopplingsschema, figur \ref{fig:senskoppling}.
