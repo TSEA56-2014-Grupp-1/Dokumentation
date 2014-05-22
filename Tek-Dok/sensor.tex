@@ -21,14 +21,14 @@ Vidare är roboten bestyckad med två stycken sidoskannrar på vardera sida om d
 
 \subsection{Sensorer}
 Sensorenheten använder tre olika sensortyper: avståndssensor, linjesensor och RFID-läsare.
-Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning".
+Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga sensorfördjupning.
 
 \subsubsection{Avståndssensorer}
 Avståndssensorerna används till robotens sidoskannrar. De mäter avstånd genom att skicka ut infrarött ljus som sedan reflekteras tillbaka i en PSD, Position Sensitive Detector. Avståndssensorerna som används fungerar för avstånd mellan \mbox{$4-30$ cm}. Eftersom de först mäter ett digitalt värde och sedan skickar ut en analog spänning uppstår brus på utsignalen. Detta brus är relativt högfrekvent varför det filtreras bort med hjälp av ett lågpassfilter innan signalen når processorn. Se kopplingsschema, figur \ref{fig:senskoppling}.
 
-En avläsning från en avståndssensor görs genom att omvandla sensorns analoga utspänning till ett digitalt värde. När A/D-omvandlingen är klar jämförs den A/D-omvanldade spänningen med en tabell över kända avstånd och spänningar för att översätta denna till ett avstånd i millimeter. Värden som inte finns i tabellen beräknas med linjärinterpolering. 
+En avläsning från en avståndssensor görs genom att omvandla sensorns analoga utspänning till ett digitalt värde. När A/D-omvandlingen är klar jämförs den A/D-omvandlade spänningen med en tabell över kända avstånd och spänningar för att översätta denna till ett avstånd i millimeter. Värden som inte finns i tabellen beräknas med linjärinterpolering. 
 
-Avståndssensorerna är inom det intervall de är designade att arbeta kapabla till att uppnå hög precision men olika föremål kan få avståndssensorn att ge ut olika spänningar för samma avstånd. Detta leder till att det är av stor vikt att alla avståndssensorer kalibreras i den miljö de är tänkta att användas. Avståndssensorerna har även ett område inom vilket de klarar av att känna av avstånd. Detta område breder huvudsakligen ut sig i horisontell led. Detta har på roboten tagits i beaktning genom att montera de avståndssensorer som sitter på sidoscannrarna vertikalt snarare än horisontellt.
+Avståndssensorerna är, inom det intervall de är designade att arbeta, kapabla till att uppnå hög precision men olika föremål kan få avståndssensorn att ge ut olika spänningar för samma avstånd. Detta leder till att det är av stor vikt att alla avståndssensorer kalibreras i den miljö de är tänkta att användas. Avståndssensorerna har även ett område inom vilket de klarar av att känna av avstånd. Detta område breder huvudsakligen ut sig i horisontell led. Detta har på roboten tagits i beaktning genom att montera de avståndssensorer som sitter på sidoscannrarna vertikalt snarare än horisontellt.
 
 \subsubsection{Linjesensor}
 Reflexsensormodulen består av en uppsättning IR-dioder och fototransistorer som tillsammans används för att mäta reflektiviteten hos underlaget. Eftersom reflexsensormodulen består av 11~stycken separata IR-dioder och fototransistorer används en multiplexer och en demultiplexer för att styra sensorn. Demultiplexern driver IR-dioderna och multiplexern används för att ta in insignalerna från fototransistorerna. Linjesensorn kommer att vara kopplad i enlighet med kopplingsschemat i figur \ref{fig:senskoppling}.
