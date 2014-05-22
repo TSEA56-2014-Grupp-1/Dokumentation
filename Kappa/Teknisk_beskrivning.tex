@@ -1,35 +1,34 @@
 
-\section{Teknisk Beskrivning}
+\section{Teknisk beskrivning}
 
-Roboten är uppdelad i fyra olika delsystem med varsitt ansvarsområde som vart och ett löser ett tydligt delproblem. Det första av delsystemen, kallat chassit, kontrollerar motorer och har en regleralgoritm för att se till att roboten följer linjen. Denna enhet har även det övergripande ansvaret för roboten. Det betyder till exempel att den säger till delsystem arm då det är dags att plocka upp ett föremål. Detta innebär att den också ansvarar för föremål ställs ned och plockas upp på rätt station.
+Roboten är uppdelad i fyra olika delsystem med varsitt ansvarsområde som vart och ett löser ett tydligt delproblem. Det första av delsystemen, kallat chassit, kontrollerar motorer och har en regleralgoritm för att se till att roboten följer linjen. Denna enhet har även det övergripande ansvaret för roboten. Det betyder till exempel att den säger till delsystem arm då det är dags att plocka upp ett föremål. Detta innebär att den också ansvarar för att föremål ställs ned och plockas upp på rätt station.
 
-Delsystem arm kontrollerar och styr de servon som sitter i robotarmen och ansvarar för funktionaliteten som krävs för att plocka upp samt sätta ner föremål vid plockstationerna.
+Armenheten kontrollerar och styr de servon som sitter i robotarmen och ansvarar för funktionaliteten som krävs för att plocka upp samt sätta ner föremål vid plockstationerna.
 
-Sensorenheten är den enhet som samlar in den information som resten av roboten använder för att ta de styrbeslut som krävs för att slutföra uppgiften. Denna enhet fungerar passivt och svarar bara på förfrågningar av andra enheter och tar inga egna initiativ för att samla information.
+Sensorenheten är den enhet som samlar in den information som resten av roboten använder för att ta de styrbeslut som krävs för att slutföra uppgiften. Denna enhet svarar bara på förfrågningar av andra enheter och tar inga egna initiativ för att börja samla information.
 
-Kommunikationsenhetens uppgift är att kommunicera relevant information ut till omvärlden. Detta görs dels till datorn med hjälp av blåtand, och dels med hjälp av en display monterad på roboten. Även denna fungerar som en slav och ser endast till att skriva saker på displayen då någon säger åt den att göra detta. Den vidarebefordrar också data korrekt mellan robotens delsystem och en persondator via bussen samt blåtand.
+Kommunikationsenhetens uppgift är att kommunicera relevant information ut till omvärlden. Detta görs dels till datorn med hjälp av blåtand, dels med hjälp av en LCD-skärm monterad på roboten. Även denna fungerar som en slav och skriver endast saker på skärmen då någon säger åt den att göra det. Den vidarebefordrar också data mellan robotens delsystem och en persondator via bussen samt blåtand.
 
-\nyBild{Robot_oversikt.png}{Förklaring av robotens delar}{Robot_översikt}{0.8}
+\nyBild{Robot_oversikt.png}{Översikt över robotens delar}{robotoversikt}{0.8}
 
 %\begin{test}
 %  \LIPSversionsinfo{0.1}{2014-05-20}{Första utkast.}{EN}{LN}
 %\end{test}
 %\newpage
 
-\begin{center}
-    \begin{tabular}{| l | l | l |}
-    \hline
-   \textbf{Nr} &  \textbf{Komponent} &  \textbf{Förklaring} \\ \hline
-    1 & Microcontroller ATmega 1284P & Sensorenhetens processor \\ \hline
- 2 & Omkopplare & Strömbrytare till batteriet \\ \hline
- 3 & Resetknapp & Nollställer sensorenhetens processor \\ \hline
- 4 & Microcontroller ATmega 1284P & Kommunikationsenhetens processor \\ \hline
- 5 & Microcontroller ATmega 1284P & Armenhetens processor \\ \hline
- 6 & Bluetoothenhet BlueSMiRF Gold &  För kommunikation mellan persondator och roboten\\ \hline
- 7 & Resetknapp & Nollställer armenhetens och kommunikationsenhetens processorer \\ \hline
- 8 & Startknapp för Auto-läge & För att starta autonom drift \\ \hline
-9 & Resetknapp & Nollställer chassienhetens processor \\ \hline
-10 & Microkontroller ATmega 1284P & Chassienhetens processor \\ \hline
-11 & Auto/manuell-omkopplare & För att växla mellan autonom och manuell styrning \\ \hline
-    \end{tabular}
-\end{center}
+Figur \ref{fig:robotoversikt} visar huvuddelarna på kretskorten med följande numrering:
+\begin{packed_enumerate}
+\item Strömbrytare till batteriet
+\item Sensorenhetens processor
+\item Knapp för nollställning av sensorenhet
+\item Blåtandsmodem för kommunikation mellan robot och persondator
+\item Kommunikationsenhetens processor
+\item Armenhetens processor
+\item Knapp för nollställning av kommunikationsenhetens och armenhetens processorer
+\item Knapp för att påbörja linjeföljning i autonomt läge
+\item Knapp för nollställning av chassienhetens processor
+\item Chassienhetens processor
+\item Omkopplare för val av autonomt eller manuellt läge
+\end{packed_enumerate}
+
+

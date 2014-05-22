@@ -1,13 +1,16 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage{graphicx}
 
+\usepackage[hidelinks=true, bookmarks=true]{hyperref}
 \usepackage{epstopdf}
 \usepackage{gensymb}
 \usepackage{float}
 \usepackage{mathtools}
 \usepackage{setspace}
 \usepackage{tabularx}
+\usepackage{appendix}
 \usepackage{svg}
+
 
 \title{Kandidatprojektsrapport}
 \input{LIPS.tex}
@@ -29,7 +32,7 @@
 
 \newcommand{\LIPSprojektgrupp}{Grupp 1}
 \newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
-\newcommand{\LIPSdokumentansvarig}{LIPS Kandidatrapport}
+\newcommand{\LIPSdokumentansvarig}{Kandidatrapport}
 
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
@@ -37,9 +40,26 @@
 \newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
 
 
-\newcommand{\LIPSdokumenttyp}{Kandidatrapport}
-\newcommand{\LIPSredaktor}{Erik Nybom}
-\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSdokumenttyp}{Lagerrobot 
+
+ \Large{Kandidatprojekt i elektronik}}
+\newcommand{\LIPSredaktor}{Johan Lind 
+
+Karl Linderhed 
+
+Lucas Nilsson 
+
+Philip Nilsson 
+
+Patrik Nyberg 
+
+Erik Nybom 
+
+Andreas Runfalk 
+
+}
+
+\newcommand{\LIPSversion}{1.0}
 \newcommand{\LIPSdatum}{\dagensdatum}
 
 \newcommand{\LIPSgranskare}{}
@@ -72,7 +92,7 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 %\addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-  \LIPSversionsinfo{0.1}{2014-05-20}{Första utkast.}{EN}{LN}
+  \LIPSversionsinfo{1.0}{2014-05-21}{Ursprunglig version}{EN}{Alla gruppmedlemmar}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -96,46 +116,17 @@
 \newpage
 
 
-
-\begin{thebibliography}{9}
-\addcontentsline{toc}{section}{Referenser}
-
-\bibitem{vanheden} ISY \emph{Hemsidan Vanheden}
-\\ https://docs.isy.liu.se/twiki/bin/view/VanHeden
-
-\bibitem{dyn-manual} Robotis, 2006, \emph{User's Manual Dynamixel AX-12}
-\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf, hämtad 2014-03-20
-
-\bibitem{hobbyservo} Vanheden 2003, \emph{Servostyrning}
-\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/servostyrning.pdf, hämtad 2014-03-19
-
-\bibitem{ATmega1284P} Atmel Corporation, 2009, \emph{ATmega 1284P Data sheet}
-\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/atmega1284p.pdf, hämtad 2014-03-20
-
-\bibitem{ana-servo} Anaheim Automation Inc., 2011, \emph{Servo motor guide}
-\\ http://www.anaheimautomation.com/manuals/forms/servo-motor-guide.php, hämtad 2014-03-20
-
-\bibitem{Linjesensor} ISY.  \emph{Reflexsensormodulen} Hämtat från Vanheden: 
-\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/reflexsensormodul.pdf 
-
-\bibitem{RFID-reader} Parallax Inc., 2008, \emph{RFID Card Reader, Serial} Hämtat från Vanheden: 
-\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/rfid-reader-v21.pdf
-
-\bibitem{distance-sensor} SHARP. \emph{GP2D120} Hämtat från Vanheden: 
-\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/gp2d120.pdf
-
-\bibitem{PWM} ISY \emph{Motorstyrning med PWM} Hämtat från Vanheden:
-\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/pwm-motorstyrning.pdf
-
-%\bibitem{Interruptvektorer} \emph{Sida om interruptvektorer i C} 
-%\\ http://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html
+%
+%\begin{thebibliography}{9}
+%\addcontentsline{toc}{section}{Referenser}
 
 
-\end{thebibliography}
 
-\newpage
+
+%\end{thebibliography}
+
+%\newpage
 \appendix
-
 \input{bilaga.tex}
 
 \end{document} 

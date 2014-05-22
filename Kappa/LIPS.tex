@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{times}
 \usepackage{ifthen}
+\usepackage[labelfont=it]{caption}
 
 \usepackage[margin=25mm]{geometry}
 
@@ -37,8 +38,8 @@
 \newcommand{\nyBild}[4] 
 {\begin{figure}[H]
   \centering
- \includegraphics[angle=0,width=#4\textwidth]{bilder/#1}
-  \caption{#2}
+ \emph{\includegraphics[angle=0,width=#4\textwidth]{bilder/#1}}
+  \caption{\emph{#2}}
   \label{fig:#3}
 \end{figure}}
 
@@ -52,22 +53,22 @@
   \textbf{\Huge {\sffamily \LIPSdokumenttyp}}
 \end{center}
 \begin{center}
-  {\Large Redaktör: \LIPSredaktor}
+  {\Large \LIPSredaktor}
 \end{center}
-\begin{center}
-  {\Large Version \LIPSversion}
-\end{center}
-\vspace{100mm}
-\begin{center}
-  {\large Status}\\[1.5ex]
-  \begin{tabular}{|*{3}{p{40mm}|}}
-    \hline
-    Granskad & \LIPSgranskare & \LIPSgranskatdatum \\
-    \hline
-    Godkänd & \LIPSgodkannare & \LIPSgodkantdatum \\
-    \hline
-  \end{tabular}
-\end{center}
+%\begin{center}
+%  {\Large Version \LIPSversion}
+%\end{center}
+\vspace{60mm}
+%\begin{center}
+%  {\large Status}\\[1.5ex]
+%  \begin{tabular}{|*{3}{p{40mm}|}}
+%    \hline
+%    Granskad & \LIPSgranskare & \LIPSgranskatdatum \\
+%    \hline
+%    Godkänd & \LIPSgodkannare & \LIPSgodkantdatum \\
+%    \hline
+%  \end{tabular}
+%\end{center}
 \newpage
 }
 
@@ -78,7 +79,7 @@
   {\Large PROJEKTIDENTITET}\\[0.5ex]
   {\small
   \LIPSprojektgrupp, \LIPSartaltermin, \LIPSprojekttitel\\
-  Linköpings tekniska högskola, ISY
+  Tekniska högskolan vid Linköpings universitet, ISY
   }
 \end{center}
 \begin{center}
