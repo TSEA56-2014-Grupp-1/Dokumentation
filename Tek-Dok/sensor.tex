@@ -1,8 +1,4 @@
 \section{Sensorenhet}
-\emph{Det här avsnittet ska innehålla mera detaljerade blockscheman och beskrivningar av modulen.
-Tänk på läsbarheten och växla mellan figurer och text.}
-
-\subsection{Funktion}
 Sensorenhetens uppgift är att samla in rådata från de olika sensorerna och formatera denna til information som är användbar för robotens övriga delsystem. På begäran av andra delsystem skickar sensorenheten ut data via bussen. Sensorenheten är utrustad
 med en linjesensor vars uppgift är att ge information om robotens position i förhållande till tejplinjen. Informationen används som styrdata och skickas över bussen i form av en tyngdpunkt till chassimodulen för styrreglering.
 
@@ -20,11 +16,12 @@ Vidare är roboten bestyckad med två stycken sidoskannrar på vardera sida om d
 \item 2 x avståndssensorer (GP2D120)
 \item 2 x resistorer (18~k\ohm), för lågpassfilter
 \item 2 x kondensatorer (100~nF), för lågpassfilter
+\item 1 x EXO-3, kristalloscillator (20 MHz)
 \end{packed_itemize}
 
 \subsection{Sensorer}
 Sensorenheten använder tre olika sensortyper: avståndssensor, linjesensor och RFID-läsare.
-Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning"
+Dessa beskrivs kortfattat nedan. En djupare beskrivning av hur komponenterna fungerar finns i bilaga "sensorfördjupning".
 
 \subsubsection{Avståndssensorer}
 Avståndssensorerna används till robotens sidoskannrar. De mäter avstånd genom att skicka ut infrarött ljus som sedan reflekteras tillbaka i en PSD, Position Sensitive Detector. Avståndssensorerna som används fungerar för avstånd mellan \mbox{$4-30$ cm}. Eftersom de först mäter ett digitalt värde och sedan skickar ut en analog spänning uppstår brus på utsignalen. Detta brus är relativt högfrekvent varför det filtreras bort med hjälp av ett lågpassfilter innan signalen når processorn. Se kopplingsschema, figur \ref{fig:senskoppling}.
@@ -51,7 +48,7 @@ För att få ett servot att svepa över robotens ena sida ökas pulsbredden inkr
 
 När avståndssensorn däremot påträffar ett föremål inom armens räckvidd sparas både vinkeln som servot står i och avståndet till föremålet undan innan sidoskannern stegar upp igen. För varje vinkel som avståndssensorerna fortfarande träffar föremålet sparas avståndet undan och slutligen även den sista vinkeln då den fortfarande träffade ett föremål.
 
-Den vinkel som föremålet slutligen beräknas stå i ligger mitt emellan den första och sista vinkeln som föremålet detekterats i. Vidare beräknas avståndet till föremålet som medianen av 20 stycken mätningar för att på så sätt minimera den inverkan som kraftigt avvikande värden annars skulle kunna få. Medelvinkeln $\alpha$ och medianavståndet $L$ används sedan för att beräkna en koordinat utifrån vilken armen sedan kan plocka upp föremålet. Denna koordinat är planpolär och består således av en vinkel $\beta$ och ett avstånd, $R$. Här är $\beta$ den vinkel som basplattan ska stå i för att armen ska vara riktad mot föremålet och $R$ är avståndet från robotens mittpunkt ut till föremålet. Se figur \ref{fig:sidoskanner}
+Den vinkel som föremålet slutligen beräknas stå i ligger mitt emellan den första och sista vinkeln där föremålet detekterats. Vidare beräknas avståndet till föremålet som medianen av 20 stycken mätningar för att på så sätt minimera den inverkan som kraftigt avvikande värden annars skulle kunna få. Medelvinkeln $\alpha$ och medianavståndet $L$ används sedan för att beräkna en koordinat utifrån vilken armen kan plocka upp föremålet. Denna koordinat är planpolär och består således av en vinkel $\beta$ och ett avstånd, $R$. Här är $\beta$ den vinkel som basplattan ska stå i för att armen ska vara riktad mot föremålet och $R$ är avståndet från robotens mittpunkt ut till föremålet. Se figur \ref{fig:sidoskanner}
 \nyBild{sidoskanner.png}{Vänster sidoskanner.}{sidoskanner}{0.7}
 
 \subsection{Översiktlig beskrivning av programmet}
@@ -84,7 +81,7 @@ R \\ \beta
 
 Plockstationsdetektering sker genom att roboten först och främst kontrollerar huruvida linjesensorn registrerar tejp utöver den tejpade linjen. Ifall att de fyra sensorerna längst ut antingen till höger eller vänster på reflexsensormodulen indikerar tejp innebär detta att vi antingen är vid en plockstation eller vid en korsning. Först när det har skett 2000 A/D-omvandlingar kommer roboten att stanna på en plockstation. Under denna tid kommer roboten fortlöpande att kontrollera huruvida linjesensorn registrerar tejp på den andra sidan om roboten. På detta sätt säkerställs att roboten inte stannar vid korsningar. Om den å andra sidan registrerar tejp på andra sidan också innebär det korsning och den kan köra vidare. 
 
-Vid tejpavbrott kommer tyngdpunkten hamna i mitten och resultera i att roboten kör rakt fram.
+För att hantera avbrott i tejplinjen kontrolleras fortlöpande huruvida roboten är över en linje. I det fall att roboten tappar linjen helt och hållet så kommer den utifrån sensorenheten skickade tyngdpunkten att vara 127, vilket motsvarar att linjen ligger på mitten. Eftersom att avbrott i tejpen i enlighet med banspecifikationen som längst får vara 10 centimeter långa är detta tillvägagångssätt fullt tillräckligt för att hantera avbrott i tejpen.
  
 %\nyBild{programfl_de-_sensorenheten_uppdaterar_variabler.jpg}{Programflöde för att upptäcka korsning eller plockstation}{senskorsning}{0.8}
 
