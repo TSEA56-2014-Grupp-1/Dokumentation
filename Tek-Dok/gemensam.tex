@@ -37,5 +37,41 @@ För att skicka data används funktionen \verb|usart_write_byte| som undersöker
 \subsection{Intern buss}
 \label{sec:bus}
 
+För att delsystem internt ska kunna kommuicera med varandra finns en intern buss av typen multimaster I$^2$C\footnote{Inter-Integrated Circuit, en synkron seriell multimasterbuss.} implementerad.
+
+\subsubsection{Protokoll}
+\label{sec:bus-protokoll}
+Alla transaktioner består utav en adress med en skriv- eller läsbit, följt av två bytes med data. Då enheten som initierat kontakten (master) vill skriva ut på bussen består de första 5 bitarna av ett id. Detta id bestämmer vilken funktion hos slaven som ska hantera den data som överförs i de resterande 11 bitarna.
+
+\nyBild{Buss-protokoll.pdf}{En lyckad skrivning från master till slav. Om NACK skulle ha returnerats istället för ACK kommer överföringen att avbrytas.}{busstransaktion}{1}
+
+I fallet att master vill göra en förfrågan på bussen gör den först en skrivning till slaven. Detta gör då att slaven kör funktionen på det id den fick med de resterande 11 bitar som inargument. Denna funktion returnerar ett 16 bitars värde vilket kommer vara det värde som skickas ut då mastern sedan begär en läsning från slaven. Mellan dessa två transaktioner är det viktigt att mastern inte släpper kontroll över bussen, eftersom slaven då skulle kunna returnera fel värde om en annan enhet skrivit till den efter den första transaktionen.
+
+\subsubsection{Implementation}
+\label{sec:bus-implementation}
+Bussen är implementeras så att alla enheter kan initiera en transaktion och därmed kan alla enheter vara master på bussen. Detta gör att två eller fler enheter kan börja kommunicera på bussen samtidigt. Då detta sker kommer den enhet som skickar en låg bit först att vinna bussen och fortsätta med sin transaktion. De andra enheterna kommer då upphöra med sina transaktioner och efter att ett stop skickats på bussen kommer de att försöka igen. Detta kommer enheterna att göra tills dessa att de lyckats med en transaktion.
+
+\begin{table}[H]
+\centering
+\label{adress-buss}
+\begin{tabularx}{0.5\textwidth}{|X|X|}
+\hline
+\textbf{Enhet} & \textbf{Adress} \\ \hline
+Sensor & 4 \\ \hline
+Kommunikation & 5 \\ \hline
+Chassi & 1 \\ \hline
+Arm & 6 \\ \hline
+\end{tabularx}
+\caption{Adresser till de olika delsystem på den interna bussen.}
+\end{table}
+
+När en enhet gör en transaktion på bussen och enheten som tar emot data returnerar NACK (no acknowledgement) efter någon byte i överförningen kommer transaktionen att avbrytas och en ny kommer inte att startas.
+
+För att bestämma vilken funktion som ska hantera data på vilket id finns funktionerna \verb|bus_register_receive|, som registrerar en funktion för mottagen data, samt \verb|bus_register_response| som registrerar en funktion då data ska returneras över bussen. 
+
+Funktionen för att skicka data på bussen är \verb|bus_transmitt|, och för att göra en förfrågan finns \verb|bus_request|. Båda dessa returnerar 0 då transaktionen lyckades. Detta innebär att om användaren vill vara säker på att en transaktion ska gå fram på bussen måste dessa funktioner köras tills dess att de returnerar 0.
+
+Hastigheten på bussen har valts till så låg som möjligt, detta för att få maximal stabilitet. Eftersom hastigheten sätts genom en division av klockhastigheten till processorn kommer bussen att gå olika fort beroende av vilken enhet som är master. Detta innebär att hastigheten varierar mellan cirka 70 och 90 kHz.
+
 \subsection{Utmatning på LCD-display}
 \label{sec:lcd_interface}
