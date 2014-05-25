@@ -87,26 +87,28 @@ Projektet gjordes med avsikten att ge studenterna bildning och erfarenhet att ut
 
 
 \section{Produktbeskrivning}
-Produkten är en robot ihopbyggd av ett chassi av plexiglas varpå fyra hjul, sensorer, en arm och kretskort är fastmonterad, utöver detta finns en programvara för övervakning och styrning av roboten.
+Produkten är en robot bestående av ett chassi av plexiglas varpå fyra hjul, sensorer, en arm och kretskort. Utöver detta finns en programvara för övervakning och manövrering av roboten.
 
-Roboten har som avsikt att användas i ett lager där den genom beordning manuellt eller autonomt hämtar och lämtar lagervaror. Lagerarbetet görs genom att följa svartmarkerad linje på marken där stationer är markerade med ett svart sträck rakt ut åt det håll stationen är tillsammans med en RFID-tag för att roboten att kunna identifiera stationen. Utefter preferens kan den styras manuellt med programvaran eller köra och hämta/lämna föremål automatiskt.
+Roboten är tänkt att användas i ett lager där den autonomt eller genom manuell beordring hämtar och lämnar lagervaror. Lagerarbetet görs genom att följa en svart linje längs marken där stationer är markerade med ett svart sträck, vinkelrätt banan, i den riktning stationen befinner sig. Undertill stationerna finns en RFID-tagg för identifiering av stationstypen, upplockning eller avlämning.
+
+Skriva mer????
 
 \section{Teori}
 \emph{Beskrivning av regleralgoritmer m.m.}
 
 \section{Systemöversikt}
-Roboten är uppbyggd av fyra olika delsystem (chassi, sensor, arm och kommunikation) som vart och ett har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har också en programvara till en dator utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt och i ett autonomt läge, här kan man välja om man endast vill ha automatisk linjeföljning, endast automatiskt föremålsupplockning eller om man vill ha all funktionallitet automatisk.
+Roboten är uppbyggd av fyra olika delsystem kallade chassi, sensor, arm och kommunikation där var och en av dem har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har en programvara till en dator utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt, fullständigt manuellt läge och i ett autonomt läge, där möjligheten att styra vissa delar manuellt fortfarande ges.
 
 \subsection{Delsystemsöversikt}
 Sensorenheten övervakar kontinuerligt de olika sensorerna roboten har och omvandlar den råa sensordatan till systemanvändbara enheter för att sedan kunna skicka dessa vidare till andra delsystem vid förfrågan.
 
-Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den kan bli tillfrågad och skicka bekräftelse om de beslut som roboten gör samt status över de olika delsystemen och omgivningsobservationer. Vidare är kommunikationsenheten utrustad med en display vilken används för att visa upp en del av den sensordata som samlas in.
+Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den kan bli tillfrågad att skicka bekräftelser om de beslut som roboten tar samt status för de olika delsystemen och omgivningsobservationer. Vidare är kommunikationsenheten utrustad med en display vilken används för att visa upp en del av den sensordata som samlas in.
 
-Chassienheten fungerar som det handlingsbeslutande organet på roboten. Den vet vid autonomt läge hur roboten ska agera vid olika situationer. Den styr också hjulen på roboten, det vill säga att den genom sensordata och reglering beräknar hastighet på hjulen för att kunna svänga och hålla kursen längst banan.
+Chassienheten fungerar som det handlingsbeslutande organet på roboten. Den vet vid autonomt läge hur roboten ska agera vid olika situationer. Chassienheten samverkar med sensorenheten och ser till att roboten följer linjen, genom reglering av hjulens gaspådrag, baserat på den sensordata sensorenheten kan tillhandahålla. 
 
-Armenheten kan vid en avhämtningsstation, utifrån identifiering av var ett objekt befinner sig, kunna plocka upp detta med robotarmen som är monterad på chassit. Den har kontroll över samtliga servon och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led skall röra sig för nå objektet och för att plocka upp det.
+Armenheten kan vid en upplockningsstation, med vetskapen om var ett objekt befinner sig, kunna plocka upp objektet med robotarmen. Den har kontroll över samtliga servon och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led ska röra sig för nå objektet för att sedan plocka upp det.
 
-Den datorbaserade programvaran består av ett instrumentbräde där användaren kan se robotens vilka beslut som tas av roboten samt vilka sensordata de olika sensorerna tar in. Vidare kan roboten styras utifrån det grafiska gränssnittet, med avseende på både robotarm och chassi.
+Den datorbaserade programvaran består av ett instrumentbräde där användaren kan se vilka beslut som tas av roboten samt vilka sensordata de olika sensorerna får in. Vidare kan roboten, inklusive armen, styras genom kommandon i det grafiska gränssnittet.
 
 \subsection{Sensorer och sensorplacering}
 
