@@ -1,0 +1,331 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{setspace}
+\usepackage{tabularx}
+\title{Teknisk Dokumentation}
+\input{LIPS.tex}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\frenchspacing
+
+\renewcommand{\thepage}{\roman{page}}
+
+\newcommand{\LIPSartaltermin}{VT14}
+\newcommand{\LIPSkursnamn}{TSEA56 Elektronik kandidatprojekt}
+
+\newcommand{\LIPSprojekttitel}{Lagerrobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 1}
+\newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
+\newcommand{\LIPSdokumentansvarig}{LIPS Teknisk Dokumentation}
+
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-28 13 68, 3B:528, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
+
+
+\newcommand{\LIPSdokumenttyp}{Användarmanual}
+\newcommand{\LIPSredaktor}{Lucas Nilsson}
+\newcommand{\LIPSversion}{1.0}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Karl Linderhed}{Projektledare (PL)}{073-679 59 59}{karli315@student.liu.se}
+  \LIPSgruppmedlem{Patrik Nyberg}{Dokumentansvarig (DOK)}{073 -049 59 90}{patny205@student.liu.se}
+  \LIPSgruppmedlem{Johan Lind}{}{070-897 58 24}{johli887@student.liu.se}
+  \LIPSgruppmedlem{Erik Nybom}{}{070-022 47 85}{eriny778@student.liu.se}
+  \LIPSgruppmedlem{Andreas Runfalk}{}{070-564 23 79}{andru411@student.liu.se}
+  \LIPSgruppmedlem{Philip Nilsson}{}{073-528 48 86}{phini326@student.liu.se}
+  \LIPSgruppmedlem{Lucas Nilsson}{}{073-059 42 94}{lucni395@student.liu.se}
+\end{LIPSprojektidentitet}
+
+
+\renewcommand*\contentsname{Innehåll}
+\begin{spacing}{0.5}
+\tableofcontents{}
+\end{spacing}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+%\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+  \LIPSversionsinfo{1.0}{}{}{}{}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+\section{Allmänt}
+Produkten är en lagerrobot med uppgiften att i en lagermiljö kunna bli beordrad att förflytta föremål mellan lagerplatser. Roboten är konstruerad att kunna följa svart linje på marken och stanna vid utmarkerade platser för att hämta eller lämna föremål. Användaren kan välja att kontrollera roboten manuellt eller låta den agera autonomt.
+
+\section{Krav på omgivning}
+Roboten är designad för att kunna manövrera sig fram längs med en linje vars luminans är betydligt mindre än underlagets. Denna mörka linje bör vara mellan 14-18 mm bred. Upplockningsstationer indikeras med en annan linje på cirka 10 cm vinkelrätt ut från körbanan. Banan är en sluten slinga och får endast korsas i en rät vinkel. Kurvor i körbanan ska ha en radie på minst 25cm. 
+
+Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakloss och en maxvikt på 200g. Dess placering i förhållande till linjen bör vara inom armens räckvidd men inte heller för nära roboten. Mer om banans utformning i bilaga \ref{banspecifikation}.  
+
+%
+%----------------------------------------
+%
+
+\section{Användning av roboten}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{oversikt_handledning.pdf}
+	\caption{Roboten sett ovanifrån med knappar, display och blåtandsenhet markerad och numrerad}
+	\label{fig:robot_oversikt}
+\end{figure}
+
+I figur \ref{fig:robot_oversikt} är komponenter som är behövliga vid användning av roboten numrerade, nedan kommer dessa refereras till i texten med knappens siffra, till exempel refererar texten till LCD-skärmen med (4).
+
+Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Läs igenom all säkerhetsdokumentation och varningar innan denna kopplas på, se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inget sitter löst eller är sönder. INSTALLERA PROGRAMVARA, HUR?! :D:D:D:d
+
+\subsection{Uppstart av system}
+Vid uppstart:
+\begin{enumerate}
+    \item Sätt omkopplaren (1) i dess mittenläge.
+    \item Koppla in batteriet.
+    \item Se till att roboten befinner sig på en öppen yta.
+    \item Sätt på strömen genom att dra omkopplaren (1) åt höger i bild. Armen kommer röra sig till sitt grundläge.
+    \item LCD-skärmen (4) ska visa ett start-meddelande. Om inget syns kan man prova att vrida medsols på vred (5) tills att texten syns.
+    \item  Nu är roboten redo att användas. För användning, starta uppkoppling mot PC, se \ref{subsec:start_pc}.
+\end{enumerate}
+
+\subsection{Koppla upp PC mot roboten}
+\label{subsec:start_pc}
+Innan programvaran används, se till att roboten har ström och att röd lampa på blåtandsenheten (3) blinkar rött. För att starta programvara:
+\begin{enumerate}
+    \item Lokalisera och öppna filen “PC-PROGRAMVARA?!”  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
+    \item Tryck på flik (SIFFRA) längst upp i vänstra hörnet för att sedan trycka på “CONNECT?!”
+    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa “YEEEEE”. Nu är uppkopplingen mot roboten igång. 
+\end{enumerate}
+
+\subsection{Använda i manuellt läge}
+När roboten har uppkoppling till PC kan manuellt läge initieras enligt:
+\begin{enumerate}
+    \item Dra omkopplare (9) uppåt i bild.
+    \item Använd sedan PC-programvara för att styra roboten, se \ref{subsec:motor}
+\end{enumerate}
+
+\subsection{Använda i automatiskt läge}
+När roboten har uppkoppling till PC kan automatiskt läge initieras enligt:
+\begin{enumerate}
+    \item Dra omkopplare (9) nedåt i bild.
+    \item Placera roboten någonstans på banans linje. 
+    \item Tryck på den blåa knappen (7) så börjar roboten direkt köra per automatik. För att se och tolka det roboten observerar från omgiviningen och de beslut som tas, se \ref{subsec:sensor} och \ref{subsec:diag}.
+\end{enumerate}
+
+\subsection{Starta om och nollställa roboten}
+När roboten är påslagen och vill nollställas kan följande göras:
+\begin{itemize}
+\item Slå av och sedan på omkopplare (1) för att starta om och nollställa hela roboten.
+\item Tryck på röd knapp (2) för att nollställa sensorenheten
+\item Tryck på svart knapp (6) för att nollställa armenheten och kommunikationsenheten.
+\item Tryck på svart knapp (8) för att nollställa chassienheten. 
+\end{itemize}
+
+\subsection{Använda i automatiskt läge}
+\begin{enumerate}
+    \item Sätt omkopplare (1) i dess mittläge.
+    \item Dra ut batteriet ur roboten och lägg den i säkert förvar.
+\end{enumerate}
+
+\subsection{Tolka LCD-skärm}
+LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. "A:" är meddelande från armenheten, "C:" är meddelande från Chassienheten, "K:" är meddelande från kommunikationsenheten och "S:" är meddelande från sensorenheten. 
+I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
+
+\begin{table}[H]
+\centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
+    \end{tabularx}
+\caption{Tolkning av meddelande som visas på LCD-skärmen}
+\label{tab:lcd}
+\end{table}
+
+\subsection{Stänga av roboten}
+\begin{enumerate}
+\item Sätt omkopplare (1) i dess mittläge.
+\item Dra ut batteriet ur roboten och lägg den i säkert förvar.
+\end{enumerate}
+%
+%----------------------------------------
+%
+\section{Använda datorgränssnittet}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{PC_manual.pdf}
+	\caption{Översiktlig bild av datorgränssnittet och dess olika delar}
+	\label{fig:pc_oversikt}
+\end{figure}
+
+Vid manuellt läge kan användaren via gränssnittet på PC styra roboten utefter behag. I automatiskt läge kan information om sensorvärden samt beslut som roboten tar observeras, nedan finns en beskrivning över vad programvaran kan användas till vid manuell och automatiskt läge. 
+
+\subsection{Motorstyrning}
+\label{subsec:motor}
+Säkerställ först att roboten är uppkopplad till PC via blåtand innan användning. Figur \ref{fig:pc_motor} visar instrumentbrädet för motorstyrning och tabell \ref{tab:motor} dess funktionallitet.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{man_motor1.pdf}
+	\caption{Grafik över instrumentbräde för manuell styrning av roboten}
+	\label{fig:pc_motor}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline \textbf{Knapp / textfält} & \textbf{Funktion} \\ \hline
+Fram & Ökar alla hjulens hastighet frammåt för varje användning. \\ \hline
+Bak & Ökar alla hjulens hastighet bakåt för varje användning. \\ \hline
+Vänster & Ökar hastighet hos höger hjulpar och minskar hastighet hos vänster hjulpar så att roboten svänger vänster, alternativt roterar. \\ \hline
+Höger & Ökar hastighet hos vänster hjulpar och minskar hastighet hos höger hjulpar så att roboten svänger vänster, alternativt roterar. \\ \hline
+STOP & Stannar alla hjulen. \\ \hline
+Starta linjeföljning & Roboten börjar följa linje automatiskt. \\ \hline
+Stoppa linjeföljning & Roboten slutar följa linje automatiskt. \\ \hline
+Kalibrera tejp & Används för att kalibrera linjesensorerna så att de vet skillnad på golvet och markerad linje. Går endast när roboten står på linjen. \\ \hline
+Kd & Skriv in storleken på linjeföljningsreglerarens deriverande beroende. \\ \hline
+Kp & Skriv in storleken på linjeföljningsreglerarens proportionella beroende. \\ \hline
+Send Kp and Kd & Skickar de värden som skrivits in i textfältet vid Kd och Kp till robototen som börjar reglera efter dessa. \\ \hline
+
+\end{tabularx}
+\caption{Tabell över funktionallitet hos manuella motorstyrningens instrumentbräde}
+\label{tab:motor}
+\end{table}
+
+\subsection{Armrörelse}
+Säkerställ först att roboten är uppkopplad till PC via blåtand innan användning. Nedan visas i figur \ref{fig:pc_arm} ett intrumentbräde för armrörelse samt i tabell \ref{tab:arm} dess funktionallitet.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{armrorelse.pdf}
+	\caption{Grafik över instrumentbräde för styrning av robotens arm}
+	\label{fig:pc_arm}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline \textbf{Knapp / textfält} & \textbf{Funktion} \\ \hline
+        Gripklo: Stäng& Stänger gripklo tills dess att den har stadigt grepp om föremålet eller tills maximal stängning nåtts. \\ \hline
+        Gripklo: Öppna& Öppnar gripklon till maximal öppning. \\ \hline
+        y: Upp & Rör armen uppåt i y-led, se figur XX, så länge knappen hålls inne. \\ \hline
+        y: Ner & Rör armen nedåt i y-led, se figur XX, så länge knappen hålls inne. \\ \hline
+        x: Upp & Rör armen uppåt i x-led, se figur XX, så länge knappen hålls inne. \\ \hline
+        x: Ner & Rör armen nedåt i x-led, se figur XX, så länge knappen hålls inne \\ \hline
+        Basvinkel: Vänster & Roterar armens bas åt vänster. \\ \hline
+        Basvinkel: Höger & Roterar armens bas åt höger. \\ \hline
+        x: Textfält & Här skrivs den x-koordinat, se figur XX, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
+        y: Textfält & Här skrivs den y-koordinat, se figur XX, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
+        vinkel: Textfält & Här skrivs den vinkel, se figur XX, som man vill att armbasen ska rotera i grader. \\ \hline
+        Skicka parametrar & Skickar de givna värdena x-koordinat, y-koordinat och vinkel till roboten för att utföra rörelse. \\ \hline
+        Startläge & Rör automatiskt armen tillbaka till dess startläge. \\ \hline
+        Plocka höger & Påbörjar skanning av område till höger för att vid identifiering av föremål sedan automatiskt plocka upp det med armen. \\ \hline
+        Plocka vänster & Påbörjar skanning av område till vänster för att vid identifiering av föremål sedan automatiskt plocka upp det med armen. \\ \hline
+    \end{tabularx}
+\caption{Tabell över funktionallitet hos manuella motorstyrningens instrumentbräde}
+\label{tab:arm}
+\end{table}
+
+\subsection{Diagnos och status}
+\label{subsec:diag}
+Nedan visas i figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och status samt i tabell \ref{tab:diag} dess funktionallitet.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{diag.pdf}
+	\caption{Grafik över instrumentbräde för diagnostik och status}
+	\label{fig:pc_diag}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline \textbf{Knapp / textfält} & \textbf{Funktion} \\ \hline
+        Callback ID & Bestämmer vilken funktion hos enheten du vill anropa. Se den tekniska dokumentationen, avsnitt XX för en tabell över callback-id:n \\ \hline
+        Hög byte & Den mest signifikanta byten som ska skickas med anropet. Endast de tre lägsta bitarna används, totalt kan alltså 11 bitar skickas med. \\ \hline
+        Låg byte & Den minst signifikanta byten som ska skickas med anropet. \\ \hline
+        Adress & Bestämmer vilken enhet du vill skicka anrop till. \\ \hline
+        Skicka förfrågan & Skickar en förfrågan enligt valda parametrar ovan. \\ \hline
+        Skicka anrop & Utför en överföring enligt valda parametrar ovan. \\ \hline
+        Loggfönster & Visar händelser som roboten observerar, status och de beslut roboten tar. Den visar också eventuella felmeddelande. Se RUBRIK XX LOGGFÖNSTER.\\ \hline
+        Tid & Visar hur lång tid roboten har varit i automatiskt linjeföljningsläge. \\ \hline
+    \end{tabularx}
+\caption{Tabell över funktionallitet hos instrumentbrädet för diagnostik och status}
+\label{tab:diag}
+\end{table}
+
+\subsection{Sensorvärden}
+\label{subsec:sensor}
+Nedan visas i figur \ref{fig:pc_sensor} den grafiska representationen av sensorvärden i användargränssnittet och  i tabell \ref{tab:sensor} dess tolkning.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{sensor.pdf}
+	\caption{Grafik över sensorvärdenas grafiska representation}
+	\label{fig:pc_sensor}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline \textbf{Representation} & \textbf{Tolkning} \\ \hline
+        Övre graf: blå linje & Här kan man se hur tyngdpunkten för linjesensorn förändras med tiden. Är endast på då linjeföljning är igång.\\ \hline
+        Övre graf: röd linje & Här kan man se hur mycket roboten svänger höger och vänster. Roboten svänger höger då styrningen är positivt och vänster då styrningen är negativ.\\ \hline
+        Undre graf: blå linje & Visar vilket avstånd som detekteras av vänster sidoskanner. Är endast igång då avsökning efter objekt sker på vänster sida. \\ \hline
+        Undre graf: röd linje & Visar vilket avstånd som detekteras av höger sidoskanner. Är endast igång då avsökning efter objekt sker på höger sida. \\ \hline
+        Pause graph & Stoppar uppdatering av grafen, så att användaren kan titta tillbaka på tidigare värden.\\ \hline
+        RFID & Visar vilkett ID det RFID som senast identifierats hade och vilken tid detta gjordes. \\ \hline
+    \end{tabularx}
+\caption{Tabell över tolkning av sensorvärdenas grafiska representation}
+\label{tab:sensor}
+\end{table}
+
+\subsection{Loggfönster}
+\label{subsec:logg}
+I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
+
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\textwidth}{|l|X|}
+        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
+    \end{tabularx}
+\caption{Tabell över tolkning av meddelanden i loggfönstret}
+\label{tab:logg}
+\end{table}
+
+\newpage
+\section*{Referenser}
+
+
+\newpage
+\appendix
+
+\end{document} 
