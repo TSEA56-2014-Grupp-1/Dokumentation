@@ -1,10 +1,10 @@
-\section{Programvara till persondator}
-Programvaran till persondatorer som finns till roboten är till dels för att ge kommandon till roboten, och dels för att visa utmatning av sensordata och beslut. För användning, se användarmanualen.
+\section{Programvara för persondator}
+Programvaran till persondatorer som finns till roboten används dels för att ge kommandon till roboten, och dels för att visa utmatning av sensordata och beslut som roboten har tagit. För detaljer om användning, se användarmanualen.
 
-Programvaran är utvecklad i utvecklingsmiljön Qt \cite{qt}, och använder till stor del Qt:s egna standard bibliotek. Den är uppdelad i två klasser, en för att kommunicera med roboten via blåtand och en för det grafiska interfacet.
+Programvaran är utvecklad i utvecklingsmiljön Qt \cite{qt}, och använder till stor del Qt:s egna standardbibliotek. Den är uppdelad i två klasser, en för att kommunicera med roboten via blåtand och en för det grafiska gränssnittet.
 
-Klassen för blåtandskommunikation använder sig utav QSerialPort, vilket finns i Qt:s standard bibliotek. Ur detta hanterar klassen när data ska skickas och tas emot från roboten, och vidarebefordrar denna data till klassen som sköter det grafiska.
+Klassen för blåtandskommunikation använder sig utav QSerialPort, vilket finns i Qt:s standardbibliotek. Ur detta hanterar klassen hur data skickas och tas emot från roboten, och vidarebefordrar denna data till klassen för det grafiska gränssnittet.
 
-Klassen för det grafiska interfacet innehåller alla knappar, fält och liknande som finns i det grafiska interfacet. Denna använder också till stor del Qt:s egna standard bibliotek. Detta gör att klassen till största del innehåller vad de olika knapparna ska göra då de klickas på. Detta består i de flesta fall av att skicka ett visst packet till roboten.
+Klassen för det grafiska gränssnittet innehåller alla knappar, fält och liknande som finns i det grafiska gränssnittet. Denna använder också till stor del Qt:s egna standardbibliotek. Den hanterar allt som ska hända när en användare interagerar med gränssnittet.
 
-I det grafiska interfacet finns också två grafer som ritar ut data från linjesensorn samt sidoskannrar. Dessa använder en klass som heter QCustomPlot, för ytterligare beskrivning se \cite{qcustomplot}.  
+I det grafiska gränssnittet finns också två grafer som ritar ut data från linjesensorn samt sidoskannrar. Dessa använder en klass som heter QCustomPlot, för ytterligare beskrivning se \cite{qcustomplot}.  
