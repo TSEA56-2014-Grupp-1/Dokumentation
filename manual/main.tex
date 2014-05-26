@@ -92,7 +92,7 @@ Produkten är en lagerrobot med uppgiften att i en lagermiljö kunna bli beordra
 \section{Krav på omgivning}
 Roboten är designad för att kunna manövrera sig fram längs med en linje vars luminans är betydligt mindre än underlagets. Denna mörka linje bör vara mellan 14-18 mm bred. Upplockningsstationer indikeras med en annan linje på cirka 10 cm vinkelrätt ut från körbanan. Banan är en sluten slinga och får endast korsas i en rät vinkel. Kurvor i körbanan ska ha en radie på minst 25cm. 
 
-Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakloss och en maxvikt på 200g. Dess placering i förhållande till linjen bör vara inom armens räckvidd men inte heller för nära roboten.  
+Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakloss och en maxvikt på 200g. Dess placering i förhållande till linjen bör vara inom armens räckvidd men inte heller för nära roboten. 
 
 %
 %----------------------------------------
@@ -168,31 +168,8 @@ När roboten är påslagen och vill nollställas kan följande göras:
     \item Dra ut batteriet ur roboten och lägg den i säkert förvar.
 \end{enumerate}
 
-\subsection{Tolka LCD-skärm}
+\subsection{LCD-skärm}
 LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. ''A:'' är meddelande från armenheten, ''C:'' är meddelande från Chassienheten, ''K:'' är meddelande från kommunikationsenheten och S:'' är meddelande från sensorenheten. 
-I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
-
-\begin{table}[H]
-\centering
-    \begin{tabularx}{\textwidth}{|l|X|}
-        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
-    Station to the right & Station till höger identifierad \\ \hline
-    Station to the left & Station till vänster identifierad \\ \hline
-    Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\ \hline
-    Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\ \hline
-    ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\ \hline
-    Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\ \hline
-    No ID was found & Roboten hittade inte RFID-tagg på station \\ \hline
-    Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\ \hline
-    Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\ \hline
-    Object was not found by arm & Objekt har hittats på stationen \\ \hline
-    An unkown error has occured & Okänt fel \\ \hline
-    Arm failed pickup & Armen misslyckades att plocka upp objekt \\ \hline
-    Started linefollowing & Automatisk linjeföljning startades \\ \hline
-    \end{tabularx}
-\caption{Tolkning av meddelande som visas på LCD-skärmen}
-\label{tab:lcd}
-\end{table}
 
 \subsection{Stänga av roboten}
 \begin{enumerate}
@@ -376,18 +353,18 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
         Wrong checksum, was X expected Y & Packet mottaget med fel cheksum \\ \hline
         Received new RFID tag:  &  Ny RFID-tagg \\ \hline
         Calibration, new tape reference:  & Kalibrering gjord, nytt värde visas på skärmen \\ \hline
-        An I/O error occurred while writing data to port 1, error: 2 & Fel vid skrivning till robot\\ \hline
-        An I/O error ocurred while reading data from port 1,error:2 & Fel vid läsning från robot\\ \hline
+        An I/O error occurred while writing data to port \#1, error: \#2 & Fel vid skrivning till robot med vilken port \#1 och vilket fel \#2\\ \hline
+        An I/O error ocurred while reading data from port \#1,error: \#2 & Fel vid läsning från robot med \#1 som vilken port och \#2 vilket fel\\ \hline
         Device was not found. & Enheten som programmet försökte ansluta till hittades inte. \\ \hline
         Permission denied. & Tillstånd att ansluta till roboten nekat. \\ \hline
         Error while opening already openden device. & Kommunikation till roboten redan ansluten. \\ \hline
         Unknown error. & Okänt fel.\\ \hline
-        Connecting to port: 1 & Ansluter till port: \\ \hline
+        Connecting to port: \#1 & Ansluter till port med \#1  \\ \hline
         Bluetooth connected succesfully. & Lyckades ansluta till roboten. \\ \hline
         Error opening bluetooth & Fel vid försök att ansluta till roboten.\\ \hline
         No port to send to. & Ingen enhet ansluten via blåtand. \\ \hline
         Sent arm command & Arm kommando skickat. \\ \hline
-        x: 1, y: 2, angle: 3 & Parametrar som skickades till armen. \\ \hline
+        x: \#1, y: \#2, angle: \#3 & Parametrar som skickades till armen med \#1 som x-koord, \#2 som y-koord och \#3 som vinkel. \\ \hline
         Invalid arguments to arm position, must be integers. & Inskriven position var inte tal. \\ \hline
         Station left:  & Station till vänster. \\ \hline
         Station right & Station till höger. \\ \hline
