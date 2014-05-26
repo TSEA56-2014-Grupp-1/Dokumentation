@@ -27,7 +27,7 @@
 
 \newcommand{\LIPSprojektgrupp}{Grupp 1}
 \newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
-\newcommand{\LIPSdokumentansvarig}{LIPS Teknisk Dokumentation}
+\newcommand{\LIPSdokumentansvarig}{LIPS Teknisk dokumentation}
 
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
@@ -35,7 +35,7 @@
 \newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
 
 
-\newcommand{\LIPSdokumenttyp}{Teknisk Dokumentation}
+\newcommand{\LIPSdokumenttyp}{Teknisk dokumentation}
 \newcommand{\LIPSredaktor}{Karl Linderhed}
 \newcommand{\LIPSversion}{1.0}
 \newcommand{\LIPSdatum}{\dagensdatum}
@@ -73,7 +73,7 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 %\addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-  \LIPSversionsinfo{1.0}{}{}{}{}
+  \LIPSversionsinfo{1.0}{2014-05-26}{Första version.}{KL}{Alla}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -81,38 +81,30 @@
 \setcounter{page}{1}
 
 \section{Inledning}
-Sju studenter vid Linköpings Universitet valde i deras kandidatprojektkurs TSEA56 att konstruera en automatiserad lagerrobot utifrån beställarens krav på design och funktion.
-
-Projektet gjordes med avsikten att ge studenterna bildning och erfarenhet att utifrån de kunskaper erhållna från tidigare kurser kunna genomföra ett omfattande uppdrag med samma metodik som förekommer i arbetslivet.
-
+Sju studenter vid Linköpings universitet har i sitt kandidatarbetsprojekt konstruerat en robot. Detta dokument tjänar till att vara ett underlag för någon som vill konstruera en liknande produkt och beskriver i detalj hur systemet fungerar.
 
 \section{Produktbeskrivning}
-Produkten är en robot bestående av ett chassi av plexiglas varpå fyra hjul, sensorer, en arm och kretskort. Utöver detta finns en programvara för övervakning och manövrering av roboten.
+Produkten är en robot bestående av ett chassi av plexiglas med fyra hjul, sensorer, en arm och styrelektronik. Utöver detta finns programvara för övervakning och manövrering av roboten.
 
-Roboten är tänkt att användas i ett lager där den autonomt eller genom manuell beordring hämtar och lämnar lagervaror. Lagerarbetet görs genom att följa en svart linje längs marken där stationer är markerade med ett svart sträck, vinkelrätt banan, i den riktning stationen befinner sig. Undertill stationerna finns en RFID-tagg för identifiering av stationstypen, upplockning eller avlämning.
-
-Skriva mer????
-
-\section{Teori}
-\emph{Beskrivning av regleralgoritmer m.m.}
+Roboten är tänkt att användas i ett lager där den autonomt eller fjärrstyrt hämtar och lämnar lagervaror. Lagerarbetet utförs genom att följa en svart linje längs marken där stationer är markerade med ett svart sträck, vinkelrätt mot banan, i den riktning stationen befinner sig. Vid stationerna finns en RFID-tagg för identifiering av stationstypen, upplockning eller avlämning.
 
 \section{Systemöversikt}
-Roboten är uppbyggd av fyra olika delsystem kallade chassi, sensor, arm och kommunikation där var och en av dem har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har en programvara till en dator utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt, fullständigt manuellt läge och i ett autonomt läge, där möjligheten att styra vissa delar manuellt fortfarande ges.
+Roboten är uppbyggd av fyra olika delsystem kallade chassi, sensor, arm och kommunikation där var och en av dem har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har programvara för persondatorer utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt, fullständigt manuellt, läge och i ett autonomt läge där möjligheten att styra vissa delar manuellt fortfarande ges.
 
 \subsection{Delsystemsöversikt}
-Sensorenheten övervakar kontinuerligt de olika sensorerna roboten har och omvandlar den råa sensordatan till systemanvändbara enheter för att sedan kunna skicka dessa vidare till andra delsystem vid förfrågan.
+Sensorenheten övervakar kontinuerligt de för tillfället aktuella sensorerna och anpassar sensordata för tolkning av övriga delsystem.
 
-Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den kan bli tillfrågad att skicka bekräftelser om de beslut som roboten tar samt status för de olika delsystemen och omgivningsobservationer. Vidare är kommunikationsenheten utrustad med en display vilken används för att visa upp en del av den sensordata som samlas in.
+Kommunikationsenheten fungerar som en förbindelselänk mellan roboten och omvärlden. Den hanterar kommunikationen mellan roboten och datorprogramvaran. Den förmedlar order, robotens status och sensordata. Vidare är kommunikationsenheten utrustad med en skärm som visar information från olika delsystem.
 
-Chassienheten fungerar som det handlingsbeslutande organet på roboten. Den vet vid autonomt läge hur roboten ska agera vid olika situationer. Chassienheten samverkar med sensorenheten och ser till att roboten följer linjen, genom reglering av hjulens gaspådrag, baserat på den sensordata sensorenheten kan tillhandahålla. 
+Chassienheten fungerar som det beslutande organet på roboten. Den vet vid autonomt läge hur roboten ska agera i olika situationer. Chassienheten samverkar med sensorenheten och ser till att roboten följer linjen, genom reglering av hjulens gaspådrag, baserat på den sensordata sensorenheten tillhandahåller. 
 
-Armenheten kan vid en upplockningsstation, med vetskapen om var ett objekt befinner sig, kunna plocka upp objektet med robotarmen. Den har kontroll över samtliga servon och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led ska röra sig för nå objektet för att sedan plocka upp det.
+Armenheten kan vid en upplockningsstation, med vetskapen om var ett föremål befinner sig, plocka upp föremålet med robotarmen. Den har kontroll över samtliga servon i armen och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led ska röra sig för att nå föremålet och sedan plocka upp det.
 
 Den datorbaserade programvaran består av ett instrumentbräde där användaren kan se vilka beslut som tas av roboten samt vilka sensordata de olika sensorerna får in. Vidare kan roboten, inklusive armen, styras genom kommandon i det grafiska gränssnittet.
 
 \subsection{Sensorer och sensorplacering}
 
-En linjesensor sitter längst fram på roboten, nära marken. En RFID-läsare sitter parallellt med marken under roboten, då den endast har 7~cm läsavstånd till taggarna som ligger på marken. På vardera sida av roboten är en avståndssensor placerad på ett servo, för att skanna efter objekt att plocka upp.
+En linjesensor sitter längst fram på roboten, nära marken. En RFID-läsare sitter parallellt med och nära marken under roboten för att underlätta avläsning av RFID-taggar. På vardera sida av roboten är en avståndssensor monterad på ett servo, för att kunna svepa över ett område och skanna efter föremål att plocka upp.
 
 
 \input{gemensam.tex}
@@ -120,11 +112,6 @@ En linjesensor sitter längst fram på roboten, nära marken. En RFID-läsare si
 \input{sensor.tex}
 \input{chassi.tex}
 \input{arm.tex}
-
-
-\section{Slutsatser}
-\emph{Vilka förbättringar skulle kunna göras?}
-Att låta roboten använda sig av någon form av trippmätare, alltså en sensor som kan mäta robotens tillryggalagda sträcka, hade kunnat göra så att roboten klarar av banan bättre. Om roboten har information om hur lång sträcka som färdats skulle ett beslut om kortaste vägen till varje avlämningsstation kunna tas. Detta skulle reducera den sträcka roboten måste transportera sig, och således även den tid det tar att utföra uppdraget.  En trippmätare hade även kunnat användas för att se till så att roboten alltid stannar exakt ovanför RFID-taggen, oavsett vilken hastighet roboten håller. 
 
 \newpage
 \section*{Referenser}

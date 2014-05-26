@@ -1,10 +1,7 @@
 \section{Chassienhet}
-\emph{Det här avsnittet ska innehålla mera detaljerade blockscheman och beskrivningar av modulen.
-Tänk på läsbarheten och växla mellan figurer och text.}
+Chassienheten tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när och på vilken sida armen ska plocka upp och lämna av objekt. Chassienheten sköter styrningen med PD-regleringen med hjälp av den tyngdpunkt som den får av sensorenheten via bussen. Detta för att kunna följa en svart tejpad linje på marken. På chassienheten finns en omkopplare för att kunna välja mellan autonomt och manuellt läge samt två tryckknappar, en tryckknapp för att starta linjeföljningsproceduren samt en för återställning. 
 
-Chassienheten tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när och på vilken sida armen ska plocka upp och lämna av objekt. Chassienheten sköter styrningen med PD-regleringen med hjälp av den tyngdpunkt som den får av sensorenheten via bussen. Detta för att kunna följa en svart tejpad linje på marken. På chassienheten finns en omkopplare för att kunna välja mellan autonomt och manuellt läge samt två tryckknappar, en tryckknapp för att starta linjeföljningsproceduren samt en för reset. 
-
-\subsubsection{Funktion}
+\subsection{Funktion}
 
 Chassit har flera funktioner som anges i följande punktlista:
 \begin{packed_itemize}
@@ -15,23 +12,13 @@ Chassit har flera funktioner som anges i följande punktlista:
 \item Skickar styrbeslut till dator via kommunikationsenheten samt skriver ut dem på kommunikationsenhetens display.
 \end{packed_itemize}
 
-\subsection{Komponenter}
-
-\begin{packed_itemize}
-\item Färdig plattform med batteri, två motorer som driver varsitt hjul och två “kundvagnshjul”
-\item 1 x Atmega1284P, huvudprocessor
-\item 2 x tryckknappar för reset samt start/stopp.
-\item 1 x omkopplare, för autonomt/manuellt läge.
-\item 1 x EXO-3, kristalloscillator (16 MHz)
-\end{packed_itemize}
-
 \subsection{Översiktlig beskrivning av programmet}
 
- Chassits huvudprogram startas genom ett knapptryck eller via ett kommando från persondatorn. 
+Chassits huvudprogram startas genom ett knapptryck eller via ett kommando från persondatorn. 
 
-Programmet på chassit beräknar styrriktning med hjälp av en tyngdpunkt som den begär med jämna mellanrum från sensorenheten . Enheten räknar också hur många stationer den passerar innan den är tillbaka på stationen den började på. Detta för att roboten ska veta när den är samtliga stationer är hanterade. Enheten lyssnar även alltid på styr- och stoppkommandon från PC:n.
+Programmet på chassit beräknar styrriktning med hjälp av en tyngdpunkt som den begär med jämna mellanrum från sensorenheten . Enheten räknar också hur många stationer den passerar innan den är tillbaka på stationen den började på. Detta för att roboten ska veta när samtliga stationer är hanterade. Enheten lyssnar även alltid på styr- och stoppkommandon från PC:n.
 
-Chassit får information om att roboten är på plockstation av sensorenheten i samma paket som den får tyngdpunkten. Vid plockstation avgör roboten om den ska stanna eller inte. När den stannat på en station skickas ett kommando om att läsa RFID-tag till sensorenheten. Efter detta avgör roboten om den ska skicka en instruktion till armenheten att  plocka föremål, lämna av föremål eller om den bara ska köra vidare till nästa station. Alla beslut skickas via kommunikationsenheten till datorn.
+Chassit får information om att roboten är på plockstation av sensorenheten i samma paket som den får tyngdpunkten. Vid plockstation avgör roboten om den ska stanna eller inte. När den stannat på en station skickas ett kommando om att läsa RFID-tagg till sensorenheten. Efter detta avgör roboten om den ska skicka en instruktion till armenheten att  plocka föremål, lämna av föremål eller om den bara ska köra vidare till nästa station. Alla beslut skickas via kommunikationsenheten till datorn.
 
 \nyBild{huvudprogram.pdf}{Flödesdiagram för huvudprogram till chassienheten.}{chassiflöde}{0.7}
 
@@ -40,20 +27,20 @@ Chassit får information om att roboten är på plockstation av sensorenheten i 
 
 För att kontrollera hastighet till motorerna används PWM-styrning med en uppdateringshastighet på 1~kHz. Detta uppnås genom att prescalern ($N$) till timern sätts till 8 samt att timern räknar till 1999 innan en ny period ska starta. 
 
-För att kunna göra linjeföljning utan att slingra sig fram implementeras en regleralgoritm. Den reglering som görs är en PD-reglering, enligt formlen:
+För att kunna följa linjen utan att slingra sig fram implementeras en regleralgoritm. Den reglering som görs är en PD-reglering, enligt formlen:
 
 $$u[t] = K_{p}e[t] + K_{d}\frac{d}{dt}e[t]$$
 
-Eftersom tiden mellan uppdateringearna är konstant kan $$ K_{d}\frac{d}{dt}]$$ sparas i processorns minne som ett konstant värde. Om $u[t]$ är negativ ska motor på höger sida  bromsas medan den andra kör med full fart och vice versa ifall $u[t]$ är positiv. För att beräkna motorkontrollen till PWM används följande formel:
+Eftersom tiden mellan uppdateringarna är konstant kan $$ K_{d}\frac{d}{dt}$$ sparas i processorns minne som ett konstant värde. Om $u[t]$ är negativ ska motor på höger sida  bromsas medan den andra kör med full fart och vice versa. För att beräkna motorkontrollen till PWM används följande formel:
 
-$$P[t] = 1999 - K_{total}u[t]$$
+$$P[t] = 1999 - u[t]$$
 
-Där $P[t]$ är värdet räknaren till vänster/höger motor räknar till. Om P[t] är negativ innebär det att hjulen som bromsas istället börjar snurra åt motsatt håll med hastighet motsvarande $|P[T]|$. Den andra motorn går i full hastighet, alltså är $P[t] = 1999$ för den motorn. Av dessa värden kommer $K_{p}$,$K_{d}$ och $K_{total}$ att kunna ändras för att optimera regleringen.
+Där $P[t]$ är värdet räknaren till vänster/höger motor räknar till. Om $P[t]$ är negativ innebär det att hjulen som bromsas istället börjar snurra åt motsatt håll med hastighet motsvarande $|P[t]|$. Den andra motorn går i full hastighet, alltså är $P[t] = 1999$ för den motorn. Av dessa värden kommer $K_{p}$ och $K_{d}$ att kunna ändras för att optimera regleringen.
 
 
 \subsubsection{Identifiering av plockstationer}
 
-Varje gång roboten stannar vid en plockstation skickar chassit en requeset till sensorenheten att läsa av plockstationens RFID-tagg. Taggens ID skickas tillbaka till chassit och sparas där i en lista. Detta gör att roboten kan räkna hur många stationer som finns på banan och således vet den när den är klar. Den kan även, efter att ha kört första varvet, förutse ifall roboten behöver stanna på nästa station eller inte. 
+Varje gång roboten stannar vid en plockstation skickar chassit en begäran till sensorenheten att läsa av plockstationens RFID-tagg. Taggens ID skickas tillbaka till chassit och sparas där i en lista. Detta gör att roboten kan räkna hur många stationer som finns på banan och således vet den när den är klar. Den kan även, efter att ha kört första varvet, förutse ifall roboten behöver stanna på nästa station eller inte. 
 
 
 \subsubsection{Styrkommando}
@@ -65,9 +52,6 @@ Chassit reagerar alltid på styrkommandon från bussen även om brytaren är sat
 
 När brytaren är i autonomt läge reagerar chassit på startknappen som sitter på chassit. Startknappen påbörjar linjeföljning med hantering av plockstationer beskrivet i \ref{följalinje}.
 
-\subsection{Analys av prestanda och resurser}
-
-Chassienheten använder 2 timers. En för PWM-styrning av motorerna och en som ger avbrott för att begära linjesensordata med jämna intervall. En av ATmega1284:ans 8~bits-timers används för att begära sensordata, och en 16~bits-timer används till PWM.
 
 
 
