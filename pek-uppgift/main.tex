@@ -73,6 +73,7 @@
 \begin{LIPSdokumenthistorik}
   \LIPSversionsinfo{0.1}{2014-03-25}{Första utkast för stilgranskning}{KL,PaN,EN}{}
   \LIPSversionsinfo{0.2}{2014-04-15}{Färdigställande inför inlämning}{KL,PaN,EN}{-}
+  \LIPSversionsinfo{1.0}{2014-05-26}{Detaljkomplettering inför slutgiltig inlämning}{KL,PaN,EN}{-}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -94,7 +95,7 @@ Följande frågeställningar ska besvaras i denna uppgift:
 
 \item Hur påverkas livstiden hos ett batteri av användning och laddningsmönster?
 
-\item Vilken forskning bedrivs om batterier i nuläget?
+\item Vilken forskning bedrivs kring att effektivisera och ta fram alternativ till dagens litiumjonbatterier?
 
 \item Hur fungerar ett enkelt servo?
 
@@ -182,7 +183,7 @@ På grund utav detta är batterier av litiumjontyp klassade som farligt gods då
 
 Ett uppmärksammat fall som rör litiumjonbatterier och säkerhet är Boeings plan~787~“Dreamliner”. Där fanns det ett problem med litiumjonbatterier i cockpit som orsakade rökutveckling under flera flygningar. I detta fall har man inte kunnat identifiera problemet som gör att batterierna började brinna. Detta trots omfattande tester och 25 000~timmars tester av batterierna innan lansering av planet. Problemet löstes sedermera genom en ny batteridesign samt en brandsäker anordning som också kunde avvärja rök från cockpit.\cite{dreamliner}
 
-\subsection{Aktuell forskning kring litiumjonbatterier}
+\subsection{Aktuell forskning kring effektivisering av, och alternativ, till litiumjonbatterier}
 Att förbättra dagens batteriteknik är ett aktivt forskningsområde som engagerar många akademiker och forskningscentra i världen. Även om dagens litiumjonbatterier är världsledande på marknaden när det handlar om energitäthet idag så börjar de närma sig sin maxgräns vad gäller kapacitet per vikt, och för att möta dagens behov av renare energialternativ och energiförvaring krävs radikala förbättringar i batteritekniken. \cite{better-battery} 
 
 Man kan tänka sig tre huvudsätt att angripa problemet att bygga vidare på och förbättra dagens litiumjonbatterier. Antingen kan man arbeta med att utveckla den teknik som finns idag med litium som laddningsbärande ämne, eller så kan man forska på att utveckla andra typer av kemiska batterier som använder andra ämnen, och slutligen kan man leta efter helt andra sätt att lagra energi på som inte använder kemiska reaktioner. I det här avsnittet behandlas ett urval av den forskning som bedrivs på dessa tre områden idag.
@@ -200,7 +201,7 @@ Ett radikalt annorlunda angreppssätt är att bygga batterier som använder den 
 Det finns dock forskningsrön som tyder på att den billigare varianten Na-O, som använder natrium istället för litium, är betydligt bättre i många avseenden och har markant mindre inverkan från sidoreaktioner. Det återstår att se hur forskningen kring detta kommer att utvecklas i framtiden. \cite{better-battery}
 
 \subsubsection{Andra tekniker för att lagra energi}
-En kondensator kan på många sätt fungera som ett batteri. Den kan laddas upp och laddas ur och behåller sin laddning när den inte belastas. Den stora skillnaden mot batterier är att energin inte lagras kemiskt i molekylbindningar, utan elektriskt i ett elektriskt fält. Detta gör att kondensatorer kan laddas upp och laddas ur väldigt snabbt och är därför attraktiva för användning i tillämpningar som kräver snabb laddning och hög strömstyrka. Kondensatorer som har kapaciteter som närmar sig de hos dagens batterier kallas super- eller ultrakondensatorer. En användning av superkondensatorer idag är i moderna hybridfordon och bussar där energi från inbromsningar lagras och används när extra effekt behövs.\cite{capacitors}
+En kondensator kan på många sätt fungera som ett batteri. Den kan laddas upp och laddas ur och kan behålla sin laddning när den inte belastas, hur väl beror på material och kvalitet. Den stora skillnaden mot batterier är att energin inte lagras kemiskt i molekylbindningar, utan elektriskt i ett elektriskt fält. Detta gör att kondensatorer kan laddas upp och laddas ur väldigt snabbt och är därför attraktiva för användning i tillämpningar som kräver snabb laddning och hög strömstyrka. Kondensatorer som har kapaciteter som närmar sig de hos dagens batterier kallas super- eller ultrakondensatorer. En användning av superkondensatorer idag är i moderna hybridfordon och bussar där energi från inbromsningar lagras och används när extra effekt behövs.\cite{capacitors}
 
 
 \subsection{Servon}
@@ -256,17 +257,17 @@ Totalt finns det 26 olika parametrar som kan skrivas och avläsas och ytterligar
 Gruppen har strävat efter att besvara de frågeställningar som ställdes i avsnitt \ref{sec:problem}. Här följer sammanfattningar av vad man kommit fram till och även diskussion av resultaten i förekommande fall.
 
 \subsection{Hur fungerar litiumjonbatterier?}
-Ett litiumjonbatteri består av två elektroder av olika ämnen som omsluts av ett elektrolyt så att litiumjoner kan vandra genom elektrolyten och driva en ström genom batteriet. Elektroderna kan vara av många olika typer, men vanligt är att man använder litiummanganoxid och grafit, och ett elektrolyt av litiumsalt upplöst i ett organiskt lösningsmedel.\cite{litium-in-cars}
+Ett litiumjonbatteri består av två elektroder av olika ämnen som omsluts av en elektrolyt så att litiumjoner kan vandra genom elektrolyten och driva en ström genom batteriet. Elektroderna kan vara av många olika typer, men vanligt är att man använder litiummanganoxid och grafit, och ett elektrolyt av litiumsalt upplöst i ett organiskt lösningsmedel.\cite{litium-in-cars}
 
 \subsection{Vilka risker finns vid användning och laddning av litiumjonbatterier?}
 Litiumjonbatterier kan anses vara säkra för vardaglig användning, även om de ska hanteras med försiktighet. De största farorna är under transport då många batterier fraktas samtidigt, då det vid en brand kan bli ett mycket våldsamt och snabbt brandförlopp då batterierna utsätts för öppen låga. Detta är, som tidigare diskuterat, speciellt viktigt vid flygtransporter då batterierna också ger en tryckökning vilket gör det svårare för de automatiska släcksystem som finns installerade.
 
 När ett litiumjonbatteri används finns det också risker, framförallt då ett batteri kan börja brinna. Eftersom detta kan ske trots att batteriet inte vanvårdats är det viktigt att vara uppmärksam på temperaturökningar på batteriet. Som tidigare beskrivet når yttre temperaturen på batteriet över 100~grader innan skalet brister, vilket betyder att temperaturökningen är klart märkbar. Om detta sker ska användning av batteriet omedelbart upphöra.
 
-\subsection{Hur påverkas livstiden hos ett batteri av användning och laddningsmönster}
+\subsection{Hur påverkas livstiden hos ett batteri av användning och laddningsmönster?}
 Laddning och användning av ett litiumjonbatteri ska inte ske vid låga temperaturer, då detta ger permanenta skador på batteriet som påverkar kapaciteten negativt. För att minimera slitage ska också laddning ske med låg ström under de första samt sista 10~\% laddningen. Det ska också ske med en laddare som har funktion för att se till att batteriet inte blir överladdat. Detta då en överladdning, som tidigare beskrivet, påverkar maximala kapaciteten negativt.
 
-\subsection{Vilken forskning bedrivs om batterier i nuläget?}
+\subsection{Vilken forskning bedrivs kring att effektivisera och ta fram alternativ till dagens litiumjonbatterier?}
 Forskningen inriktas på en rad olika områden, då det finns många olika metoder för att förbättra batteritekniken. Gruppen har funnit följande exempel på forskning som bedrivs i nuläget:
 \begin{itemize}
 \item Nya material i litiumbatterier, såsom litium-svavel-batterier och litium-syre/litium-luft-batterier.
