@@ -53,15 +53,445 @@ Robotens elektronik är uppdelad på två virkort. Därför presenteras här ett
 
 
 \section{Utdrag från programlistning}
-\emph{(ca 5-10 sidor så att vi kan bedöma kodens läsbarhet mm.) och eventuell VHDL-kod}
+Utdrag ur programkod från tre filer, dessa är inte kompletta utan endast utdrag för att exemplifiera kodstruktur.
+
+\begin{listing}{1}
+/**
+ *	@file bus.c
+ *	@author Andreas Runfalk & Patrik Nyberg
+ *
+ *	Functions for intra processor communication over the two wire
+ interface
+ */
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+/**
+ *	Temporary storage for received data
+ */
+uint16_t bus_data;
+
+/**
+ *	Temporary storage for response data
+ */
+uint16_t bus_response_data;
+
+/**
+ *	Array of response callbacks used by bus_register_response()
+ and bus_call_response()
+ */
+uint16_t (*response_callbacks[64])(uint8_t, uint16_t) = {0};
+
+/**
+ *	Array of receive callbacks used by bus_register_receive() and
+ bus_call_receive()
+ */
+void (*receive_callbacks[64])(uint8_t, uint16_t) = {0};
+
+/**
+ *	Start listening on given address and enable interrupts
+ *
+ *	@param address 7-bit address to listen to
+ */
+void bus_init(uint8_t address) {
+	// Bus speed, approximately 70 kHz
+	TWBR = 0x80;
+
+	// Enable internal pull-up for SDA and SCL
+	PORTC |= 0x03;
+
+	// Set address on bus
+	TWAR = (address << 1) | 1;
+
+	// Enable the bus
+	TWSR &= 0xfc;
+	TWCR = (1 << TWEN) | (1 << TWEA) | (1 << TWIE);
+
+	sei();
+}
+
+/**
+ *	Try to acquire control over the bus. Will continuously retry
+ until control is
+ *	aquired. Possible status codes are:
+ *
+ *	- 0 if bytes were successfully sent
+ *
+ *	@return Status code
+ */
+uint8_t bus_start(void) {
+	uint8_t status_code;
+	cli();
+	TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN) | (1 << TWIE)
+		| (1 << TWEA);
+
+	// Wait for TWINT to go high
+	while (!(TWCR & (1 << TWINT)));
+
+	status_code = TWSR & 0xf8;
+	sei();
+
+	// Check if failure to seize bus
+	switch (status_code) {
+		case 0x08: // Start
+		case 0x10: // Repeated start
+			return 0;
+		case 0x00:
+			cli();
+			TWCR &= 0xff ^ (1 << TWSTA);
+			TWCR |= (1 << TWINT) | (1 << TWSTO);
+			while (!(TWCR & (1 << TWINT)));
+			sei();
+		case 0xf8:
+		default:
+			// Catastrophic failure, retry
+			return bus_start();
+	}
+}
+
+/**
+ *	Let go of the control over the buss
+ */
+void bus_stop(void) {
+	TWCR |= (1 << TWINT) | (1 << TWSTO) | (1 << TWEA);
+}
+
+/**
+ *	Write a byte of data on the bus
+ *
+ *	@param data Data byte to write
+ *
+ *	@return Masked status code from TWSR
+ */
+uint8_t bus_write(uint8_t data) {
+	uint8_t status_code;
+
+	cli();
+	TWDR = data;
+	TWCR &= 0xff ^ (1 << TWSTA) ^ (1 << TWSTO);
+	TWCR |= (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
+
+	// Wait for TWINT to go high (package sent)
+	while (!(TWCR & (1 << TWINT)));
+
+	status_code = TWSR & 0xf8;
+	sei();
+
+	return status_code;
+}
+\end{listing}
+\begin{listing}{1}
+/**
+ *	@file automatic_steering.c
+ *	@author Lucas Nilsson
+ *
+ *	Calculates steering direction based on current robot position
+ */
+
+#include "automatic_steering.h"
+
+/**
+ *	Store previous error as set by pd_update()
+ */
+int8_t prev_error;
+
+/**
+ *	Bus callback for setting proportional gain in PD controller
+ *
+ *	@param id Unused
+ *	@param kp_data Proportional gain to use
+ */
+void engine_set_kp(uint8_t id, uint16_t kp_data)
+{
+	proportional_gain = kp_data;
+}
+
+/**
+ *	Bus callback for setting proportional gain in PD controller
+ *
+ *	@param id Unused
+ *	@param kd_data Derivative gain to use
+ */
+void engine_set_kd(uint8_t id, uint16_t kd_data)
+{
+	derivative_gain = kd_data;
+}
+
+/**
+ *	Calculate new steering based on passed current error and
+ previous error
+ *
+ *	@param curr_error
+ *
+ *	@return Steering wheel position to use. Negative means turn
+ left and positive
+ *	        turn right.
+ */
+int16_t pd_update(int8_t curr_error)
+{
+	double diff;
+	int16_t p_term;
+	double d_term;
+
+	// differentiation
+	diff = curr_error - prev_error;
+
+	// scaling
+	p_term = proportional_gain * curr_error;
+	d_term = derivative_gain  * diff;
+
+	// save current error as previous error for next iteration
+	prev_error = curr_error;
+
+	// Return regulated signal
+	return p_term + floor(d_term);
+}
+
+/**
+ *	Set regulator constants to default values. To be used when
+ initializing robot
+ */
+void regulator_init(void)
+{
+	prev_error = 0;
+	proportional_gain = 180;
+	derivative_gain = 5;
+}
+\end{listing}
+\begin{listing}{1}
+/**
+ *	@file servo.c
+ *	@author Andreas Runfalk
+ *
+ *	Handles tri-state buffer control and basic servo
+ communications. Many
+ *	functions in this file should only be used in conjunction with
+ 'macros defined
+ *	in servo.h.
+ *
+ *	This library is not thread safe. No servo communication should
+ _ever_ be done in interrupts.
+ */
+
+#include "servo.h"
+#include "../shared/LCD_interface.h"
+#include "../shared/bus.h"
+
+/**
+ *	Set tri-state buffer to write mode
+ */
+void servo_enable_write(void) {
+	// Set tri-state buffer to write
+	PORTD |= 1 << PORTD2;
+
+	// Wait for tri-state buffer to switch directions
+	_delay_us(20);
+}
+
+/**
+ *	Set tri-state buffer to read mode
+ */
+void servo_enable_read(void) {
+	while (!usart_tx_complete());
+
+	// Set tri-state buffer to read
+	PORTD &= ~(1 << PORTD2);
+
+	// Wait for tri-state buffer to switch directions
+	_delay_us(20);
+}
+
+/**
+ *	Initialize USART communication and tri-state buffer control
+ */
+void servo_init(void) {
+	usart_init(SERVO_DEFAULT_BAUD_RATE);
+
+	// Enable control of tri-state buffer and put in read mode
+	DDRD |= 1 << DDD2;
+	PORTD &= ~(1 << PORTD2);
+}
+
+/**
+ *	Calculate servo checksum for given array from _first_index_ to
+ _last_index_
+ *
+ *	@param first_index First index of array to include
+ *	@param last_index Last index of array to include
+ *	@param parameters[] Array to calculate checksum for
+ *
+ *	@return Checksum
+ */
+uint8_t servo_calculate_checksum(uint8_t first_index, uint8_t last_index, uint8_t parameters[]) {
+	uint8_t i;
+	uint8_t checksum = 0;
+
+	for (i = first_index; i <= last_index; i++) {
+		checksum += parameters[i];
+	}
+
+	return ~checksum;
+}
+
+/**
+ *	Read response from a servo. Possible status codes are:
+ *
+ *	- 0 if successful
+ *	- 1 if read timed out
+ *	- 2 if checksum is wrong
+ *	- 3 if incorrect non 0xff start bytes
+ *	- 4 if wrong servo return status
+ *	- 5 if servo didn't understand the instruction
+ *	- 6 if servo max torque can't handle applied load
+ *	- 7 if checksum is incorrect
+ *	- 8 if sent instruction is out of range
+ *	- 9 if servo is overheated
+ *	- 10 if goal position is out of limit range
+ *	- 11 if input voltage is too low or too high
+ *
+ *	@param[in] id Servo ID that response is expected from
+ *	@param[out] parameters Array that should hold response data.
+ *	This must be big enough to fit all returned parameters.
+ *       
+ *	@return Status code
+ */
+uint8_t servo_receive(uint8_t id, uint8_t *parameters) {
+	uint8_t i;
+	uint8_t data[256];
+	uint8_t data_length = 0;
+
+	// Fetch bytes into an array of length data_length
+	// 0:     Start (0xff)
+	// 1:     Start (0xff)
+	// 2:     ID of servo
+	// 3:     Number of data packets (error code + parameters +
+	checksum)
+	// 4:     Error code
+	// 5-...: Parameters
+	// Last:  Checksum
+	for (i = 0; data_length == 0 || i < data_length; i++) {
+		if (usart_read_byte(&data[i]) != 0) {
+			// Read timed out
+			return 1;
+		}
+
+		// Mark how many bytes to expect and pray that this is not
+		wrong
+		if (i == 3) {
+			data_length = data[i] + 4;
+		}
+	}
+
+	// Calculate checksum and compare against received one
+	if (data[data_length - 1] != servo_calculate_checksum(2,
+	data_length - 2, data)) {
+		return 2;
+	}
+
+	// Verify that start bytes we're correct
+	if (data[0] != 0xff || data[1] != 0xff) {
+		return 3;
+	}
+
+	// Verify that correct servo returned data
+	if (data[2] != id) {
+		return 4;
+	}
+
+	// Check if there was an error code
+	if (data[4]) {
+		if (data[4] & SERVO_ERROR_INSTRUCTION) {
+			return 5;
+		} else if (data[4] & SERVO_ERROR_OVERLOAD) {
+			return 6;
+		} else if (data[4] & SERVO_ERROR_CHECKSUM) {
+			return 7;
+		} else if (data[4] & SERVO_ERROR_RANGE) {
+			return 8;
+		} else if (data[4] & SERVO_ERROR_OVERHEAT) {
+			return 9;
+		} else if (data[4] & SERVO_ERROR_ANGLE_LIMIT) {
+			return 10;
+		} else if (data[4] & SERVO_ERROR_INPUT_VOLTAGE) {
+			return 11;
+		}
+	}
+
+	// Read parameters into given array if not null pointer
+	if (data_length > 5 && parameters != 0) {
+		for (i = 5; i < data_length - 1; i++) {
+			parameters[i - 5] = data[i];
+		}
+	}
+
+	return 0;
+}
+/**
+ *	Transfer data to servo. To be used with variable length functions
+ *
+ *	@param id Servo ID
+ *	@param instruction Instruction type
+ *	@param data_length Number of parameters in data
+ *	@param data Variable argument list of parameters to send as
+ obtained by `va_start()`
+ */
+void vservo_send(
+	uint8_t id, uint8_t instruction, uint8_t data_length, va_list
+	data)
+{
+	uint8_t i;
+
+	uint8_t packet_length = data_length + 6;
+	uint8_t packet[packet_length];
+
+	packet[0] = 0xff;            // Start byte
+	packet[1] = 0xff;            // Start byte
+	packet[2] = id;              // Servo ID
+	packet[3] = data_length + 2; // Length of data + instruction +
+	checksum
+	packet[4] = instruction;     // Instruction type (read, write,
+	ping)
+
+	for (i = 0; i < data_length; i++) {
+		packet[i + 5] = (uint8_t)va_arg(data, int);
+	}
+
+	// Add checksum to last byte
+	packet[packet_length - 1] = servo_calculate_checksum(
+		2, packet_length - 2, packet);
+
+	// Disable interrupts while writing data
+	cli();
+
+	// Clear buffer before sending to be sure there is not junk
+	usart_clear_buffer();
+
+	servo_enable_write();
+	for (i = 0; i < packet_length; i++) {
+		usart_write_byte(packet[i]);
+	}
+
+	// Indicate that all bytes are sent so servo_enable_read can
+	wait for all
+	// bytes to be transmitted before changing tri-state buffer
+	usart_tx_frame();
+
+	// Enable receiving so interrupts can be handled properly
+	servo_enable_read();
+
+	// Re-enable interrupts once write is complete
+	sei();
+}
+\end{listing}
 
 \section{ID:n till buss}
 \label{callbacks}
+\subsection{Delsystem sensor}
 
 \begin{table}[H]
 \centering
 \label{callbacks-sensor}
-Delsystem sensor
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
 \textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
@@ -79,7 +509,7 @@ Delsystem sensor
 \caption{ID:n samt funktion för delsystem sensor}
 \end{table}
 
-Delsystem chassi
+\subsection{Delsystem chassi}
 
 \begin{table}[H]
 \centering
@@ -104,7 +534,7 @@ Delsystem chassi
 \caption{ID:n samt funktion för delsystem chassi}
 \end{table}
 
-Delsystem kommunikationsenhet
+\subsection{Delsystem kommunikationsenhet}
 
 \begin{table}[H]
 \centering
@@ -129,7 +559,7 @@ Delsystem kommunikationsenhet
 \caption{ID:n samt funktion för delsystem kommunikation}
 \end{table}
 
-Delsystem arm
+\subsection{Delsystem arm}
 
 \begin{table}[H]
 \centering
