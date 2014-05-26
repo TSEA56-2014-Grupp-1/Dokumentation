@@ -1,6 +1,6 @@
 \section{Armenhet}
 
-Robotens arm är av modell PhantomX Reactor från Trossen Robotics, som är en servostyrd arm med 4 rotationsleder och en gripklo varpå det sitter totalt 7~st AX-12A-servon. Armen kontrolleras av en mikroprocessor, ATmega 1284, genom att parallellkoppla servona till en seriell UART-port. Kommunikationen till servona sker via halv duplex via en tri state buffer. Armen har en maximal räckvidd på 43~cm och en bas med  300~grader rotationsfrihet.
+Robotens arm är av modell PhantomX Reactor från Trossen Robotics, som är en servostyrd arm med fyra rotationsleder och en gripklo varpå det sitter totalt 7~st AX-12A-servon. Armen kontrolleras av en mikroprocessor, ATmega 1284, genom att parallellkoppla servona till en seriell USART-port. Kommunikationen till servona sker via halv duplex via en tri state buffer. Armen har en maximal räckvidd på 43~cm och en bas med  300~grader rotationsfrihet.
 
 \subsection{Funktion}
 
@@ -12,7 +12,7 @@ Vid manuellt läge får armen ingen upplockningsorder från chassienheten och v�
 
 Användaren kan välja att röra armen i djupled (X-axeln), i höjd (Y-axeln), rotera runt Y-axeln eller öppna och stänga klon. Vid ett styrkommando rör sig armen i den angivna riktningen tills dess att ett kommando om att stanna rörelse i den riktningen ges från PC eller om den nått max-läget. Rörelse görs genom att kontinuerligt beräkna hur vinkeln av vardera led på armen skall ändras för att röra sig ett litet steg i den beordrade riktningen. Detta görs genom beräkningar i inverterad kinematik (se avsnitt \ref{sec:inverskinematik}), sedan gör lederna en vinkelförändring för att sedan repetera enligt ovan.
 
-Armen kan också via en persondator automatiskt röra sig till ett förbestämt läge, ett startläge, där rörelsen även här beräknas med inverterad kinematik till den position som startläget har. Först rör sig armen rakt upp från det nuvarande läget för att sedan röra sig till den position som startläget har, detta för att eliminera risken att stöta i chassit och virkorten.
+Armen kan också via en persondator automatiskt röra sig till ett förutbestämt läge, ett startläge, där rörelsen även här beräknas med inverterad kinematik till den position som startläget har. Först rör sig armen rakt upp från det nuvarande läget för att sedan röra sig till den position som startläget har, detta för att eliminera risken att stöta i chassit och virkorten.
 
 \subsubsection{Autonomt läge}
 
@@ -23,7 +23,7 @@ Sensorenheten kommer, när den är klar med sidoskannrarna, skicka tillbaka ett 
 \subsubsection{Inverterad kinematik}
 \label{inverskinematik}
 
-Från sensorenheten ges armenheten en planpolär koordinat för objektet, dvs ett avstånd till föremålet och en vinkel för bottenplattan. Inverterad kinematik innebär att utifrån givna koordinater bestämma vinklar på robotarmens leder för att få armens spets att nå den givna koordinaten. För att reducera problemets komplexitet kunde armen, utifrån den givna vinkeln, rotera basplattan mot föremålet och således förenkla det inverterade kinematikproblemet till ett tvådimensionellt sådant.
+Från sensorenheten ges armenheten en planpolär koordinat för objektet, dvs. ett avstånd till föremålet och en vinkel för bottenplattan. Inverterad kinematik innebär att utifrån givna koordinater bestämma vinklar på robotarmens leder för att få armens spets att nå den givna koordinaten. För att reducera problemets komplexitet kunde armen, utifrån den givna vinkeln, rotera basplattan mot föremålet och således förenkla det inverterade kinematikproblemet till ett tvådimensionellt sådant.
 
 Problemet som kvarstod blev således att utifrån tre ihopsatta leder finna en lösning för ledvinklarna så att spetsen av kedjan, gripklon, hamnar på den kända positionen för föremålet. Se figur \ref{fig:inv_kin}
 

@@ -25,9 +25,9 @@ Chassit får information om att roboten är på plockstation av sensorenheten i 
 \subsubsection{Följa linje samt motorkontroll}
 \label{följalinje}
 
-För att kontrollera hastighet till motorerna används PWM-styrning med en uppdateringshastighet på 1~kHz. Detta uppnås genom att prescalern ($N$) till timern sätts till 8 samt att timern räknar till 1999 innan en ny period ska starta. 
+För att kontrollera hastighet till motorerna används PWM-styrning med en uppdateringshastighet på 1~kHz. Detta uppnås genom att klockdelaren ($N$) till timern sätts till 8 samt att timern räknar till 1999 innan en ny period ska starta. 
 
-För att kunna följa linjen utan att slingra sig fram implementeras en regleralgoritm. Den reglering som görs är en PD-reglering, enligt formlen:
+För att kunna följa linjen utan att slingra sig fram implementeras en regleralgoritm. Den reglering som görs är en PD-reglering, enligt formeln:
 
 $$u[t] = K_{p}e[t] + K_{d}\frac{d}{dt}e[t]$$
 

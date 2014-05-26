@@ -1,21 +1,29 @@
 \section{Kopplingsschema}
+
+\vspace{-20pt}
 Robotens elektronik är uppdelad på två virkort. Därför presenteras här ett kopplingsschema för varje virkort.
 
+\vspace{-20pt}
 \subsection{Sensorenhet}
+\nyBild{sensor.png}{Kopplingsschema för virkortet som innehåller sensorenheten.}{senskoppling}{1}
 
-\nyBild{kopplingsschema_sensor.pdf}{Kopplingsschema för virkortet som innehåller sensorenheten.}{senskoppling}{1}
-
-
-\begin{packed_itemize}
-\item 1 x ATmega1284P, huvudprocessor
-\item 1 x reflexsensormodul
-\item 2 x 16-kanals multiplexrar
-\item 1 x RFID-läsare (Parallax Serial)
-\item 2 x avståndssensorer (GP2D120)
-\item 2 x resistorer (18~k\ohm), för lågpassfilter
-\item 2 x kondensatorer (100~nF), för lågpassfilter
-\item 1 x EXO-3, kristalloscillator (20 MHz)
-\end{packed_itemize}
+\textbf{Komponentförteckning}
+\vspace{-10pt}
+\begin{packed_enumerate}
+\item[1.] Sensorenhetens processor, ATmega1284P
+\item[2 \& 3.] 16-kanals multiplexer för linjesensor, HEF4067B
+\item[4.] Reflexsensormodul
+\item[5 \& 6.] Kontakt för kabel till avståndssensor för sidoskanner, GP2D120
+\item[7 \& 8.] Kontakt för kabel till servo för sidoskanner, HS-422
+\item[9.] Kontakt för JTAG-kabel
+\item[10.] Klockgenerator, EXO-3 20 MHz
+\item[11 \& 14.] Resistor för lågpassfilter, 18 k$\Omega$
+\item[12 \& 13.] Kondensator för lågpassfilter, 100 nF
+\item[15.] Kondensator för reset av Sensorenhet, 4700 nF
+\item[16.] Resetknapp för Sensorenhet
+\item[17.] Pullup-resistor för reset av Sensorenhet
+\item[18.] Kontakt för kabel till RFID-läsare, Parallax Serial Reader
+\end{packed_enumerate}
 
 \subsection{Kommunikationsenhet, Armenhet, Chassienhet}
 \begin{figure}[H]
@@ -42,7 +50,7 @@ Robotens elektronik är uppdelad på två virkort. Därför presenteras här ett
 \item[13.] Klockgenerator för Kommunikationsenhet, EXO-3 18.432 MHz
 \item[14.] Processor för Chassienhet, ATmega 1284P
 \item[15.] Pullup-resistor för reset av Chassienhet, 8,2 k$\Omega$
-\item[16.] Kondensator fö reset av Chassienhet, 4700 nF
+\item[16.] Kondensator för reset av Chassienhet, 4700 nF
 \item[17.] Resetknapp för Chassienhet
 \item[18.] Omkopplare för att växla mellan autonomt och fjärrstyrt läge
 \item[19.] Startknapp för att påbörja autonom drift
@@ -64,17 +72,17 @@ Robotens elektronik är uppdelad på två virkort. Därför presenteras här ett
 Delsystem sensor
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
-\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
+\textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
 1 & Oanvänd & \\ \hline
-2 & Transaktion & Kalibrering av linjesensor \\ \hline
+2 & Sändning & Kalibrering av linjesensor \\ \hline
 3 & Förfrågan & Linjesensordata \\ \hline
-4 & Förfrågan & Tyngpunkt \\ \hline
-5 & Transaktion & Sätt tejpreferens [ny tejpreferens] \\ \hline
+4 & Förfrågan & Tyngdpunkt \\ \hline
+5 & Sändning & Sätt tejpreferens [ny tejpreferens] \\ \hline
 6 & Oanvänd & \\ \hline
 7 & Oanvänd & \\ \hline
 8 & Oanvänd & \\ \hline
-9 & Transaktion & Sätt aktivitet [0 = linjeföljning, 1 = skanna vänster, 2 = skanna höger] \\ \hline
-10 & Transaktion & Läs RFID-tag \\ \hline
+9 & Sändning & Sätt aktivitet [0 = linjeföljning, 1 = skanna vänster, 2 = skanna höger] \\ \hline
+10 & Sändning & Läs RFID-tag \\ \hline
 \end{tabularx}
 \caption{ID:n samt funktion för delsystem sensor}
 \end{table}
@@ -86,20 +94,20 @@ Delsystem chassi
 \label{callbacks-chassi}
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
-\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
-0 & Transaktion & Nödstopp \\ \hline
+\textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
+0 & Sändning & Nödstopp \\ \hline
 1 & Oanvänd & \\ \hline
-2 & Transaktion & Arm klar [0 = plockat up, 1 = lagt ner, 2 = hittade inget] \\ \hline
-3 & Transaktion & Starta linjeföljning \\ \hline
-4 & Transaktion & RFID inläst \\ \hline
+2 & Sändning & Arm klar [0 = plockat up, 1 = lagt ner, 2 = hittade inget] \\ \hline
+3 & Sändning & Starta linjeföljning \\ \hline
+4 & Sändning & RFID inläst \\ \hline
 5 & Oanvänd & \\ \hline
 6 & Oanvänd & \\ \hline
 7 & Oanvänd & \\ \hline
-8 & Transaktion & Uppdatera manuell styrning, se \ref{packets}\\ \hline
+8 & Sändning & Uppdatera manuell styrning, se \ref{packets}\\ \hline
 9 & Oanvänd & \\ \hline
 10 & Oanvänd & \\ \hline
-11 & Transaktion & Sätt Kp [nytt värde på Kp] \\ \hline
-12 & Transaktion & Sätt Kd [nytt värde på Kd] \\ \hline
+11 & Sändning & Sätt Kp [nytt värde på Kp] \\ \hline
+12 & Sändning & Sätt Kd [nytt värde på Kd] \\ \hline
 \end{tabularx}
 \caption{ID:n samt funktion för delsystem chassi}
 \end{table}
@@ -111,20 +119,20 @@ Delsystem kommunikationsenhet
 \label{callbacks-komm}
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
-\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
+\textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
 1 & Oanvänd & \\ \hline
-2 & Transaktion & Rad 1 på skärm för sensorenheten \\ \hline
-3 & Transaktion & Rad 2 på skärm för sensorenheten \\ \hline
-4 & Transaktion & Rad 1 på skärm för armenheten \\ \hline
-5 & Transaktion & Rad 2 på skärm för armenheten \\ \hline
-6 & Transaktion & Rad 1 på skärm för chassienheten \\ \hline
-7 & Transaktion & Rad 2 på skärm för chassienheten \\ \hline
-8 & Transaktion & Vidarebefordra beslut från chassi till PC \\ \hline
-9 & Transaktion & Vidarebefordra RFID-tag till PC\\ \hline
-10 & Transaktion & Vidarebefordra data från sidoskanner till PC \\ \hline
-11 & Transaktion & Sätt Kp [nytt värde på Kp] \\ \hline
-12 & Transaktion & Sätt Kd [nytt värde på Kd] \\ \hline
-13 & Transaktion & Vidarebefordra kalibreringsvärde till PC \\ \hline
+2 & Sändning & Rad 1 på skärm för sensorenheten \\ \hline
+3 & Sändning & Rad 2 på skärm för sensorenheten \\ \hline
+4 & Sändning & Rad 1 på skärm för armenheten \\ \hline
+5 & Sändning & Rad 2 på skärm för armenheten \\ \hline
+6 & Sändning & Rad 1 på skärm för chassienheten \\ \hline
+7 & Sändning & Rad 2 på skärm för chassienheten \\ \hline
+8 & Sändning & Vidarebefordra beslut från chassi till PC \\ \hline
+9 & Sändning & Vidarebefordra RFID-tag till PC\\ \hline
+10 & Sändning & Vidarebefordra data från sidoskanner till PC \\ \hline
+11 & Sändning & Sätt Kp [nytt värde på Kp] \\ \hline
+12 & Sändning & Sätt Kd [nytt värde på Kd] \\ \hline
+13 & Sändning & Vidarebefordra kalibreringsvärde till PC \\ \hline
 \end{tabularx}
 \caption{ID:n samt funktion för delsystem kommunikation}
 \end{table}
@@ -136,20 +144,20 @@ Delsystem arm
 \label{callbacks-arm}
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
-\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
-0 & Transaktion & Nödstopp \\ \hline
-1 & Transaktion & Kommando till klo [0 = stäng, 1 = öppna] \\ \hline
-2 & Transaktion & Signal att roboten står på station [0 = vänster, 1 = höger] \\ \hline
-3 & Transaktion & Vinkel till uppplockning [vinkel] \\ \hline
-4 & Transaktion & x koordinat till uppplockning [x] \\ \hline
-5 & Transaktion & Plocka upp objekt [0 = inget hittades, 1 = föremål hittat] \\ \hline
-6 & Transaktion & x position för manuell styrning [x] \\ \hline
-7 & Transaktion & y position för manuell styrning [y] \\ \hline
-8 & Transaktion & Vinkel för manuell styrning om positiv [vinkel] \\ \hline
-9 & Transaktion & Vinkel för manuell styrning om negativ [vinkel] \\ \hline
-10 & Transaktion & Gå till position satt i manuell styrning \\ \hline
-11 & Transaktion & Uppdatera manuell styrning, se \ref{packets} \\ \hline
-12 & Transaktion & Lämna av objekt [0 = vänster, 1 = höger] \\ \hline
+\textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
+0 & Sändning & Nödstopp \\ \hline
+1 & Sändning & Kommando till klo [0 = stäng, 1 = öppna] \\ \hline
+2 & Sändning & Signal att roboten står på station [0 = vänster, 1 = höger] \\ \hline
+3 & Sändning & Vinkel till upplockning [vinkel] \\ \hline
+4 & Sändning & x koordinat till upplockning [x] \\ \hline
+5 & Sändning & Plocka upp objekt [0 = inget hittades, 1 = föremål hittat] \\ \hline
+6 & Sändning & x position för manuell styrning [x] \\ \hline
+7 & Sändning & y position för manuell styrning [y] \\ \hline
+8 & Sändning & Vinkel för manuell styrning om positiv [vinkel] \\ \hline
+9 & Sändning & Vinkel för manuell styrning om negativ [vinkel] \\ \hline
+10 & Sändning & Gå till position satt i manuell styrning \\ \hline
+11 & Sändning & Uppdatera manuell styrning, se \ref{packets} \\ \hline
+12 & Sändning & Lämna av objekt [0 = vänster, 1 = höger] \\ \hline
 \end{tabularx}
 \caption{ID:n samt funktion för delsystem arm}
 \end{table}
@@ -163,16 +171,17 @@ Delsystem arm
 PKT\_STOP & Indikerar att roboten ska stoppa all rörelse. & Inga \\ \hline
 PKT\_ARM\_COMMAND & Kommando till arm. & Kommando (1), argument (2-10) \\ \hline
 PKT\_CHASSIS\_COMMAND & Kommando till chassi. & Kommando (1), argument (2-3) \\ \hline
-PKT\_CALIBRATION\_COMMAND & Kommando för klibrering av sensor. & Sensor id (1) \\ \hline
-PKT\_LINE\_DATA & Data från linjesensorn. & Inviduella sensorer (1-11), flaggor (12), tyngdpunkt (13), styrutslag (14) \\ \hline
+PKT\_CALIBRATION\_COMMAND & Kommando för kalibrering av sensor. & Sensor id (1) \\ \hline
+PKT\_LINE\_DATA & Data från linjesensorn. & Individuella sensorer (1-11), flaggor (12), tyngdpunkt (13), styrutslag (14) \\ \hline
 PKT\_RANGE\_DATA & Avstånd från sidoskanner. & sida (1), avstånd (2-3) \\ \hline
 PKT\_RFID\_DATA & Värde på RFID-tagg & värde (1) \\ \hline
 PKT\_CHASSIS\_DECISION & Beslut från chassi. & beslut (1) \\ \hline
 PKT\_PACKET\_REQUEST & Förfrågan om paket från dator. & ID på packet (1) \\ \hline
-PKT\_SPOOFED\_RESPONSE & Simulerad förfågran på bussen. & Data som skickas ut på bussen (1-2) \\ \hline
-PKT\_SPOOFED\_TRANSMIT & Simulerad transmitt på bussen. & Data som skickas ut på bussen. (1-2) \\ \hline
+PKT\_SPOOFED\_REQUESE & Simulerad förfrågan över bussen & Adress för enheten som ska ta emot förfrågan (1), ID på funktionen som ska anropas(2), metadata som ska föras med förfrågan (3-4) \\ \hline
+PKT\_SPOOFED\_RESPONSE & Svar på simulerad förfrågan. & Data som returneras av förfrågan (1-2) \\ \hline
+PKT\_SPOOFED\_TRANSMIT & Simulerad sändning på bussen. & Data som skickas ut på bussen. (1-2) \\ \hline
 PKT\_CALIBRATION\_DATA & Värde efter kalibrering. & Värde (1) \\ \hline
-PKT\_LINE\_WEIGHT & Tyngpunkt från linjesensor. & Tyngdpunkt (1) \\ \hline
+PKT\_LINE\_WEIGHT & Tyngdpunkt från linjesensor. & Tyngdpunkt (1) \\ \hline
 \end{tabularx}
 \caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
 \end{table}
@@ -185,38 +194,37 @@ PKT\_LINE\_WEIGHT & Tyngpunkt från linjesensor. & Tyngdpunkt (1) \\ \hline
 CMD\_ARM\_MOVE & Arm ska röra sig. & Koordinat (1), riktning (2) \\ \hline
 CMD\_ARM\_GRIP & Stäng gripklo. & Inga \\ \hline
 CMD\_ARM\_RELEASE & Öppna gripklo. & Inga \\ \hline
-CMD\_ARM\_PREDEFINED\_POS & Rör arm till fördefinerad position. & ID på position \\ \hline
+CMD\_ARM\_PREDEFINED\_POS & Rör arm till fördefinierad position. & ID på position \\ \hline
 CMD\_ARM\_STOP & Stanna alla rörelser. & Inga \\ \hline
 CMD\_ARM\_MOVE\_POS & Rör arm till position. & x (1), y (2), vinkel (3) \\ \hline
-CMD\_CHASSIS\_SPEED & Ny hastighet till chassi. & Hastighet (1) \\ \hline
-CMD\_CHASSIS\_STEER & Sätt nytt rattutslag. & Rattutslag (1) \\ \hline
 CMD\_CHASSIS\_START & Starta linjeföljning. & Inga \\ \hline
+CMD\_CHASSIS\_STOP & Stoppa linjeföljning & Inga \\ \hline
 CMD\_CHASSIS\_PARAMETERS & Sätt nya värde på $K_p$ och $K_d$. & $K_p$(1), $K_d$(2) \\ \hline
-CMD\_CHASSIS\_MOVEMENT & Kommando till chassi att röra på sig i en given riktning. & Riktning (1) \\ \hline
+CMD\_CHASSIS\_MOVEMENT & Kommando till chassi att ändra sin hastighet eller riktning & Kommando (1) \\ \hline
 \end{tabularx}
-\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\caption{De olika undertyper av paket som skickas som kommandon från persondatorgränssnittet till roboten, genom PKT\_ARM\_COMMAND eller PKT\_CHASSIS\_COMMAND. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
 \end{table}
 
 \begin{table}[H]
 \label{decision}
-\begin{tabularx}{\textwidth}{|l|l|X|}
+\begin{tabularx}{\textwidth}{|l|X|}
 \hline
-\textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
-DEC\_PICKUP\_RIGHT & Plockar upp föremål höger. & Inga \\ \hline
-DEC\_PICKUP\_LEFT & Plockar upp föremål vänster. & Inga \\ \hline
-DEC\_PUT\_DOWN\_RIGHT & Lägger ner föremål höger. & Inga \\ \hline
-DEC\_PUT\_DOWN\_LEFT & Lägger ner föremål vänster. & Inga \\ \hline
-DEC\_NO\_MATCH & RFID var inte korrekt. & Inga \\ \hline
-DEC\_STATION\_HANDELED & Station redan behandlad. & Inga \\ \hline
-DEC\_NO\_ID\_FOUND & Ingen RFID-tagg hittade på stationen. & Inga \\ \hline
-DEC\_ARM\_PICKED\_UP & Arm har plockat upp ett föremål. & Inga \\ \hline
-DEC\_ARM\_PUT\_DOWN & Arm har lagt ned ett föremål. & Inga \\ \hline
-DEC\_OBJECT\_NOT\_FOUND & Inget föremål hittades. & Inga \\ \hline
-DEC\_UNKOWN\_ERROR & Okänt fel inträffade. & Inga \\ \hline
-DEC\_ARM\_FAILED & Arm misslyckades med uppplockning. & Inga \\ \hline
-DEC\_START\_LINE & Startade linjeföljning. & Inga \\ \hline
+\textbf{ID-beteckning} & \textbf{Beskrivning} \\ \hline
+DEC\_PICKUP\_RIGHT & Plockar upp föremål höger. \\ \hline
+DEC\_PICKUP\_LEFT & Plockar upp föremål vänster. \\ \hline
+DEC\_PUT\_DOWN\_RIGHT & Lägger ner föremål höger. \\ \hline
+DEC\_PUT\_DOWN\_LEFT & Lägger ner föremål vänster.  \\ \hline
+DEC\_NO\_MATCH & RFID var inte korrekt.  \\ \hline
+DEC\_STATION\_HANDLED & Station redan behandlad.  \\ \hline
+DEC\_NO\_ID\_FOUND & Ingen RFID-tagg hittade på stationen.  \\ \hline
+DEC\_ARM\_PICKED\_UP & Arm har plockat upp ett föremål. \\ \hline
+DEC\_ARM\_PUT\_DOWN & Arm har lagt ned ett föremål. \\ \hline
+DEC\_OBJECT\_NOT\_FOUND & Inget föremål hittades. \\ \hline
+DEC\_UNKNOWN\_ERROR & Okänt fel inträffade. \\ \hline
+DEC\_ARM\_FAILED & Arm misslyckades med upplockning. \\ \hline
+DEC\_START\_LINE & Startade linjeföljning. \\ \hline
 \end{tabularx}
-\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\caption{De olika besluten som roboten kan ta och vidarebefordra till persondatorgränssnittet.}
 \end{table}
 
 \section{Övriga bilagor?}

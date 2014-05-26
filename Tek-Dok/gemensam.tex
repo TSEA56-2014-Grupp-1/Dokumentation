@@ -3,7 +3,7 @@ Detta avsnitt beskriver olika funktioner som inbegriper eller används av flera 
 
 \subsection{Protokoll för seriell kommunikation mellan robot och PC}
 \label{sec:bt-protokoll}
-Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika typer av paket. Varje typ av data som skickas har ett fördefinierat unikt paket-ID, som indikerar för en mottagare hur datan ska hanteras. Paket-ID:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
+Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika typer av paket. Varje typ av data som skickas har ett fördefinierat unikt paket-ID, som indikerar för en mottagare hur data ska hanteras. Paket-ID:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
 
 \nyBild{Bluetooth-protokoll.png}{Ett paket i den seriella kommunikationen mellan robot och PC, varje ruta är en byte lång.}{btpaket}{0.8}
 
@@ -23,7 +23,7 @@ När avbrottet, som indikerar att en byte har tagits emot, sker kommer den byte 
 
 För att läsa en byte från buffern anropas funktionen \verb|usart_read_byte|. Den undersöker om det finns någon data tillgänglig som inte redan har lästs (med andra ord, om läs- och skrivpekaren skiljer sig från varandra, se figur \ref{fig:usartbuffer}). I annat fall väntar den tills dess att det finns data, dock som mest under en bestämd timeout-tid. När det finns data läser den in en byte från den position i buffern som läspekaren pekar på till en variabel, och stegar upp läspekaren med ett steg.
 
-För att skicka data används funktionen \verb|usart_write_byte| som undersöker om den inbyggda USART-modulens statusflaggor tillåter att man skickar data, och i sådana fall ger funktionen en byte till USART-modulen som direkt matar ut den på den seriella linan. Går det inte att skicka väntar funktionen till dess att det går innan den skriver datan till USART-modulen.
+För att skicka data används funktionen \verb|usart_write_byte| som undersöker om den inbyggda USART-modulens statusflaggor tillåter att man skickar data, och i sådana fall ger funktionen en byte till USART-modulen som direkt matar ut den på den seriella linan. Går det inte att skicka väntar funktionen till dess att det går innan den skriver data till USART-modulen.
 
 \subsection{Intern buss}
 \label{sec:bus}
