@@ -346,58 +346,56 @@ I figur \ref{fig:pc_sensor} visas den grafiska representationen av sensorvärden
 I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
 
 
-
-
-\begin{longtable}{|c|c|}
+\begin{longtable}{|p{0.4\textwidth}|p{0.6\textwidth}|}
 \caption{Tabell över tolkning av meddelanden i loggfönstret}\\
     \hline
     \textbf{Meddelande} & \textbf{Tolkning} \\
     \hline
     \endfirsthead
     \multicolumn{2}{c}%
-    {\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+    {\tablename\ \thetable\ -- \textit{Fortsättning från föregående sida}} \\
     \hline
     \textbf{Meddelande} & \textbf{Tolkning} \\
     \hline
     \endhead
-    \hline \multicolumn{2}{r}{\textit{Continued on next page}} \\
+    \hline \multicolumn{2}{r}{\textit{Fortsättning på nästa sida}} \\
     \endfoot
     \hline
     \endlastfoot
-        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ 
-        Station to the right & Station till höger identifierad \\
-        Station to the left & Station till vänster identifierad \\
-        Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\
-        Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\
-        ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\
-        Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\
-        No ID was found & Roboten hittade inte RFID-tagg på station \\
-        Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\
-        Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\
-        Object was not found by arm & Objekt har hittats på stationen \\
-        An unkown error has occured & Okänt fel \\
-        Arm failed pickup & Armen misslyckades att plocka upp objekt \\
-        Started linefollowing & Automatisk linjeföljning startades \\
-        Recived packet with wrong length, was (length 1) expected (length 2). & Packet mottaget med fel längd. \\
-        Wrong checksum, was X expected Y & Packet mottaget med fel cheksum \\
-        Received new RFID tag:  &  Ny RFID-tagg \\
-        Calibration, new tape reference:  & Kalibrering gjord, nytt värde visas på skärmen \\
-        An I/O error occurred while writing data to port 1, error: 2 & Fel vid skrivning till robot\\
-        An I/O error ocurred while reading data from port 1,error:2 & Fel vid läsning från robot\\
-        Device was not found. & Enheten som programmet försökte ansluta till hittades inte. \\
-        Permission denied. & Tillstånd att ansluta till roboten nekat. \\
-        Error while opening already openden device. & Kommunikation till roboten redan ansluten. \\
-        Unknown error. & Okänt fel.\\
-        Connecting to port: 1 & Ansluter till port: \\
-        Bluetooth connected succesfully. & Lyckades ansluta till roboten. \\
-        Error opening bluetooth & Fel vid försök att ansluta till roboten.\\
-        No port to send to. & Ingen enhet ansluten via blåtand. \\
-        Sent arm command & Arm kommando skickat. \\
-        x: 1, y: 2, angle: 3 & Parametrar som skickades till armen. \\
-        Invalid arguments to arm position, must be integers. & Inskriven position var inte tal. \\
-        Station left:  & Station till vänster. \\
-        Station right & Station till höger. \\
-        Break in line. & Avbrott i linjen. \\
+        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
+        Station to the right & Station till höger identifierad \\ \hline
+        Station to the left & Station till vänster identifierad \\ \hline
+        Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\ \hline
+        Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\ \hline
+        ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\ \hline
+        Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\ \hline
+        No ID was found & Roboten hittade inte RFID-tagg på station \\ \hline
+        Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\ \hline
+        Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\ \hline
+        Object was not found by arm & Objekt har hittats på stationen \\ \hline
+        An unkown error has occured & Okänt fel \\ \hline
+        Arm failed pickup & Armen misslyckades att plocka upp objekt \\ \hline
+        Started linefollowing & Automatisk linjeföljning startades \\ \hline
+        Recived packet with wrong length, was (length 1) expected (length 2). & Packet mottaget med fel längd. \\ \hline
+        Wrong checksum, was X expected Y & Packet mottaget med fel cheksum \\ \hline
+        Received new RFID tag:  &  Ny RFID-tagg \\ \hline
+        Calibration, new tape reference:  & Kalibrering gjord, nytt värde visas på skärmen \\ \hline
+        An I/O error occurred while writing data to port 1, error: 2 & Fel vid skrivning till robot\\ \hline
+        An I/O error ocurred while reading data from port 1,error:2 & Fel vid läsning från robot\\ \hline
+        Device was not found. & Enheten som programmet försökte ansluta till hittades inte. \\ \hline
+        Permission denied. & Tillstånd att ansluta till roboten nekat. \\ \hline
+        Error while opening already openden device. & Kommunikation till roboten redan ansluten. \\ \hline
+        Unknown error. & Okänt fel.\\ \hline
+        Connecting to port: 1 & Ansluter till port: \\ \hline
+        Bluetooth connected succesfully. & Lyckades ansluta till roboten. \\ \hline
+        Error opening bluetooth & Fel vid försök att ansluta till roboten.\\ \hline
+        No port to send to. & Ingen enhet ansluten via blåtand. \\ \hline
+        Sent arm command & Arm kommando skickat. \\ \hline
+        x: 1, y: 2, angle: 3 & Parametrar som skickades till armen. \\ \hline
+        Invalid arguments to arm position, must be integers. & Inskriven position var inte tal. \\ \hline
+        Station left:  & Station till vänster. \\ \hline
+        Station right & Station till höger. \\ \hline
+        Break in line. & Avbrott i linjen.
 \label{tab:logg}
 \end{longtable}
 
