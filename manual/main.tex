@@ -118,7 +118,7 @@ Vid uppstart:
     \item Koppla in batteriet.
     \item Se till att roboten befinner sig på en öppen yta.
     \item Sätt på strömen genom att dra omkopplaren (1) åt höger i bild. Armen kommer röra sig till sitt grundläge.
-    \item LCD-skärmen (4) ska visa ett start-meddelande. Om inget syns kan man prova att vrida medsols på vred (5) tills att texten syns.
+    \item LCD-skärmen (4) ska visa ett start-meddelande. Om inget syns kan man prova att vrida medsols på vred (5) tills texten syns.
     \item  Nu är roboten redo att användas. För användning, starta uppkoppling mot PC, se \ref{subsec:start_pc}.
 \end{enumerate}
 
@@ -170,7 +170,7 @@ När roboten är påslagen och vill nollställas kan följande göras:
 \end{enumerate}
 
 \subsection{Tolka LCD-skärm}
-LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. "A:" är meddelande från armenheten, "C:" är meddelande från Chassienheten, "K:" är meddelande från kommunikationsenheten och "S:" är meddelande från sensorenheten. 
+LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. ''A:'' är meddelande från armenheten, "C:" är meddelande från Chassienheten, "K:" är meddelande från kommunikationsenheten och "S:" är meddelande från sensorenheten. 
 I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
 
 \begin{table}[H]
@@ -212,7 +212,7 @@ I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
 	\label{fig:pc_oversikt}
 \end{figure}
 
-Vid manuellt läge kan användaren via gränssnittet på PC styra roboten utefter behag. I automatiskt läge kan information om sensorvärden samt beslut som roboten tar observeras, nedan finns en beskrivning över vad programvaran kan användas till vid manuell och automatiskt läge. 
+Vid manuellt läge kan användaren via PC-gränssnittet styra roboten efter behag. I automatiskt läge kan användaren använda PC-gränssnittet för att observera besluten som roboten tar och information om sensorvärden. Nedan finns en beskrivning över vad programvaran kan användas till vid manuell och automatiskt läge. 
 
 \subsection{Motorstyrning}
 \label{subsec:motor}
@@ -317,7 +317,7 @@ Nedan visas i figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och st
 
 \subsection{Sensorvärden}
 \label{subsec:sensor}
-Nedan visas i figur \ref{fig:pc_sensor} den grafiska representationen av sensorvärden i användargränssnittet och  i tabell \ref{tab:sensor} dess tolkning.
+I figur \ref{fig:pc_sensor} visas den grafiska representationen av sensorvärden i användargränssnittet och i tabell \ref{tab:sensor} dess tolkning.
 
 \begin{figure}[H]
 	\centering
@@ -335,7 +335,7 @@ Nedan visas i figur \ref{fig:pc_sensor} den grafiska representationen av sensorv
         Undre graf: blå linje & Visar vilket avstånd som detekteras av vänster sidoskanner. Är endast igång då avsökning efter objekt sker på vänster sida. \\ \hline
         Undre graf: röd linje & Visar vilket avstånd som detekteras av höger sidoskanner. Är endast igång då avsökning efter objekt sker på höger sida. \\ \hline
         Pause graph & Stoppar uppdatering av grafen, så att användaren kan titta tillbaka på tidigare värden.\\ \hline
-        RFID & Visar vilkett ID det RFID som senast identifierats hade och vilken tid detta gjordes. \\ \hline
+        RFID & Visar vilket ID det RFID som senast identifierats hade och vid vilken tid detta gjordes. \\ \hline
     \end{tabularx}
 \caption{Tabell över tolkning av sensorvärdenas grafiska representation}
 \label{tab:sensor}
