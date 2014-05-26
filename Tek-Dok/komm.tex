@@ -2,7 +2,7 @@
 Kommunikationsenheten är robotens gränssnitt för interaktion med omvärlden och har två uppgifter. Den ska
 \begin{itemize}
 \item agera som ett gränssnitt mot LCD-skärmen och möjliggöra att alla delsystem kan skriva ut information på den.
-\item hantera den seriella kommunikationen över Bluetooth och möjliggöra att roboten kan skicka och ta emot information till och från PC-gränssnittet.
+\item hantera den seriella kommunikationen över blåtand och möjliggöra att roboten kan skicka och ta emot information till och från PC-gränssnittet.
 \end{itemize}
 
 Figur \ref{fig:kommblock} ger en övergripande bild över kommunikationsenhetens beståndsdelar.
@@ -21,8 +21,8 @@ Efter denna initiering kan data skrivas ut på skärmen genom att sätta \verb|R
 Alla delsystem kan skriva ut information på skärmen genom ett gemensamt bibliotek, \textit{lcd\_interface}, som beskrivs närmare i avsnitt \ref{sec:lcd_interface}.
 
 
-\subsection{Seriell kommunikation över Bluetooth}
-Anslutningen till datorn sker med bluetoothmodemet \emph{BlueSMiRF Gold} som är monterat på roboten. På PC-sidan skapas vid parkoppling med modemet en virtuell serieport, som emulerar en fysisk COM-port eller motsvarande. Kommunikationen sker sedan över denna port som om den vore en vanlig RS-232-port. 
+\subsection{Seriell kommunikation över blåtand}
+Anslutningen till datorn sker med blåtandsmodemet \emph{BlueSMiRF Gold} som är monterat på roboten. På PC-sidan skapas vid parkoppling med modemet en virtuell serieport, som emulerar en fysisk COM-port eller motsvarande. Kommunikationen sker sedan över denna port som om den vore en vanlig RS-232-port. 
 
 På robotsidan används AVR-processorns inbyggda modul för USART, och det gemensamma biblioteket för USART som används av flera delsystem -- se avsnitt \ref{sec:usart}. Följande parametrar ställs in i det protokoll som roboten använder:
 \begin{itemize}

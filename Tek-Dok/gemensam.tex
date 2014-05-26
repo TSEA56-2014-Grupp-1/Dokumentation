@@ -3,21 +3,21 @@ Detta avsnitt beskriver olika funktioner som inbegriper eller används av flera 
 
 \subsection{Protokoll för seriell kommunikation mellan robot och PC}
 \label{sec:bt-protokoll}
-Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika typer av paket. Varje typ av data som skickas har ett fördefinierat unikt paket-id, som indikerar för en mottagare hur datan ska hanteras. Paket-id:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
+Protokollet som roboten och PC-gränssnittet använder är uppbyggt av olika typer av paket. Varje typ av data som skickas har ett fördefinierat unikt paket-ID, som indikerar för en mottagare hur datan ska hanteras. Paket-ID:t är alltid den första byten av en överföring. Figur \ref{fig:btpaket} visar hur ett paket är uppbyggt.
 
 \nyBild{Bluetooth-protokoll.png}{Ett paket i den seriella kommunikationen mellan robot och PC, varje ruta är en byte lång.}{btpaket}{0.8}
 
-Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrollsumman ingår i paketet. Paketlängden indikerar alltså hur många bytes som finns kvar i paketet efter paketlängden.
+Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrollsumman ingår i paketet. Paketlängden indikerar alltså hur många byte som finns kvar i paketet efter paketlängden.
 
 Kontrollsumman bildas genom att summera värdena av alla bytes i paketet, exklusive kontrollsumman själv, trunkera summan till 8 bitar, och invertera värdet bitvis.
 
 \subsection{USART}
 \label{sec:usart}
-AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot byte över en seriell lina.
+AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot data över en seriell lina.
 
-Biblioteket använder en byte-buffer för att lagra mottagen data. Till buffern hör två pekare, en läspekare och en skrivpekare, som pekar till olika element i buffern och flyttas upp när man läser eller skriver i buffern. Genom att pekarna endast kan anta värden mellan 0 och 255, samma antal värden som det finns element i buffern, fås funktionalitet som i en ringbuffer eftersom pekarnas värden svämmar över till 0 när de ökas från 255.
+Biblioteket använder en databuffer för att lagra mottagen data. Till buffern hör två pekare, en läspekare och en skrivpekare, som pekar till olika element i buffern och flyttas upp när man läser eller skriver i buffern. Genom att pekarna endast kan anta värden mellan 0 och 255, samma antal värden som det finns element i buffern, fås funktionalitet som i en ringbuffer eftersom pekarnas värden svämmar över till 0 när de ökas från 255.
 
-När avbrottet som indikerar att en byte har tagits emot skrivs den byte som har tagits emot in i buffern på den position som skrivpekaren pekar på. Därefter ökas pekarens värde ett steg.
+När avbrottet, som indikerar att en byte har tagits emot, sker kommer den byte som tagits emot skrivas in i buffern på den position som skrivpekaren pekar på. Därefter ökas pekarens värde ett steg.
 
 \nyBild{USART-buffer.png}{Byte-buffern som USART-biblioteket använder, och vilken data som räknas som tillgänglig och ej ännu läst. En ruta föreställer en byte.}{usartbuffer}{0.6}
 
@@ -28,19 +28,19 @@ För att skicka data används funktionen \verb|usart_write_byte| som undersöker
 \subsection{Intern buss}
 \label{sec:bus}
 
-För att delsystem internt ska kunna kommuicera med varandra finns en intern buss av typen multimaster I$^2$C\footnote{Inter-Integrated Circuit, en synkron seriell multimasterbuss.} implementerad.
+För att delsystemen internt ska kunna kommunicera med varandra finns en intern buss av typen multimaster, se avsnitt \ref{sec:bus-implementation}, I$^2$C\footnote{Inter-Integrated Circuit, en synkron seriell multimasterbuss.} implementerad.
 
 \subsubsection{Protokoll}
 \label{sec:bus-protokoll}
-Alla transaktioner består utav en adress med en skriv- eller läsbit, följt av två bytes med data. Då enheten som initierat kontakten (master) vill skriva ut på bussen består de första 5 bitarna av ett id. Detta id bestämmer vilken funktion hos slaven som ska hantera den data som överförs i de resterande 11 bitarna.
+Alla transaktioner består av en adress med en skriv- eller läsbit, följt av två byte med data. Då enheten som initierat kontakten (master) vill skriva ut på bussen består de första 5 bitarna av ett ID. Detta ID bestämmer vilken funktion hos mottagaren, som alltså agerar slav, som ska hantera den data som överförs i de resterande 11 bitarna.
 
-\nyBild{Buss-protokoll.pdf}{En lyckad skrivning från master till slav. Om NACK skulle ha returnerats istället för ACK kommer överföringen att avbrytas.}{busstransaktion}{1}
+\nyBild{Buss-protokoll.pdf}{En lyckad skrivning från master till slav. Om NACK (No Acknowledgement, innebär att mottagaren ej mottagit data) skulle ha returnerats istället för ACK (Acknowledgement innebär att mottagaren tog emot data) kommer överföringen att avbrytas.}{busstransaktion}{1}
 
-I fallet att master vill göra en förfrågan på bussen gör den först en skrivning till slaven. Detta gör då att slaven kör funktionen på det id den fick med de resterande 11 bitar som inargument. Denna funktion returnerar ett 16 bitars värde vilket kommer vara det värde som skickas ut då mastern sedan begär en läsning från slaven. Mellan dessa två transaktioner är det viktigt att mastern inte släpper kontroll över bussen, eftersom slaven då skulle kunna returnera fel värde om en annan enhet skrivit till den efter den första transaktionen.
+I fallet att master vill göra en förfrågan på bussen gör den först en skrivning till slaven. Detta gör då att slaven kör funktionen på det ID den fick med de resterande 11 bitar som inargument. Denna funktion returnerar ett 16 bitars värde vilket kommer vara det värde som skickas ut då mastern sedan begär en läsning från slaven. Mellan dessa två transaktioner är det viktigt att mastern inte släpper kontroll över bussen, eftersom slaven då skulle kunna returnera fel värde om en annan enhet skrivit till den efter den första transaktionen.
 
 \subsubsection{Implementation}
 \label{sec:bus-implementation}
-Bussen är implementeras så att alla enheter kan initiera en transaktion och därmed kan alla enheter vara master på bussen. Detta gör att två eller fler enheter kan börja kommunicera på bussen samtidigt. Då detta sker kommer den enhet som skickar en låg bit först att vinna bussen och fortsätta med sin transaktion. De andra enheterna kommer då upphöra med sina transaktioner och efter att ett stop skickats på bussen kommer de att försöka igen. Detta kommer enheterna att göra tills dessa att de lyckats med en transaktion.
+Bussen är implementerad så att alla enheter kan initiera en transaktion och därmed kan alla enheter vara master på bussen. Detta gör att två eller fler enheter kan börja kommunicera på bussen samtidigt. Då detta sker kommer den enhet som skickar en låg bit först att vinna bussen och fortsätta med sin transaktion. De andra enheterna kommer då upphöra med sina transaktioner och efter att ett stop skickats på bussen kommer de att försöka igen. Detta kommer enheterna att göra tills dessa att de lyckats med en transaktion.
 
 \begin{table}[H]
 \centering
@@ -56,13 +56,13 @@ Arm & 6 \\ \hline
 \caption{Adresser till de olika delsystem på den interna bussen.}
 \end{table}
 
-När en enhet gör en transaktion på bussen och enheten som tar emot data returnerar NACK (no acknowledgement) efter någon byte i överförningen kommer transaktionen att avbrytas och en ny kommer inte att startas.
+När en enhet gör en transaktion på bussen och enheten som tar emot data returnerar NACK efter någon byte i överförningen kommer transaktionen att avbrytas. Detta innebär även att en ny transaktion inte kommer att startas per automatik.
 
-För att bestämma vilken funktion som ska hantera data på vilket id finns funktionerna \verb|bus_register_receive|, som registrerar en funktion för mottagen data, samt \verb|bus_register_response| som registrerar en funktion då data ska returneras över bussen.
+För att bestämma vilken funktion som ska hantera data på vilket ID finns funktionerna \verb|bus_register_receive|, som registrerar en funktion för mottagen data, samt \verb|bus_register_response| som registrerar en funktion då data ska returneras över bussen.
 
 De ID:n som finns på de olika delsystemen och vad de gör finns i bilaga \ref{callbacks}.
 
-Funktionen för att skicka data på bussen är \verb|bus_transmitt|, och för att göra en förfrågan finns \verb|bus_request|. Båda dessa returnerar 0 då transaktionen lyckades. Detta innebär att om användaren vill vara säker på att en transaktion ska gå fram på bussen måste dessa funktioner köras tills dess att de returnerar 0.
+Funktionen för att skicka data på bussen är \verb|bus_transmit|, och för att göra en förfrågan finns \verb|bus_request|. Båda dessa returnerar 0 då transaktionen lyckades. Detta innebär att om användaren vill vara säker på att en transaktion ska gå fram på bussen måste dessa funktioner köras tills dess att de returnerar 0.
 
 Hastigheten på bussen har valts till så låg som möjligt, detta för att få maximal stabilitet. Eftersom hastigheten sätts genom en division av klockhastigheten till processorn kommer bussen att gå olika fort beroende av vilken enhet som är master. Detta innebär att hastigheten varierar mellan cirka 70 och 90 kHz.
 

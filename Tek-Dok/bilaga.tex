@@ -5,6 +5,18 @@ Robotens elektronik är uppdelad på två virkort. Därför presenteras här ett
 
 \nyBild{kopplingsschema_sensor.pdf}{Kopplingsschema för virkortet som innehåller sensorenheten.}{senskoppling}{1}
 
+
+\begin{packed_itemize}
+\item 1 x ATmega1284P, huvudprocessor
+\item 1 x reflexsensormodul
+\item 2 x 16-kanals multiplexrar
+\item 1 x RFID-läsare (Parallax Serial)
+\item 2 x avståndssensorer (GP2D120)
+\item 2 x resistorer (18~k\ohm), för lågpassfilter
+\item 2 x kondensatorer (100~nF), för lågpassfilter
+\item 1 x EXO-3, kristalloscillator (20 MHz)
+\end{packed_itemize}
+
 \subsection{Kommunikationsenhet, Armenhet, Chassienhet}
 \begin{figure}[H]
 \centering
