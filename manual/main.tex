@@ -10,12 +10,11 @@
 \usepackage{braket}
 \usepackage{setspace}
 \usepackage{tabularx}
+\usepackage{multirow}
 \usepackage{longtable}
-
-\usepackage{lipsum}
-\usepackage{booktabs}
-\usepackage{array}
-\newcolumntype{R}{>{\raggedleft\arraybackslash}p{6cm}}
+\usepackage{ctable}
+\usepackage{hyphenat}
+\usepackage{xfrac}
 
 \title{Teknisk Dokumentation}
 \input{LIPS.tex}
@@ -34,7 +33,7 @@
 
 \newcommand{\LIPSprojektgrupp}{Grupp 1}
 \newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
-\newcommand{\LIPSdokumentansvarig}{LIPS Användarmanual}
+\newcommand{\LIPSdokumentansvarig}{LIPS Teknisk Dokumentation}
 
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
@@ -126,7 +125,7 @@ Vid uppstart:
 \label{subsec:install_pc}
 \begin{enumerate}
     \item Ladda in programvara på datorn, given tillsammans med produkten.
-    \item Höger klicka på den komprimerade filen "Ouroborobot" och välj valfri mapp att lägga programmet i.
+    \item Höger klicka på den komprimerade filen ''Ouroborobot'' och välj valfri mapp att lägga programmet i.
 \end{enumerate}
 
 
@@ -134,9 +133,9 @@ Vid uppstart:
 \label{subsec:start_pc}
 Innan programvaran används, se till att roboten har ström och att röd lampa på blåtandsenheten (3) blinkar rött. För att starta programvara:
 \begin{enumerate}
-    \item \item Lokalisera den mappen du packat up programmet i, tryck på filen "PC-interface" för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
-    \item Tryck på flik "File"  längst upp i vänstra hörnet för att sedan trycka på “CONNECT?!”
-    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa “YEEEEE”. Nu är uppkopplingen mot roboten igång. 
+    \item Lokalisera den mappen du packat up programmet i, tryck på filen "PC-interface" för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
+    \item Tryck på flik "File"  längst upp i vänstra hörnet för att sedan trycka på ''Connect''
+    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa ''Bluetooth connected succesfull''. Nu är uppkopplingen mot roboten igång. 
 \end{enumerate}
 
 \subsection{Använda i manuellt läge}
@@ -170,7 +169,7 @@ När roboten är påslagen och vill nollställas kan följande göras:
 \end{enumerate}
 
 \subsection{Tolka LCD-skärm}
-LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. ''A:'' är meddelande från armenheten, "C:" är meddelande från Chassienheten, "K:" är meddelande från kommunikationsenheten och "S:" är meddelande från sensorenheten. 
+LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. ''A:'' är meddelande från armenheten, ''C:'' är meddelande från Chassienheten, ''K:'' är meddelande från kommunikationsenheten och S:'' är meddelande från sensorenheten. 
 I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
 
 \begin{table}[H]
@@ -308,7 +307,7 @@ Nedan visas i figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och st
         Adress & Bestämmer vilken enhet du vill skicka anrop till. \\ \hline
         Skicka förfrågan & Skickar en förfrågan enligt valda parametrar ovan. \\ \hline
         Skicka anrop & Utför en överföring enligt valda parametrar ovan. \\ \hline
-        Loggfönster & Visar händelser som roboten observerar, status och de beslut roboten tar. Den visar också eventuella felmeddelande. Se RUBRIK XX LOGGFÖNSTER.\\ \hline
+        Loggfönster & Visar händelser som roboten observerar, status och de beslut roboten tar. Den visar också eventuella felmeddelande. Se \ref{subsec:logg}.\\ \hline
         Tid & Visar hur lång tid roboten har varit i automatiskt linjeföljningsläge. \\ \hline
     \end{tabularx}
 \caption{Tabell över funktionallitet hos instrumentbrädet för diagnostik och status}
@@ -348,7 +347,7 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
 
 
 
-\begin{longtable}{|c|c|}
+\begin{longtable}{|p{0.3\textwidth}|p{0.7\textwidth}|}
 \caption{Tabell över tolkning av meddelanden i loggfönstret}\\
     \hline
     \textbf{Meddelande} & \textbf{Tolkning} \\
@@ -364,40 +363,44 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
     \endfoot
     \hline
     \endlastfoot
-        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ 
-        Station to the right & Station till höger identifierad \\
-        Station to the left & Station till vänster identifierad \\
-        Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\
-        Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\
-        ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\
-        Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\
-        No ID was found & Roboten hittade inte RFID-tagg på station \\
-        Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\
-        Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\
-        Object was not found by arm & Objekt har hittats på stationen \\
-        An unkown error has occured & Okänt fel \\
-        Arm failed pickup & Armen misslyckades att plocka upp objekt \\
-        Started linefollowing & Automatisk linjeföljning startades \\
-        Recived packet with wrong length, was (length 1) expected (length 2). & Packet mottaget med fel längd. \\
-        Wrong checksum, was X expected Y & Packet mottaget med fel cheksum \\
-        Received new RFID tag:  &  Ny RFID-tagg \\
-        Calibration, new tape reference:  & Kalibrering gjord, nytt värde visas på skärmen \\
-        An I/O error occurred while writing data to port 1, error: 2 & Fel vid skrivning till robot\\
-        An I/O error ocurred while reading data from port 1,error:2 & Fel vid läsning från robot\\
-        Device was not found. & Enheten som programmet försökte ansluta till hittades inte. \\
-        Permission denied. & Tillstånd att ansluta till roboten nekat. \\
-        Error while opening already openden device. & Kommunikation till roboten redan ansluten. \\
-        Unknown error. & Okänt fel.\\
-        Connecting to port: 1 & Ansluter till port: \\
-        Bluetooth connected succesfully. & Lyckades ansluta till roboten. \\
-        Error opening bluetooth & Fel vid försök att ansluta till roboten.\\
-        No port to send to. & Ingen enhet ansluten via blåtand. \\
-        Sent arm command & Arm kommando skickat. \\
-        x: 1, y: 2, angle: 3 & Parametrar som skickades till armen. \\
-        Invalid arguments to arm position, must be integers. & Inskriven position var inte tal. \\
-        Station left:  & Station till vänster. \\
-        Station right & Station till höger. \\
-        Break in line. & Avbrott i linjen. \\
+        Station to the right & Station till höger identifierad \\ \hline
+        Station to the left & Station till vänster identifierad \\ \hline
+        Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\ \hline
+        Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\ \hline
+        ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\ \hline
+        Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\ \hline
+        No ID was found & Roboten hittade inte RFID-tagg på station \\ \hline
+        Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\ \hline
+        Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\ \hline
+        Object was not found by arm & Objekt har hittats på stationen \\ \hline
+        An unkown error has occured & Okänt fel \\ \hline
+        Arm failed pickup & Armen misslyckades att plocka upp objekt \\ \hline
+        Started linefollowing & Automatisk linjeföljning startades \\ \hline
+        Recived packet with wrong length, was (length 1) expected (length 2). & \\ \hline
+        Wrong checksum, was 1 expected 2 & \\ \hline
+        Received new RFID tag:  & \\ \hline
+        Calibration, new tape reference:  & \\ \hline
+        An I/O error occurred while writing data to port 1, error: 2 & \\ \hline
+        An I/O error ocurred while reading data from port 1,error:2 & \\ \hline
+        Device was not found. & \\ \hline
+        Permission denied. & \\ \hline
+        Error while opening already openden device. & \\ \hline
+        Unknown error. & \\ \hline
+        Connecting to port: 1 & \\ \hline
+        Bluetooth connected succesfully. & \\ \hline
+        Error opening bluetooth & \\ \hline
+        No port to send to. & \\ \hline
+        No port to send to. & \\ \hline
+        No response from robot. Attempting to reconnect... & \\ \hline
+        Sent arm command & \\ \hline
+        x: 1, y: 2, angle: 3 & \\ \hline
+        Invalid arguments to arm position, must be integers. & \\ \hline
+        Station left: 1 & \\ \hline
+        Station right & \\ \hline
+        Value of 1: 2 & \\ \hline
+        Break in line. & \\ \hline
+        Not enough information entered. & \\ \hline
+        Only decimal integers accepted & \\ \hline
 \label{tab:logg}
 \end{longtable}
 
