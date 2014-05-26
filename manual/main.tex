@@ -10,12 +10,11 @@
 \usepackage{braket}
 \usepackage{setspace}
 \usepackage{tabularx}
+\usepackage{multirow}
 \usepackage{longtable}
-
-\usepackage{lipsum}
-\usepackage{booktabs}
-\usepackage{array}
-\newcolumntype{R}{>{\raggedleft\arraybackslash}p{6cm}}
+\usepackage{ctable}
+\usepackage{hyphenat}
+\usepackage{xfrac}
 
 \title{Teknisk Dokumentation}
 \input{LIPS.tex}
@@ -34,7 +33,7 @@
 
 \newcommand{\LIPSprojektgrupp}{Grupp 1}
 \newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
-\newcommand{\LIPSdokumentansvarig}{LIPS Användarmanual}
+\newcommand{\LIPSdokumentansvarig}{LIPS Teknisk Dokumentation}
 
 \newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
 \newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
@@ -126,7 +125,7 @@ Vid uppstart:
 \label{subsec:install_pc}
 \begin{enumerate}
     \item Ladda in programvara på datorn, given tillsammans med produkten.
-    \item Höger klicka på den komprimerade filen "Ouroborobot" och välj valfri mapp att lägga programmet i.
+    \item Höger klicka på den komprimerade filen ''Ouroborobot'' och välj valfri mapp att lägga programmet i.
 \end{enumerate}
 
 
@@ -134,9 +133,9 @@ Vid uppstart:
 \label{subsec:start_pc}
 Innan programvaran används, se till att roboten har ström och att röd lampa på blåtandsenheten (3) blinkar rött. För att starta programvara:
 \begin{enumerate}
-    \item \item Lokalisera den mappen du packat up programmet i, tryck på filen "PC-interface" för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
-    \item Tryck på flik "File"  längst upp i vänstra hörnet för att sedan trycka på “CONNECT?!”
-    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa “YEEEEE”. Nu är uppkopplingen mot roboten igång. 
+    \item Lokalisera den mappen du packat up programmet i, tryck på filen "PC-interface" för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
+    \item Tryck på flik "File"  längst upp i vänstra hörnet för att sedan trycka på ''Connect''
+    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa ''Bluetooth connected succesfull''. Nu är uppkopplingen mot roboten igång. 
 \end{enumerate}
 
 \subsection{Använda i manuellt läge}
@@ -170,7 +169,7 @@ När roboten är påslagen och vill nollställas kan följande göras:
 \end{enumerate}
 
 \subsection{Tolka LCD-skärm}
-LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. ''A:'' är meddelande från armenheten, "C:" är meddelande från Chassienheten, "K:" är meddelande från kommunikationsenheten och "S:" är meddelande från sensorenheten. 
+LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. Den roterar mellan meddelanden från varje enhet och visar det senaste meddelande den enheten skickat. ''A:'' är meddelande från armenheten, ''C:'' är meddelande från Chassienheten, ''K:'' är meddelande från kommunikationsenheten och S:'' är meddelande från sensorenheten. 
 I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
 
 \begin{table}[H]
@@ -308,7 +307,7 @@ Nedan visas i figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och st
         Adress & Bestämmer vilken enhet du vill skicka anrop till. \\ \hline
         Skicka förfrågan & Skickar en förfrågan enligt valda parametrar ovan. \\ \hline
         Skicka anrop & Utför en överföring enligt valda parametrar ovan. \\ \hline
-        Loggfönster & Visar händelser som roboten observerar, status och de beslut roboten tar. Den visar också eventuella felmeddelande. Se RUBRIK XX LOGGFÖNSTER.\\ \hline
+        Loggfönster & Visar händelser som roboten observerar, status och de beslut roboten tar. Den visar också eventuella felmeddelande. Se \ref{subsec:logg}.\\ \hline
         Tid & Visar hur lång tid roboten har varit i automatiskt linjeföljningsläge. \\ \hline
     \end{tabularx}
 \caption{Tabell över funktionallitet hos instrumentbrädet för diagnostik och status}
@@ -355,14 +354,11 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
     \multicolumn{2}{c}%
     {\tablename\ \thetable\ -- \textit{Fortsättning från föregående sida}} \\
     \hline
-    \textbf{Meddelande} & \textbf{Tolkning} \\
-    \hline
     \endhead
     \hline \multicolumn{2}{r}{\textit{Fortsättning på nästa sida}} \\
     \endfoot
     \hline
     \endlastfoot
-        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
         Station to the right & Station till höger identifierad \\ \hline
         Station to the left & Station till vänster identifierad \\ \hline
         Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\ \hline
