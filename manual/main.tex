@@ -92,7 +92,7 @@ Produkten är en lagerrobot med uppgiften att i en lagermiljö kunna bli beordra
 \section{Krav på omgivning}
 Roboten är designad för att kunna manövrera sig fram längs med en linje vars luminans är betydligt mindre än underlagets. Denna mörka linje bör vara mellan 14-18 mm bred. Upplockningsstationer indikeras med en annan linje på cirka 10 cm vinkelrätt ut från körbanan. Banan är en sluten slinga och får endast korsas i en rät vinkel. Kurvor i körbanan ska ha en radie på minst 25cm. 
 
-Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakloss och en maxvikt på 200g. Dess placering i förhållande till linjen bör vara inom armens räckvidd men inte heller för nära roboten. Mer om banans utformning i bilaga \ref{banspecifikation}.  
+Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakloss och en maxvikt på 200g. Dess placering i förhållande till linjen bör vara inom armens räckvidd men inte heller för nära roboten.  
 
 %
 %----------------------------------------
@@ -108,7 +108,7 @@ Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakl
 
 I figur \ref{fig:robot_oversikt} är komponenter som är behövliga vid användning av roboten numrerade, nedan kommer dessa refereras till i texten med knappens siffra, till exempel refererar texten till LCD-skärmen med (4).
 
-Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Läs igenom all säkerhetsdokumentation och varningar innan denna kopplas på, se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inget sitter löst eller är sönder. För installation av programvara se \ref{subsec:install_pc}.
+Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inget sitter löst eller är sönder. För installation av programvara se \ref{subsec:install_pc}.
 
 \subsection{Uppstart av system}
 Vid uppstart:
@@ -133,9 +133,9 @@ Vid uppstart:
 \label{subsec:start_pc}
 Innan programvaran används, se till att roboten har ström och att röd lampa på blåtandsenheten (3) blinkar rött. För att starta programvara:
 \begin{enumerate}
-    \item Lokalisera den mappen du packat up programmet i, tryck på filen "PC-interface" för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
-    \item Tryck på flik "File"  längst upp i vänstra hörnet för att sedan trycka på ''Connect''
-    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa ''Bluetooth connected succesfull''. Nu är uppkopplingen mot roboten igång. 
+    \item Lokalisera den mappen du packat upp programmet i, tryck på filen ''PC-interface'' för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
+    \item Tryck på flik ''File''  längst upp i vänstra hörnet för att sedan trycka på ''Connect''
+    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}, ska visa ''Bluetooth connected succesfull''. Nu är uppkopplingen mot roboten igång. 
 \end{enumerate}
 
 \subsection{Använda i manuellt läge}
@@ -263,13 +263,13 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
         Gripklo: Öppna& Öppnar gripklon till maximal öppning. \\ \hline
         y: Upp & Rör armen uppåt i y-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
         y: Ner & Rör armen nedåt i y-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
-        x: Upp & Rör armen uppåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
-        x: Ner & Rör armen nedåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne \\ \hline
+        x: Upp & Rör armen framåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
+        x: Ner & Rör armen bakåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne \\ \hline
         Basvinkel: Vänster & Roterar armens bas åt vänster. \\ \hline
         Basvinkel: Höger & Roterar armens bas åt höger. \\ \hline
-        x: Textfält & Här skrivs den x-koordinat, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
-        y: Textfält & Här skrivs den y-koordinat, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
-        vinkel: Textfält & Här skrivs den vinkel, se figur \ref{fig:arm_koord}, som man vill att armbasen ska rotera i grader. \\ \hline
+        x: Textfält & Här skrivs den x-koordinat i millimeter, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till. \\ \hline
+        y: Textfält & Här skrivs den y-koordinat i millimeter, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till. \\ \hline
+        vinkel: Textfält & Här skrivs den vinkel i grader, se figur \ref{fig:arm_koord}, som man vill att armbasen ska ställa in sig i. \\ \hline
         Skicka parametrar & Skickar de givna värdena x-koordinat, y-koordinat och vinkel till roboten för att utföra rörelse. \\ \hline
         Startläge & Rör automatiskt armen tillbaka till dess startläge. \\ \hline
         Plocka höger & Påbörjar skanning av område till höger för att vid identifiering av föremål sedan automatiskt plocka upp det med armen. \\ \hline
@@ -301,7 +301,7 @@ Nedan visas i figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och st
     \centering
     \begin{tabularx}{\textwidth}{|l|X|}
         \hline \textbf{Knapp / textfält} & \textbf{Funktion} \\ \hline
-        Callback ID & Bestämmer vilken funktion hos enheten du vill anropa. Se den tekniska dokumentationen, avsnitt XX för en tabell över callback-id:n \\ \hline
+        Callback ID & Bestämmer vilken funktion hos enheten du vill anropa. Se den tekniska dokumentationen, bilaga C, för en tabell över callback-id:n \\ \hline
         Hög byte & Den mest signifikanta byten som ska skickas med anropet. Endast de tre lägsta bitarna används, totalt kan alltså 11 bitar skickas med. \\ \hline
         Låg byte & Den minst signifikanta byten som ska skickas med anropet. \\ \hline
         Adress & Bestämmer vilken enhet du vill skicka anrop till. \\ \hline
