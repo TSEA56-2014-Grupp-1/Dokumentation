@@ -50,6 +50,7 @@ Den vinkel som föremålet slutligen beräknas stå i ligger mitt emellan den f�
 \nyBild{sidoskanner.png}{Vänster sidoskanner.}{sidoskanner}{0.7}
 
 \subsection{Översiktlig beskrivning av programmet}
+Sensorenhetens huvudsakliga funktionalitet ryms i tre olika delar. En del för beräkning av koordinaterna som skall ges till armen från sidoskannrarna. Ytterliggare en del hanterar den data som fås från linjesensorn och utifrån denna upptäcker korsningar, avbrott och plockstationer. Slutligen behandlas den del av programvaran som tar hand om tyngdpunktsberäkningen som krävs för att roboten ska klara av att följa en linje.
 
 \subsubsection{Koordinatberäkning}
 När sidoskannern har hittat ett objekt och med flera mätningar noggrant identifierat avståndet $L$ och vinkeln $\alpha$ används dessa för att räkna ut $R$ och $\beta$ genom att kalla på två funktioner, calculate-angle-coordinate och calculate-distance-coordinate.
@@ -90,9 +91,6 @@ För att roboten ska känna till sin egen position i förhållande till linjen s
 Tyngdpunktsberäkningen använder sig av två stycken variabler. Den första variabeln innehåller linjesensorns totalvikt, alltså summan av de individuella reflexsensorernas värden. Den andra variabeln innehåller sensorns totalvikt, men där de olika reflexsensorerna även har blivit multiplicerade med en skalfaktor. Denna skalfaktor fyller två funktioner. Först och främst behövs den för att ge sensorerna på kanterna en större hävarm relativt linjesensorns mittpunkt. Vidare används den till att skala den slutgiltiga tyngdpunkten så att hela talområdet hos det åtta bitar stora returvärdet används för att representera linjen. Denna metod kommer att resultera i att tyngdpunkten representeras av ett åtta bitar stort heltalsvärde.
 
 Då tyngdpunkten är 0 ligger tejpen alltså längst till vänster på reflexsensorn på samma sätt som en mekanisk tyngdpunkt hade legat längs till vänster om all massa hos en linje hade legat till vänster. Motsvarande innebär tyngdpunkt 255 att linjen ligger längs ut till höger på linjesensorn.
-
-\subsection{Analys av prestanda}
-
 
 
 
