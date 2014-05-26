@@ -90,7 +90,7 @@
 Produkten är en lagerrobot med uppgiften att i en lagermiljö kunna bli beordrad att förflytta föremål mellan lagerplatser. Roboten är konstruerad att kunna följa svart linje på marken och stanna vid utmarkerade platser för att hämta eller lämna föremål. Användaren kan välja att kontrollera roboten manuellt eller låta den agera autonomt.
 
 \section{Krav på omgivning}
-Roboten är designad för att kunna manövrera sig fram längs med en linje vars luminans är betydligt mindre än underlagets. Denna mörka linje bör vara mellan 14-18 mm bred. Upplockningsstationer indikeras med en annan linje på cirka 10 cm vinkelrätt ut från körbanan. Banan är en sluten slinga och får endast korsas i en rät vinkel. Kurvor i körbanan ska ha en radie på minst 25cm. 
+Roboten är designad för att kunna manövrera sig fram längs med en linje vars luminans är betydligt mindre än underlagets. Denna mörka linje bör vara mellan 14-18 mm bred. Upplockningsstationer indikeras med en annan linje på cirka 10 cm vinkelrätt ut från körbanan. Banan är en sluten slinga och får endast korsas i räta vinklar på raksträckorl. Kurvor i körbanan ska ha en radie på minst 25cm. 
 
 Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakloss och en maxvikt på 200g. Dess placering i förhållande till linjen bör vara inom armens räckvidd men inte heller för nära roboten. 
 
@@ -108,7 +108,7 @@ Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakl
 
 I figur \ref{fig:robot_oversikt} är komponenter som är behövliga vid användning av roboten numrerade, nedan kommer dessa refereras till i texten med knappens siffra, till exempel refererar texten till LCD-skärmen med (4).
 
-Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inget sitter löst eller är sönder. För installation av programvara se \ref{subsec:install_pc}.
+Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inga komponenter är lösa eller trasiga innan ström slås på. För installation av programvara se \ref{subsec:install_pc}.
 
 \subsection{Uppstart av system}
 Vid uppstart:
@@ -116,7 +116,7 @@ Vid uppstart:
     \item Sätt omkopplaren (1) i dess mittenläge.
     \item Koppla in batteriet.
     \item Se till att roboten befinner sig på en öppen yta.
-    \item Sätt på strömen genom att dra omkopplaren (1) åt höger i bild. Armen kommer röra sig till sitt grundläge.
+    \item Sätt på strömmen genom att dra omkopplaren (1) åt höger i bild. Armen kommer röra sig till sitt grundläge.
     \item LCD-skärmen (4) ska visa ett start-meddelande. Om inget syns kan man prova att vrida medsols på vred (5) tills texten syns.
     \item  Nu är roboten redo att användas. För användning, starta uppkoppling mot PC, se \ref{subsec:start_pc}.
 \end{enumerate}
@@ -135,7 +135,7 @@ Innan programvaran används, se till att roboten har ström och att röd lampa p
 \begin{enumerate}
     \item Lokalisera den mappen du packat upp programmet i, tryck på filen ''PC-interface'' för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
     \item Tryck på flik ''File''  längst upp i vänstra hörnet för att sedan trycka på ''Connect''
-    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}, ska visa ''Bluetooth connected succesfull''. Nu är uppkopplingen mot roboten igång. 
+    \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}, står ''Bluetooth connected succesfull''. Nu är datorn uppkopplad mot roboten.
 \end{enumerate}
 
 \subsection{Använda i manuellt läge}
@@ -153,19 +153,19 @@ När roboten har uppkoppling till PC kan automatiskt läge initieras enligt:
     \item Tryck på den blåa knappen (7) så börjar roboten direkt köra per automatik. För att se och tolka det roboten observerar från omgiviningen och de beslut som tas, se \ref{subsec:sensor} och \ref{subsec:diag}.
 \end{enumerate}
 
-\subsection{Starta om och nollställa roboten}
-När roboten är påslagen och vill nollställas kan följande göras:
+\subsection{Starta om och återställa roboten}
+När roboten är påslagen och ska återställas kan följande göras:
 \begin{itemize}
-\item Slå av och sedan på omkopplare (1) för att starta om och nollställa hela roboten.
-\item Tryck på röd knapp (2) för att nollställa sensorenheten
-\item Tryck på svart knapp (6) för att nollställa armenheten och kommunikationsenheten.
-\item Tryck på svart knapp (8) för att nollställa chassienheten. 
+\item Slå av och sedan på omkopplare (1) för att starta om och återställa hela roboten.
+\item Tryck på röd knapp (2) för att återställa sensorenheten
+\item Tryck på svart knapp (6) för att återställa armenheten och kommunikationsenheten.
+\item Tryck på svart knapp (8) för att återställa chassienheten. 
 \end{itemize}
 
 \subsection{Använda i automatiskt läge}
 \begin{enumerate}
     \item Sätt omkopplare (1) i dess mittläge.
-    \item Dra ut batteriet ur roboten och lägg den i säkert förvar.
+    \item Dra ut batteriet ur roboten och lägg det i säkert förvar.
 \end{enumerate}
 
 \subsection{LCD-skärm}
@@ -188,7 +188,7 @@ LCD-skärmen visar status och meddelanden från de olika enheterna på roboten. 
 	\label{fig:pc_oversikt}
 \end{figure}
 
-Vid manuellt läge kan användaren via PC-gränssnittet styra roboten efter behag. I automatiskt läge kan användaren använda PC-gränssnittet för att observera besluten som roboten tar och information om sensorvärden. Nedan finns en beskrivning över vad programvaran kan användas till vid manuell och automatiskt läge. 
+Vid manuellt läge kan användaren via PC-gränssnittet styra roboten efter behag. I automatiskt läge kan användaren använda PC-gränssnittet för att övervaka de interna beslut som roboten tar. Vidare fås  information om sensorvärden för de olika sensorer som för tillfället används. Nedan finns en beskrivning över vad programvaran kan användas till i manuellt respektive automatiskt läge. 
 
 \subsection{Motorstyrning}
 \label{subsec:motor}
@@ -218,12 +218,12 @@ Kp & Skriv in storleken på linjeföljningsreglerarens proportionella beroende. 
 Send Kp and Kd & Skickar de värden som skrivits in i textfältet vid Kd och Kp till robototen som börjar reglera efter dessa. \\ \hline
 
 \end{tabularx}
-\caption{Tabell över funktionallitet hos manuella motorstyrningens instrumentbräde}
+\caption{Tabell över funktionalitet hos manuella motorstyrningens instrumentbräde}
 \label{tab:motor}
 \end{table}
 
 \subsection{Armrörelse}
-Säkerställ först att roboten är uppkopplad till PC via blåtand innan användning. Nedan visas i figur \ref{fig:pc_arm} ett intrumentbräde för armrörelse samt i tabell \ref{tab:arm} dess funktionallitet.
+Säkerställ först att roboten är uppkopplad till PC via blåtand innan användning. Nedan visas i figur \ref{fig:pc_arm} ett instrumentbräde för armrörelse samt i tabell \ref{tab:arm} dess funktionalitet.
 
 \begin{figure}[H]
 	\centering
@@ -242,8 +242,8 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
         y: Ner & Rör armen nedåt i y-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
         x: Upp & Rör armen framåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
         x: Ner & Rör armen bakåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne \\ \hline
-        Basvinkel: Vänster & Roterar armens bas åt vänster. \\ \hline
-        Basvinkel: Höger & Roterar armens bas åt höger. \\ \hline
+        Basvinkel: Moturs & Roterar armens bas moturs. \\ \hline
+        Basvinkel: Medurs & Roterar armens bas medurs. \\ \hline
         x: Textfält & Här skrivs den x-koordinat i millimeter, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till. \\ \hline
         y: Textfält & Här skrivs den y-koordinat i millimeter, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till. \\ \hline
         vinkel: Textfält & Här skrivs den vinkel i grader, se figur \ref{fig:arm_koord}, som man vill att armbasen ska ställa in sig i. \\ \hline
@@ -252,7 +252,7 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
         Plocka höger & Påbörjar skanning av område till höger för att vid identifiering av föremål sedan automatiskt plocka upp det med armen. \\ \hline
         Plocka vänster & Påbörjar skanning av område till vänster för att vid identifiering av föremål sedan automatiskt plocka upp det med armen. \\ \hline
     \end{tabularx}
-\caption{Tabell över funktionallitet hos manuella motorstyrningens instrumentbräde}
+\caption{Tabell över funktionalitet hos manuella motorstyrningens instrumentbräde}
 \label{tab:arm}
 \end{table}
 
@@ -265,7 +265,7 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
 
 \subsection{Diagnos och status}
 \label{subsec:diag}
-Nedan visas i figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och status samt i tabell \ref{tab:diag} dess funktionallitet.
+I figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och status samt i tabell \ref{tab:diag} dess funktionallitet.
 
 \begin{figure}[H]
 	\centering
@@ -306,8 +306,8 @@ I figur \ref{fig:pc_sensor} visas den grafiska representationen av sensorvärden
     \centering
     \begin{tabularx}{\textwidth}{|l|X|}
         \hline \textbf{Representation} & \textbf{Tolkning} \\ \hline
-        Övre graf: blå linje & Här kan man se hur tyngdpunkten för linjesensorn förändras med tiden. Är endast på då linjeföljning är igång.\\ \hline
-        Övre graf: röd linje & Här kan man se hur mycket roboten svänger höger och vänster. Roboten svänger höger då styrningen är positivt och vänster då styrningen är negativ.\\ \hline
+        Övre graf: blå linje & Här kan man se hur tyngdpunkten för linjesensorn förändras med tiden. Visar endast data då linjeföljning är aktiv.\\ \hline
+        Övre graf: röd linje & Här visas robotens styrutslag åt höger respektive vänster. Roboten svänger höger då styrningen är positivt och vänster då styrningen är negativ.\\ \hline
         Undre graf: blå linje & Visar vilket avstånd som detekteras av vänster sidoskanner. Är endast igång då avsökning efter objekt sker på vänster sida. \\ \hline
         Undre graf: röd linje & Visar vilket avstånd som detekteras av höger sidoskanner. Är endast igång då avsökning efter objekt sker på höger sida. \\ \hline
         Pause graph & Stoppar uppdatering av grafen, så att användaren kan titta tillbaka på tidigare värden.\\ \hline
@@ -341,31 +341,31 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
         Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\ \hline
         Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\ \hline
         ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\ \hline
-        Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\ \hline
+        Station is already handled & Senaste station som identifierats har redan blivit behandlat\\ \hline
         No ID was found & Roboten hittade inte RFID-tagg på station \\ \hline
         Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\ \hline
         Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\ \hline
-        Object was not found by arm & Objekt har hittats på stationen \\ \hline
+        Object was not found by arm & Objekt har ej hittats på stationen \\ \hline
         An unkown error has occured & Okänt fel \\ \hline
         Arm failed pickup & Armen misslyckades att plocka upp objekt \\ \hline
         Started linefollowing & Automatisk linjeföljning startades \\ \hline
-        Recived packet with wrong length, was (length 1) expected (length 2). & Packet mottaget med fel längd. \\ \hline
-        Wrong checksum, was X expected Y & Packet mottaget med fel cheksum \\ \hline
-        Received new RFID tag:  &  Ny RFID-tagg \\ \hline
+        Recived packet with wrong length, was (length 1) expected (length 2). & Paket mottaget med fel längd. \\ \hline
+        Wrong checksum, was X expected Y & Paket mottaget med fel cheksum \\ \hline
+        Received new RFID tag:  &  Ny RFID-tagg inläst \\ \hline
         Calibration, new tape reference:  & Kalibrering gjord, nytt värde visas på skärmen \\ \hline
         An I/O error occurred while writing data to port \#1, error: \#2 & Fel vid skrivning till robot med vilken port \#1 och vilket fel \#2\\ \hline
         An I/O error ocurred while reading data from port \#1,error: \#2 & Fel vid läsning från robot med \#1 som vilken port och \#2 vilket fel\\ \hline
         Device was not found. & Enheten som programmet försökte ansluta till hittades inte. \\ \hline
         Permission denied. & Tillstånd att ansluta till roboten nekat. \\ \hline
-        Error while opening already openden device. & Kommunikation till roboten redan ansluten. \\ \hline
+        Error while opening already opened device. & Kommunikation till roboten redan ansluten. \\ \hline
         Unknown error. & Okänt fel.\\ \hline
-        Connecting to port: \#1 & Ansluter till port med \#1  \\ \hline
+        Connecting to port: \#1 & Ansluter till port \#1  \\ \hline
         Bluetooth connected succesfully. & Lyckades ansluta till roboten. \\ \hline
         Error opening bluetooth & Fel vid försök att ansluta till roboten.\\ \hline
         No port to send to. & Ingen enhet ansluten via blåtand. \\ \hline
-        Sent arm command & Arm kommando skickat. \\ \hline
+        Sent arm command & Armkommando skickat. \\ \hline
         x: \#1, y: \#2, angle: \#3 & Parametrar som skickades till armen med \#1 som x-koord, \#2 som y-koord och \#3 som vinkel. \\ \hline
-        Invalid arguments to arm position, must be integers. & Inskriven position var inte tal. \\ \hline
+        Invalid arguments to arm position, must be integers. & Inskriven position var inte heltal. \\ \hline
         Station left:  & Station till vänster. \\ \hline
         Station right & Station till höger. \\ \hline
         Break in line. & Avbrott i linjen.
