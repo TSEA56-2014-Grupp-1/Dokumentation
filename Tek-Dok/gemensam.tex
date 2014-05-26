@@ -13,7 +13,7 @@ Kontrollsumman bildas genom att summera värdena av alla bytes i paketet, exklus
 
 \subsection{USART}
 \label{sec:usart}
-AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot data över en seriell lina.
+AVR-processorns inbyggda USART-funktionalitet används av flera delsystem \footnote{Universal Synchronous/Asynchronous Receiver/Transmitter funktionalliet hos ATmega1284P som möjliggör överföring från paralell till seriell kommunikation. \cite{atmega1284}}. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot data över en seriell lina.
 
 Biblioteket använder en databuffer för att lagra mottagen data. Till buffern hör två pekare, en läspekare och en skrivpekare, som pekar till olika element i buffern och flyttas upp när man läser eller skriver i buffern. Genom att pekarna endast kan anta värden mellan 0 och 255, samma antal värden som det finns element i buffern, fås funktionalitet som i en ringbuffer eftersom pekarnas värden svämmar över till 0 när de ökas från 255.
 
@@ -28,7 +28,7 @@ För att skicka data används funktionen \verb|usart_write_byte| som undersöker
 \subsection{Intern buss}
 \label{sec:bus}
 
-För att delsystemen internt ska kunna kommunicera med varandra finns en intern buss av typen multimaster, se avsnitt \ref{sec:bus-implementation}, I$^2$C\footnote{Inter-Integrated Circuit, en synkron seriell multimasterbuss.} implementerad.
+För att delsystemen internt ska kunna kommunicera med varandra finns en intern buss av typen multimaster, se avsnitt \ref{sec:bus-implementation}, I$^2$C\footnote{Inter-Integrated Circuit, en synkron seriell multimasterbuss.\cite{i2c}} implementerad.
 
 \subsubsection{Protokoll}
 \label{sec:bus-protokoll}
