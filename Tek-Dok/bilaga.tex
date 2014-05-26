@@ -114,4 +114,69 @@ Delsystem arm
 \caption{ID:n samt funktion för delsystem arm}
 \end{table}
 
+\section{Protokoll för blåtand}
+\begin{table}[H]
+\label{packets}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
+PKT\_STOP & Indikerar att roboten ska stoppa all rörelse. & Inga \\ \hline
+PKT\_ARM\_COMMAND & Kommando till arm. & Kommando (1), argument (2-10) \\ \hline
+PKT\_CHASSIS\_COMMAND & Kommando till chassi. & Kommando (1), argument (2-3) \\ \hline
+PKT\_CALIBRATION\_COMMAND & Kommando för klibrering av sensor. & Sensor id (1) \\ \hline
+PKT\_LINE\_DATA & Data från linjesensorn. & Inviduella sensorer (1-11), flaggor (12), tyngdpunkt (13), styrutslag (14) \\ \hline
+PKT\_RANGE\_DATA & Avstånd från sidoskanner. & sida (1), avstånd (2-3) \\ \hline
+PKT\_RFID\_DATA & Värde på RFID-tagg & värde (1) \\ \hline
+PKT\_CHASSIS\_DECISION & Beslut från chassi. & beslut (1) \\ \hline
+PKT\_PACKET\_REQUEST & Förfrågan om paket från dator. & ID på packet (1) \\ \hline
+PKT\_SPOOFED\_RESPONSE & Simulerad förfågran på bussen. & Data som skickas ut på bussen (1-2) \\ \hline
+PKT\_SPOOFED\_TRANSMIT & Simulerad transmitt på bussen. & Data som skickas ut på bussen. (1-2) \\ \hline
+PKT\_CALIBRATION\_DATA & Värde efter kalibrering. & Värde (1) \\ \hline
+PKT\_LINE\_WEIGHT & Tyngpunkt från linjesensor. & Tyngdpunkt (1) \\ \hline
+\end{tabularx}
+\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\end{table}
+
+\begin{table}[H]
+\label{commands}
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
+CMD\_ARM\_MOVE & Arm ska röra sig. & Koordinat (1), riktning (2) \\ \hline
+CMD\_ARM\_GRIP & Stäng gripklo. & Inga \\ \hline
+CMD\_ARM\_RELEASE & Öppna gripklo. & Inga \\ \hline
+CMD\_ARM\_PREDEFINED\_POS & Rör arm till fördefinerad position. & ID på position \\ \hline
+CMD\_ARM\_STOP & Stanna alla rörelser. & Inga \\ \hline
+CMD\_ARM\_MOVE\_POS & Rör arm till position. & x (1), y (2), vinkel (3) \\ \hline
+CMD\_CHASSIS\_SPEED & Ny hastighet till chassi. & Hastighet (1) \\ \hline
+CMD\_CHASSIS\_STEER & Sätt nytt rattutslag. & Rattutslag (1) \\ \hline
+CMD\_CHASSIS\_START & Starta linjeföljning. & Inga \\ \hline
+CMD\_CHASSIS\_PARAMETERS & Sätt nya värde på $K_p$ och $K_d$. & $K_p$(1), $K_d$(2) \\ \hline
+CMD\_CHASSIS\_MOVEMENT & Kommando till chassi att röra på sig i en given riktning. & Riktning (1) \\ \hline
+\end{tabularx}
+\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\end{table}
+
+\begin{table}[H]
+\label{decision}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
+DEC\_PICKUP\_RIGHT & Plockar upp föremål höger. & Inga \\ \hline
+DEC\_PICKUP\_LEFT & Plockar upp föremål vänster. & Inga \\ \hline
+DEC\_PUT\_DOWN\_RIGHT & Lägger ner föremål höger. & Inga \\ \hline
+DEC\_PUT\_DOWN\_LEFT & Lägger ner föremål vänster. & Inga \\ \hline
+DEC\_NO\_MATCH & RFID var inte korrekt. & Inga \\ \hline
+DEC\_STATION\_HANDELED & Station redan behandlad. & Inga \\ \hline
+DEC\_NO\_ID\_FOUND & Ingen RFID-tagg hittade på stationen. & Inga \\ \hline
+DEC\_ARM\_PICKED\_UP & Arm har plockat upp ett föremål. & Inga \\ \hline
+DEC\_ARM\_PUT\_DOWN & Arm har lagt ned ett föremål. & Inga \\ \hline
+DEC\_OBJECT\_NOT\_FOUND & Inget föremål hittades. & Inga \\ \hline
+DEC\_UNKOWN\_ERROR & Okänt fel inträffade. & Inga \\ \hline
+DEC\_ARM\_FAILED & Arm misslyckades med uppplockning. & Inga \\ \hline
+DEC\_START\_LINE & Startade linjeföljning. & Inga \\ \hline
+\end{tabularx}
+\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\end{table}
+
 \section{Övriga bilagor?}

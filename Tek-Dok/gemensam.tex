@@ -11,16 +11,6 @@ Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrol
 
 Kontrollsumman bildas genom att summera värdena av alla bytes i paketet, exklusive kontrollsumman själv, trunkera summan till 8 bitar, och invertera värdet bitvis.
 
-\begin{table}[H]
-\label{packets}
-\begin{tabularx}{\textwidth}{|l|X|p{5cm}|}
-\hline
-\textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
-PKT\_STOP & Indikerar att roboten ska stoppa all rörelse. & Inga \\ \hline
-\end{tabularx}
-\caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
-\end{table}
-
 \subsection{USART}
 \label{sec:usart}
 AVR-processorns inbyggda USART-funktionalitet används av flera delsystem. Därför finns ett gemensamt bibliotek med funktionalitet för att skicka och ta emot byte över en seriell lina.
