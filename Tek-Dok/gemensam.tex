@@ -44,7 +44,6 @@ Bussen är implementerad så att alla enheter kan initiera en transaktion och d�
 
 \begin{table}[H]
 \centering
-\label{adress-buss}
 \begin{tabularx}{0.5\textwidth}{|X|X|}
 \hline
 \textbf{Enhet} & \textbf{Adress} \\ \hline
@@ -54,11 +53,14 @@ Chassi & 1 \\ \hline
 Arm & 6 \\ \hline
 \end{tabularx}
 \caption{Adresser till de olika delsystem på den interna bussen.}
+\label{tab:adress-buss}
 \end{table}
+
+I tabell \ref{tab:adress-buss} finns adresserna till de olika delsystemen. Adresserna har valts så att en prioritering av transaktioner till de olika delsystemen finns då flera använder bussen samtidigt. Det betyder i detta fall att transaktioner till chassit alltid har högst prioritet.
 
 När en enhet gör en transaktion på bussen och enheten som tar emot data returnerar NACK efter någon byte i överförningen kommer transaktionen att avbrytas. Detta innebär även att en ny transaktion inte kommer att startas per automatik.
 
-För att bestämma vilken funktion som ska hantera data på vilket ID finns funktionerna \verb|bus_register_receive|, som registrerar en funktion för mottagen data, samt \verb|bus_register_response| som registrerar en funktion då data ska returneras över bussen.
+För att bestämma vilken funktion som ska hantera data på vilket ID finns funktionerna \texttt{bus\_register\_receive}, som registrerar en funktion för mottagen data, samt \texttt{bus\_register\_response} som registrerar en funktion då data ska returneras över bussen.
 
 De ID:n som finns på de olika delsystemen och vad de gör finns i bilaga \ref{callbacks}.
 
