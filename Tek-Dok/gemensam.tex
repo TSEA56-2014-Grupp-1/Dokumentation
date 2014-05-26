@@ -62,7 +62,7 @@ När en enhet gör en transaktion på bussen och enheten som tar emot data retur
 
 För att bestämma vilken funktion som ska hantera data på vilket ID finns funktionerna \texttt{bus\_register\_receive}, som registrerar en funktion för mottagen data, samt \texttt{bus\_register\_response} som registrerar en funktion då data ska returneras över bussen.
 
-De ID:n som finns på de olika delsystemen och vad de gör finns i bilaga \ref{callbacks}.
+De ID:n som finns implementerade på de olika delsystemen och vad de gör finns i bilaga \ref{callbacks}.
 
 Funktionen för att skicka data på bussen är \verb|bus_transmit|, och för att göra en förfrågan finns \verb|bus_request|. Båda dessa returnerar 0 då transaktionen lyckades. Detta innebär att om användaren vill vara säker på att en transaktion ska gå fram på bussen måste dessa funktioner köras tills dess att de returnerar 0.
 
