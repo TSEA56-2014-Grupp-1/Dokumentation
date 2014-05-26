@@ -66,5 +66,9 @@ Funktionen för att skicka data på bussen är \verb|bus_transmitt|, och för at
 
 Hastigheten på bussen har valts till så låg som möjligt, detta för att få maximal stabilitet. Eftersom hastigheten sätts genom en division av klockhastigheten till processorn kommer bussen att gå olika fort beroende av vilken enhet som är master. Detta innebär att hastigheten varierar mellan cirka 70 och 90 kHz.
 
-\subsection{Utmatning på LCD-display}
+\subsection{Utmatning på LCD-skärm}
 \label{sec:lcd_interface}
+
+Alla enheter kan mata ut information på kommunikationsenhetens LCD-skärm. Detta görs genom biblioteket \verb|lcd_interface| och funktionen \verb|display|. Funktionen kan ta godtyckligt antal parametrar, dock som minst två där den första anger vilken av LCD-skärmens två rader man vill använda och den andra är en sträng med texten som ska skrivas ut. Övriga parametrar är variabler som man vill mata ut, dessa refereras till i textsträngen med samma syntax som är standard i funktionen \verb|printf| i C.
+
+LCD-skärmen kommer att rotera mellan de fyra olika enheternas meddelanden med ca två sekunders intervall. Varje ''sida'' som visas på skärmen identifieras med en bokstav för vilken enhet som visas för tillfället: ''C'' för chassienheten, ''S'' för sensorenheten, ''K'' för kommunikationsenheten och ''A'' för armenheten.
