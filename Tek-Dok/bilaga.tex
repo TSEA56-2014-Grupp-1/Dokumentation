@@ -1,17 +1,145 @@
 \section{Kopplingsschema}
 Robotens elektronik är uppdelad på två virkort. Därför presenteras här ett kopplingsschema för varje virkort.
 
+\subsection{Sensorenhet}
 
 \nyBild{kopplingsschema_sensor.pdf}{Kopplingsschema för virkortet som innehåller sensorenheten.}{senskoppling}{1}
 
+\subsection{Kommunikationsenhet, Armenhet, Chassienhet}
 \begin{figure}[H]
 \centering
- \includegraphics[angle=90,width=0.9\textwidth]{bilder/chassiarmkomm.pdf}
+ \includegraphics[angle=90,width=0.85\textwidth]{bilder/chassiarmkomm.png}
   \emph{\caption{Kopplingsschema över virkortet som innehåller kommunikationsenheten, chassienheten och armenheten.} \label{fig:chassiarmkomm}}
   
 \end{figure}
 
+\textbf{Komponentförteckning}
+\begin{packed_enumerate}
+\item[1.] Processor Armenhet, ATmega 1284P
+\item[2.] Tri-state buffer, 74LS241
+\item[3.] Klockgenerator för Armenhet och Chassienhet, EXO-3 16 MHz  
+\item[4.] Kontakt för kabel till armservon
+\item[5.] Kontakt för kabel till blåtandsenhet
+\item[6.] Pullup-resistor för reset av Kommunikationsenhet och Armenhet, 15 k$\Omega$
+\item[7.] Kondensator för reset av Kommunikationsenhet och Armenhet, 4700 nF
+\item[8.] Resetknapp för Kommunikationsenhet och Armenhet
+\item[9.] Processor Kommunikationsenhet, ATmega 1284P
+\item[10.] Skärmenhet för LCD-skärm, JM162A
+\item[11.] Resistor för att begränsa strömmen till LCD-skärmens bakgrundsbelysning, 10 $\Omega$
+\item[12.] Potentiometer för att justera LCD-skärmens kontrast, 0 - 10 k$\Omega$
+\item[13.] Klockgenerator för Kommunikationsenhet, EXO-3 18.432 MHz
+\item[14.] Processor för Chassienhet, ATmega 1284P
+\item[15.] Pullup-resistor för reset av Chassienhet, 8,2 k$\Omega$
+\item[16.] Kondensator fö reset av Chassienhet, 4700 nF
+\item[17.] Resetknapp för Chassienhet
+\item[18.] Omkopplare för att växla mellan autonomt och fjärrstyrt läge
+\item[19.] Startknapp för att påbörja autonom drift
+\item[20.] Pulldown-resistor för startknappen
+\item[21.] Kontakt för kabel till robotchassi, tillför spänning +5 V till virkortet
+\item[22.] Kontakt för JTAG-kabel.
+\end{packed_enumerate}
+
 
 \section{Utdrag från programlistning}
 \emph{(ca 5-10 sidor så att vi kan bedöma kodens läsbarhet mm.) och eventuell VHDL-kod}
+
+\section{ID:n till buss}
+\label{callbacks}
+
+\begin{table}[H]
+\centering
+\label{callbacks-sensor}
+Delsystem sensor
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
+1 & Oanvänd & \\ \hline
+2 & Transaktion & Kalibrering av linjesensor \\ \hline
+3 & Förfrågan & Linjesensordata \\ \hline
+4 & Förfrågan & Tyngpunkt \\ \hline
+5 & Transaktion & Sätt tejpreferens [ny tejpreferens] \\ \hline
+6 & Oanvänd & \\ \hline
+7 & Oanvänd & \\ \hline
+8 & Oanvänd & \\ \hline
+9 & Transaktion & Sätt aktivitet [0 = linjeföljning, 1 = skanna vänster, 2 = skanna höger] \\ \hline
+10 & Transaktion & Läs RFID-tag \\ \hline
+\end{tabularx}
+\caption{ID:n samt funktion för delsystem sensor}
+\end{table}
+
+Delsystem chassi
+
+\begin{table}[H]
+\centering
+\label{callbacks-chassi}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
+0 & Transaktion & Nödstopp \\ \hline
+1 & Oanvänd & \\ \hline
+2 & Transaktion & Arm klar [0 = plockat up, 1 = lagt ner, 2 = hittade inget] \\ \hline
+3 & Transaktion & Starta linjeföljning \\ \hline
+4 & Transaktion & RFID inläst \\ \hline
+5 & Oanvänd & \\ \hline
+6 & Oanvänd & \\ \hline
+7 & Oanvänd & \\ \hline
+8 & Transaktion & Uppdatera manuell styrning, se \ref{packets}\\ \hline
+9 & Oanvänd & \\ \hline
+10 & Oanvänd & \\ \hline
+11 & Transaktion & Sätt Kp [nytt värde på Kp] \\ \hline
+12 & Transaktion & Sätt Kd [nytt värde på Kd] \\ \hline
+\end{tabularx}
+\caption{ID:n samt funktion för delsystem chassi}
+\end{table}
+
+Delsystem kommunikationsenhet
+
+\begin{table}[H]
+\centering
+\label{callbacks-komm}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
+1 & Oanvänd & \\ \hline
+2 & Transaktion & Rad 1 på skärm för sensorenheten \\ \hline
+3 & Transaktion & Rad 2 på skärm för sensorenheten \\ \hline
+4 & Transaktion & Rad 1 på skärm för armenheten \\ \hline
+5 & Transaktion & Rad 2 på skärm för armenheten \\ \hline
+6 & Transaktion & Rad 1 på skärm för chassienheten \\ \hline
+7 & Transaktion & Rad 2 på skärm för chassienheten \\ \hline
+8 & Transaktion & Vidarebefordra beslut från chassi till PC \\ \hline
+9 & Transaktion & Vidarebefordra RFID-tag till PC\\ \hline
+10 & Transaktion & Vidarebefordra data från sidoskanner till PC \\ \hline
+11 & Transaktion & Sätt Kp [nytt värde på Kp] \\ \hline
+12 & Transaktion & Sätt Kd [nytt värde på Kd] \\ \hline
+13 & Transaktion & Vidarebefordra kalibreringsvärde till PC \\ \hline
+\end{tabularx}
+\caption{ID:n samt funktion för delsystem kommunikation}
+\end{table}
+
+Delsystem arm
+
+\begin{table}[H]
+\centering
+\label{callbacks-arm}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{ID} & \textbf{Transaktion/förfrågan} & \textbf{Funktion [data]} \\ \hline
+0 & Transaktion & Nödstopp \\ \hline
+1 & Transaktion & Kommando till klo [0 = stäng, 1 = öppna] \\ \hline
+2 & Transaktion & Signal att roboten står på station [0 = vänster, 1 = höger] \\ \hline
+3 & Transaktion & Vinkel till uppplockning [vinkel] \\ \hline
+4 & Transaktion & x koordinat till uppplockning [x] \\ \hline
+5 & Transaktion & Plocka upp objekt [0 = inget hittades, 1 = föremål hittat] \\ \hline
+6 & Transaktion & x position för manuell styrning [x] \\ \hline
+7 & Transaktion & y position för manuell styrning [y] \\ \hline
+8 & Transaktion & Vinkel för manuell styrning om positiv [vinkel] \\ \hline
+9 & Transaktion & Vinkel för manuell styrning om negativ [vinkel] \\ \hline
+10 & Transaktion & Gå till position satt i manuell styrning \\ \hline
+11 & Transaktion & Uppdatera manuell styrning, se \ref{packets} \\ \hline
+12 & Transaktion & Lämna av objekt [0 = vänster, 1 = höger] \\ \hline
+\end{tabularx}
+\caption{ID:n samt funktion för delsystem arm}
+\end{table}
+
 \section{Övriga bilagor?}
