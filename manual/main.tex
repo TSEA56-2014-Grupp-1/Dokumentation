@@ -10,6 +10,13 @@
 \usepackage{braket}
 \usepackage{setspace}
 \usepackage{tabularx}
+\usepackage{longtable}
+
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{array}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}p{6cm}}
+
 \title{Teknisk Dokumentation}
 \input{LIPS.tex}
 
@@ -102,7 +109,7 @@ Föremål som ska plockas upp har lämpligen liknande dimensioner som en jengakl
 
 I figur \ref{fig:robot_oversikt} är komponenter som är behövliga vid användning av roboten numrerade, nedan kommer dessa refereras till i texten med knappens siffra, till exempel refererar texten till LCD-skärmen med (4).
 
-Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Läs igenom all säkerhetsdokumentation och varningar innan denna kopplas på, se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inget sitter löst eller är sönder. INSTALLERA PROGRAMVARA, HUR?! :D:D:D:d
+Roboten använder ett batteri av typen LI-PO TIGER Power Atomic-Platinum 11.1V 2200mAh. Läs igenom all säkerhetsdokumentation och varningar innan denna kopplas på, se till att det är fulladdat och i skick att användas. Se till att alla kablar på roboten är inkopplade och att de inte är i vägen för sidoskannrarnas synfält. Se till att inget sitter löst eller är sönder. För installation av programvara se \ref{subsec:install_pc}.
 
 \subsection{Uppstart av system}
 Vid uppstart:
@@ -115,12 +122,20 @@ Vid uppstart:
     \item  Nu är roboten redo att användas. För användning, starta uppkoppling mot PC, se \ref{subsec:start_pc}.
 \end{enumerate}
 
+\subsection{Installera programvara}
+\label{subsec:install_pc}
+\begin{enumerate}
+    \item Ladda in programvara på datorn, given tillsammans med produkten.
+    \item Höger klicka på den komprimerade filen "Ouroborobot" och välj valfri mapp att lägga programmet i.
+\end{enumerate}
+
+
 \subsection{Koppla upp PC mot roboten}
 \label{subsec:start_pc}
 Innan programvaran används, se till att roboten har ström och att röd lampa på blåtandsenheten (3) blinkar rött. För att starta programvara:
 \begin{enumerate}
-    \item Lokalisera och öppna filen “PC-PROGRAMVARA?!”  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
-    \item Tryck på flik (SIFFRA) längst upp i vänstra hörnet för att sedan trycka på “CONNECT?!”
+    \item \item Lokalisera den mappen du packat up programmet i, tryck på filen "PC-interface" för att öppna programmet.  Ett fönster öppnas liknande figur \ref{fig:pc_oversikt}. 
+    \item Tryck på flik "File"  längst upp i vänstra hörnet för att sedan trycka på “CONNECT?!”
     \item Vänta på att det i loggfönstret, se \ref{fig:pc_diag}  ska visa “YEEEEE”. Nu är uppkopplingen mot roboten igång. 
 \end{enumerate}
 
@@ -162,6 +177,19 @@ I tabell \ref{tab:lcd} visas tolkning av de olika meddelandena.
 \centering
     \begin{tabularx}{\textwidth}{|l|X|}
         \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
+    Station to the right & Station till höger identifierad \\ \hline
+    Station to the left & Station till vänster identifierad \\ \hline
+    Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\ \hline
+    Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\ \hline
+    ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\ \hline
+    Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\ \hline
+    No ID was found & Roboten hittade inte RFID-tagg på station \\ \hline
+    Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\ \hline
+    Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\ \hline
+    Object was not found by arm & Objekt har hittats på stationen \\ \hline
+    An unkown error has occured & Okänt fel \\ \hline
+    Arm failed pickup & Armen misslyckades att plocka upp objekt \\ \hline
+    Started linefollowing & Automatisk linjeföljning startades \\ \hline
     \end{tabularx}
 \caption{Tolkning av meddelande som visas på LCD-skärmen}
 \label{tab:lcd}
@@ -234,15 +262,15 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
         \hline \textbf{Knapp / textfält} & \textbf{Funktion} \\ \hline
         Gripklo: Stäng& Stänger gripklo tills dess att den har stadigt grepp om föremålet eller tills maximal stängning nåtts. \\ \hline
         Gripklo: Öppna& Öppnar gripklon till maximal öppning. \\ \hline
-        y: Upp & Rör armen uppåt i y-led, se figur XX, så länge knappen hålls inne. \\ \hline
-        y: Ner & Rör armen nedåt i y-led, se figur XX, så länge knappen hålls inne. \\ \hline
-        x: Upp & Rör armen uppåt i x-led, se figur XX, så länge knappen hålls inne. \\ \hline
-        x: Ner & Rör armen nedåt i x-led, se figur XX, så länge knappen hålls inne \\ \hline
+        y: Upp & Rör armen uppåt i y-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
+        y: Ner & Rör armen nedåt i y-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
+        x: Upp & Rör armen uppåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne. \\ \hline
+        x: Ner & Rör armen nedåt i x-led, se figur \ref{fig:arm_koord}, så länge knappen hålls inne \\ \hline
         Basvinkel: Vänster & Roterar armens bas åt vänster. \\ \hline
         Basvinkel: Höger & Roterar armens bas åt höger. \\ \hline
-        x: Textfält & Här skrivs den x-koordinat, se figur XX, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
-        y: Textfält & Här skrivs den y-koordinat, se figur XX, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
-        vinkel: Textfält & Här skrivs den vinkel, se figur XX, som man vill att armbasen ska rotera i grader. \\ \hline
+        x: Textfält & Här skrivs den x-koordinat, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
+        y: Textfält & Här skrivs den y-koordinat, se figur \ref{fig:arm_koord}, som man vill att armen ska röra sig till i millimeter från armbasens mitt. \\ \hline
+        vinkel: Textfält & Här skrivs den vinkel, se figur \ref{fig:arm_koord}, som man vill att armbasen ska rotera i grader. \\ \hline
         Skicka parametrar & Skickar de givna värdena x-koordinat, y-koordinat och vinkel till roboten för att utföra rörelse. \\ \hline
         Startläge & Rör automatiskt armen tillbaka till dess startläge. \\ \hline
         Plocka höger & Påbörjar skanning av område till höger för att vid identifiering av föremål sedan automatiskt plocka upp det med armen. \\ \hline
@@ -251,6 +279,13 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
 \caption{Tabell över funktionallitet hos manuella motorstyrningens instrumentbräde}
 \label{tab:arm}
 \end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{arm_koord.pdf}
+	\caption{Grafik över armens koordinatsystem}
+	\label{fig:arm_koord}
+\end{figure}
 
 \subsection{Diagnos och status}
 \label{subsec:diag}
@@ -312,14 +347,65 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
 
 
 
-\begin{table}[H]
-    \centering
-    \begin{tabularx}{\textwidth}{|l|X|}
-        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ \hline
-    \end{tabularx}
-\caption{Tabell över tolkning av meddelanden i loggfönstret}
+
+\begin{longtable}{|c|c|}
+\caption{Tabell över tolkning av meddelanden i loggfönstret}\\
+    \hline
+    \textbf{Meddelande} & \textbf{Tolkning} \\
+    \hline
+    \endfirsthead
+    \multicolumn{2}{c}%
+    {\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+    \hline
+    \textbf{Meddelande} & \textbf{Tolkning} \\
+    \hline
+    \endhead
+    \hline \multicolumn{2}{r}{\textit{Continued on next page}} \\
+    \endfoot
+    \hline
+    \endlastfoot
+        \hline \textbf{Meddelande} & \textbf{Tolkning} \\ 
+        Station to the right & Station till höger identifierad \\
+        Station to the left & Station till vänster identifierad \\
+        Putting down object to the right & Roboten lägger ner objekt automatiskt till höger\\
+        Putting down object to the left & Roboten lägger ner objekt automatiskt till vänster \\
+        ID did not match object & Det ID senaste stationen som besökts hade inte samma ID som där roboten plockat upp objekt \\
+        Station is already handeld & Senaste station som identifierats har redan blivit behandlat\\
+        No ID was found & Roboten hittade inte RFID-tagg på station \\
+        Arm has picked up an object & Armen har automatiskt lyckats plockat upp ett objekt\\
+        Arm has put down the object & Armen har automatiskt lyckats sätta ner objekt på station \\
+        Object was not found by arm & Objekt har hittats på stationen \\
+        An unkown error has occured & Okänt fel \\
+        Arm failed pickup & Armen misslyckades att plocka upp objekt \\
+        Started linefollowing & Automatisk linjeföljning startades \\
+        Recived packet with wrong length, was (length 1) expected (length 2). & \\
+        Wrong checksum, was 1 expected 2 & \\
+        Received new RFID tag:  & \\
+        Calibration, new tape reference:  & \\
+        An I/O error occurred while writing data to port 1, error: 2 & \\
+        An I/O error ocurred while reading data from port 1,error:2 & \\
+        Device was not found. & \\
+        Permission denied. & \\
+        Error while opening already openden device. & \\
+        Unknown error. & \\
+        Connecting to port: 1 & \\
+        Bluetooth connected succesfully. & \\
+        Error opening bluetooth & \\
+        No port to send to. & \\
+        No port to send to. & \\
+        No response from robot. Attempting to reconnect... & \\
+        Sent arm command & \\
+        x: 1, y: 2, angle: 3 & \\
+        Invalid arguments to arm position, must be integers. & \\
+        Station left: 1 & \\
+        Station right & \\
+        Value of 1: 2 & \\
+        Break in line. & \\
+        Not enough information entered. & \\
+        Only decimal integers accepted & \\
 \label{tab:logg}
-\end{table}
+\end{longtable}
+
 
 \newpage
 \section*{Referenser}
