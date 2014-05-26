@@ -1,10 +1,10 @@
 \section{Programvara till persondator}
 Programvaran till persondatorer som finns till roboten är till dels för att ge kommandon till roboten, och dels för att visa utmatning av sensordata och beslut. För användning, se användar manualen.
 
-Programvaran är utvecklad i utvecklingsmiljön Qt, och använder till stor del Qt:s egna standard bibliotek. Den är uppdelad i två klasser, en för att kommunicera med roboten via blåtand och en för det grafiska interfacet.
+Programvaran är utvecklad i utvecklingsmiljön Qt \cite{qt}, och använder till stor del Qt:s egna standard bibliotek. Den är uppdelad i två klasser, en för att kommunicera med roboten via blåtand och en för det grafiska interfacet.
 
 Klassen för blåtands kommunikation använder sig utav QSerialPort, vilket finns i Qt:s standard bibliotek. Ur detta hanterar klassen när data ska skickas och tas emot från roboten, och vidarebefordrar denna data till klassen som sköter det grafiska.
 
 Klassen för det grafiska interfacet innehåller alla knappar, fält och liknande som finns i det grafiska interfacet. Denna använder också till stor del Qt:s egna standard bibliotek. Detta gör att klassen till största del innehåller vad de olika knapparna ska göra då de klickas på. Detta består i de flesta fall av att skicka ett visst packet till roboten.
 
-I det grafiska interfacet finns också två grafer som ritar ut data från linjesensorn samt sidoskannrar. Dessa använder en klass som heter QCustomPlot, för ytterligare beskrivning se \ref{}.  
+I det grafiska interfacet finns också två grafer som ritar ut data från linjesensorn samt sidoskannrar. Dessa använder en klass som heter QCustomPlot, för ytterligare beskrivning se \cite{qcustomplot}.  
