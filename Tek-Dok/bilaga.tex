@@ -494,12 +494,12 @@ void vservo_send(
 \end{listing}
 
 \section{ID:n till buss}
-\label{callbacks}
+\label{sec:callbacks}
 \subsection{Delsystem sensor}
 
 \begin{table}[H]
 \centering
-\label{callbacks-sensor}
+\label{tab:callbacks-sensor}
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
 \textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
@@ -514,14 +514,14 @@ void vservo_send(
 9 & Sändning & Sätt aktivitet [0 = linjeföljning, 1 = skanna vänster, 2 = skanna höger] \\ \hline
 10 & Sändning & Läs RFID-tag \\ \hline
 \end{tabularx}
-\caption{ID:n samt funktion för delsystem sensor}
+\caption{De funktioner för att reagera på bussöverföringar som sensorenheten har implementerat.}
 \end{table}
 
 \subsection{Delsystem chassi}
 
 \begin{table}[H]
 \centering
-\label{callbacks-chassi}
+
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
 \textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
@@ -539,14 +539,15 @@ void vservo_send(
 11 & Sändning & Sätt Kp [nytt värde på Kp] \\ \hline
 12 & Sändning & Sätt Kd [nytt värde på Kd] \\ \hline
 \end{tabularx}
-\caption{ID:n samt funktion för delsystem chassi}
+\caption{De funktioner för att reagera på bussöverföringar som chassienheten har implementerat.}
+\label{tab:callbacks-chassi}
 \end{table}
 
 \subsection{Delsystem kommunikationsenhet}
 
 \begin{table}[H]
 \centering
-\label{callbacks-komm}
+
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
 \textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
@@ -564,14 +565,15 @@ void vservo_send(
 12 & Sändning & Sätt Kd [nytt värde på Kd] \\ \hline
 13 & Sändning & Vidarebefordra kalibreringsvärde till PC \\ \hline
 \end{tabularx}
-\caption{ID:n samt funktion för delsystem kommunikation}
+\caption{De funktioner för att reagera på bussöverföringar som kommunikationsenheten har implementerat.}
+\label{tab:callbacks-komm}
 \end{table}
 
 \subsection{Delsystem arm}
 
 \begin{table}[H]
 \centering
-\label{callbacks-arm}
+
 \begin{tabularx}{\textwidth}{|l|l|X|}
 \hline
 \textbf{ID} & \textbf{Sändning/förfrågan} & \textbf{Funktion [data]} \\ \hline
@@ -586,15 +588,16 @@ void vservo_send(
 8 & Sändning & Vinkel för manuell styrning om positiv [vinkel] \\ \hline
 9 & Sändning & Vinkel för manuell styrning om negativ [vinkel] \\ \hline
 10 & Sändning & Gå till position satt i manuell styrning \\ \hline
-11 & Sändning & Uppdatera manuell styrning, se \ref{packets} \\ \hline
+11 & Sändning & Uppdatera manuell styrning, via CMD\_ARM\_MOVE i tabell \ref{tab:commands} \\ \hline
 12 & Sändning & Lämna av objekt [0 = vänster, 1 = höger] \\ \hline
 \end{tabularx}
-\caption{ID:n samt funktion för delsystem arm}
+\caption{De funktioner för att reagera på bussöverföringar som armenheten har implementerat.}
+\label{tab:callbacks-arm}
 \end{table}
 
 \section{Protokoll för blåtand}
+\label{sec:blue}
 \begin{table}[H]
-\label{packets}
 \begin{tabularx}{\textwidth}{|l|X|X|}
 \hline
 \textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
@@ -607,17 +610,18 @@ PKT\_RANGE\_DATA & Avstånd från sidoskanner. & sida (1), avstånd (2-3) \\ \hl
 PKT\_RFID\_DATA & Värde på RFID-tagg & värde (1) \\ \hline
 PKT\_CHASSIS\_DECISION & Beslut från chassi. & beslut (1) \\ \hline
 PKT\_PACKET\_REQUEST & Förfrågan om paket från dator. & ID på packet (1) \\ \hline
-PKT\_SPOOFED\_REQUESE & Simulerad förfrågan över bussen & Adress för enheten som ska ta emot förfrågan (1), ID på funktionen som ska anropas(2), metadata som ska föras med förfrågan (3-4) \\ \hline
+PKT\_SPOOFED\_REQUEST & Simulerad förfrågan över bussen & Adress för enheten som ska ta emot förfrågan (1), ID på funktionen som ska anropas(2), metadata som ska föras med förfrågan (3-4) \\ \hline
 PKT\_SPOOFED\_RESPONSE & Svar på simulerad förfrågan. & Data som returneras av förfrågan (1-2) \\ \hline
 PKT\_SPOOFED\_TRANSMIT & Simulerad sändning på bussen. & Data som skickas ut på bussen. (1-2) \\ \hline
 PKT\_CALIBRATION\_DATA & Värde efter kalibrering. & Värde (1) \\ \hline
 PKT\_LINE\_WEIGHT & Tyngdpunkt från linjesensor. & Tyngdpunkt (1) \\ \hline
 \end{tabularx}
 \caption{De olika pakettyper som kan skickas mellan roboten och PC och vad de innehåller. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\label{tab:packets}
 \end{table}
 
 \begin{table}[H]
-\label{commands}
+
 \begin{tabularx}{\textwidth}{|l|X|X|}
 \hline
 \textbf{ID-beteckning} & \textbf{Beskrivning} & \textbf{Parametrar} \\ \hline
@@ -633,6 +637,7 @@ CMD\_CHASSIS\_PARAMETERS & Sätt nya värde på $K_p$ och $K_d$. & $K_p$(1), $K_
 CMD\_CHASSIS\_MOVEMENT & Kommando till chassi att ändra sin hastighet eller riktning & Kommando (1) \\ \hline
 \end{tabularx}
 \caption{De olika undertyper av paket som skickas som kommandon från persondatorgränssnittet till roboten, genom PKT\_ARM\_COMMAND eller PKT\_CHASSIS\_COMMAND. Parametrarnas ordningsnummer i parameterföljden anges inom parentes i den sista kolumnen.}
+\label{tab:commands}
 \end{table}
 
 \begin{table}[H]
@@ -654,5 +659,5 @@ DEC\_UNKNOWN\_ERROR & Okänt fel inträffade. \\ \hline
 DEC\_ARM\_FAILED & Arm misslyckades med upplockning. \\ \hline
 DEC\_START\_LINE & Startade linjeföljning. \\ \hline
 \end{tabularx}
-\caption{De olika besluten som roboten kan ta och vidarebefordra till persondatorgränssnittet.}
+\caption{De olika besluten som roboten kan ta och vidarebefordra till persondatorgränssnittet. Dessa skickas som en parameter i PKT\_CHASSIS\_DECISION.}
 \end{table}
