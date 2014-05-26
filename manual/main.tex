@@ -14,7 +14,7 @@
 \usepackage{longtable}
 \usepackage{ctable}
 \usepackage{hyphenat}
-\usepackage{xfrac}
+%\usepackage{xfrac}
 
 \title{Teknisk Dokumentation}
 \input{LIPS.tex}
@@ -41,7 +41,9 @@
 \newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
 
 
-\newcommand{\LIPSdokumenttyp}{Användarmanual}
+\newcommand{\LIPSdokumenttyp}{Användarmanual
+
+Lagerrobot}
 \newcommand{\LIPSredaktor}{Lucas Nilsson}
 \newcommand{\LIPSversion}{1.0}
 \newcommand{\LIPSdatum}{\dagensdatum}
@@ -79,7 +81,7 @@
 %% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
 %\addcontentsline{toc}{section}{Dokumenthistorik}
 \begin{LIPSdokumenthistorik}
-  \LIPSversionsinfo{1.0}{}{}{}{}
+  \LIPSversionsinfo{1.0}{2014-05-26}{Första version}{LN}{PhN}
 \end{LIPSdokumenthistorik}
 \newpage
 
@@ -141,14 +143,14 @@ Innan programvaran används, se till att roboten har ström och att röd lampa p
 \subsection{Använda i manuellt läge}
 När roboten har uppkoppling till PC kan manuellt läge initieras enligt:
 \begin{enumerate}
-    \item Dra omkopplare (9) uppåt i bild.
+    \item Dra omkopplare (9) nedåt i bild.
     \item Använd sedan PC-programvara för att styra roboten, se \ref{subsec:motor}
 \end{enumerate}
 
 \subsection{Använda i automatiskt läge}
 När roboten har uppkoppling till PC kan automatiskt läge initieras enligt:
 \begin{enumerate}
-    \item Dra omkopplare (9) nedåt i bild.
+    \item Dra omkopplare (9) uppåt i bild.
     \item Placera roboten någonstans på banans linje. 
     \item Tryck på den blåa knappen (7) så börjar roboten direkt köra per automatik. För att se och tolka det roboten observerar från omgiviningen och de beslut som tas, se \ref{subsec:sensor} och \ref{subsec:diag}.
 \end{enumerate}
@@ -265,12 +267,12 @@ Säkerställ först att roboten är uppkopplad till PC via blåtand innan använ
 
 \subsection{Diagnos och status}
 \label{subsec:diag}
-I figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och status samt i tabell \ref{tab:diag} dess funktionallitet.
+I figur \ref{fig:pc_diag} visas ett instrumentbräde för diagnostik och status samt i tabell \ref{tab:diag} dess funktionalitet. Den övre panelen används för att skicka en simulerad överföring på bussen, både ett anrop/sändning och en förfrågan. Svaret på en förfrågan kommer att visas i loggfönstret.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{diag.pdf}
-	\caption{Grafik över instrumentbräde för diagnostik och status}
+	\caption{Instrumentbräde för diagnostik och status}
 	\label{fig:pc_diag}
 \end{figure}
 
@@ -287,7 +289,7 @@ I figur \ref{fig:pc_diag} ett intrumentbräde för diagnostik och status samt i 
         Loggfönster & Visar händelser som roboten observerar, status och de beslut roboten tar. Den visar också eventuella felmeddelande. Se \ref{subsec:logg}.\\ \hline
         Tid & Visar hur lång tid roboten har varit i automatiskt linjeföljningsläge. \\ \hline
     \end{tabularx}
-\caption{Tabell över funktionallitet hos instrumentbrädet för diagnostik och status}
+\caption{Tabell över funktionalitet hos instrumentbrädet för diagnostik och status}
 \label{tab:diag}
 \end{table}
 
@@ -350,7 +352,7 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
         Arm failed pickup & Armen misslyckades att plocka upp objekt \\ \hline
         Started linefollowing & Automatisk linjeföljning startades \\ \hline
         Recived packet with wrong length, was (length 1) expected (length 2). & Paket mottaget med fel längd. \\ \hline
-        Wrong checksum, was X expected Y & Paket mottaget med fel cheksum \\ \hline
+        Wrong checksum, was X expected Y & Paket mottaget med fel checksum \\ \hline
         Received new RFID tag:  &  Ny RFID-tagg inläst \\ \hline
         Calibration, new tape reference:  & Kalibrering gjord, nytt värde visas på skärmen \\ \hline
         An I/O error occurred while writing data to port \#1, error: \#2 & Fel vid skrivning till robot med vilken port \#1 och vilket fel \#2\\ \hline
@@ -360,7 +362,7 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
         Error while opening already opened device. & Kommunikation till roboten redan ansluten. \\ \hline
         Unknown error. & Okänt fel.\\ \hline
         Connecting to port: \#1 & Ansluter till port \#1  \\ \hline
-        Bluetooth connected succesfully. & Lyckades ansluta till roboten. \\ \hline
+        Bluetooth connected successfully. & Lyckades ansluta till roboten. \\ \hline
         Error opening bluetooth & Fel vid försök att ansluta till roboten.\\ \hline
         No port to send to. & Ingen enhet ansluten via blåtand. \\ \hline
         Sent arm command & Armkommando skickat. \\ \hline
@@ -371,13 +373,5 @@ I tabell \ref{tab:logg} visas de olika meddelandena och dess tolkning.
         Break in line. & Avbrott i linjen.
 \label{tab:logg}
 \end{longtable}
-
-
-\newpage
-\section*{Referenser}
-
-
-\newpage
-\appendix
 
 \end{document} 
