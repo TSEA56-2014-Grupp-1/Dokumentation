@@ -10,6 +10,10 @@
 \usepackage{braket}
 \usepackage{setspace}
 \usepackage{tabularx}
+\usepackage{spverbatim}
+\usepackage[htt]{hyphenat}
+\usepackage{moreverb}
+\usepackage{tocloft}
 \title{Teknisk Dokumentation}
 \input{LIPS.tex}
 
@@ -64,6 +68,8 @@
 \end{LIPSprojektidentitet}
 
 
+\setlength\cftparskip{4pt}
+
 \renewcommand*\contentsname{Innehåll}
 \begin{spacing}{0.5}
 \tableofcontents{}
@@ -115,8 +121,45 @@ En linjesensor sitter längst fram på roboten, nära marken. En RFID-läsare si
 \input{persondator.tex}
 
 \newpage
-\section*{Referenser}
+\begin{thebibliography}{9}
+\addcontentsline{toc}{section}{Referenser}
+\bibitem{atmega1284} Datablad för mikroprocessorn ATmega1284.
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/atmega1284p.pdf
 
+\bibitem{i2c} Specifikation för en I2C-buss.
+\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/i2cspec2000.pdf
+
+\bibitem{lcd} Datablad för LCD-skärm av modell JM162A. 
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/jm162a.pdf
+
+\bibitem{avst-sens} Datablad för avståndssensor SHARP GP2D120.
+\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/gp2d120.pdf
+
+\bibitem{servo} Datablad för servo av modell AX-12.
+\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/AX-12.pdf
+
+\bibitem{rfid} Datablad för RFID-läsare av modellen Parralax-Reader.
+\\ https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/rfid-reader-v21.pdf
+
+\bibitem{bluetooth} Datablad för Bluetooth modemet FireFly BlueSMiRF Gold.
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/firefly.pdf
+
+\bibitem{rs232} Informationssida för den seriella kommunikationsformen RS-232
+\\https://docs.isy.liu.se/twiki/bin/view/VanHeden/RS232
+
+\bibitem{linj_sens} Informationsblad om reflexsensoruppsättning.
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/reflexsensormodul.pdf
+
+\bibitem{hobby} Informationsblad om servostyrning med vanliga hobbyservon.
+\\https://docs.isy.liu.se/twiki/pub/VanHeden/DataSheets/servostyrning.pdf
+
+\bibitem{qt} Hemsida för utvecklingsverktyget QT.
+\\http://qt-project.org/
+
+\bibitem{qcustomplot} Hemsida för gränsnittskomponenten QCustomPlot.
+\\http://www.qcustomplot.com/
+
+\end{thebibliography}
 
 \newpage
 \appendix
