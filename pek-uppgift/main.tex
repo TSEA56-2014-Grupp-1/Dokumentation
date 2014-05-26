@@ -114,7 +114,7 @@ Som i alla batterier används två elektriskt isolerade elektroder, omslutna av 
 
 \nyBild{Reaktionsforlopp.png}{Flöde av ström och joner vid laddning och urladdning}{reaction}{0.8}
 
-De kemiska reaktioner som sker inuti batteriet vid laddning och urladdning är följande för hela förloppet:
+De kemiska reaktioner som sker inuti batteriet vid laddning och urladdning är följande för hela förloppet, där Li är litium, C är kol, O är syre samt e står för elektron:
 
 \centerline{\ce{LiMO2 + nC <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + Li_{x}C_{n}}}
 
@@ -126,11 +126,11 @@ För katoden är reaktionen:
 \\
 \centerline{\ce{LiMO2 <=>[\text{Laddning}][\text{Urladdning}] Li_{1-x}MO2 + xLi^+ + xe}}
 
-Där n är 6, 12 eller 18. M är Co, Ni, Fe eller W beroende på batteri. Under en laddning eller urladdning kan alltså \ce{LiC6}, \ce{LiC12} eller \ce{LiC18} att bildas eller förbrukas på anoden. \cite{formler} 
+Där n är 6, 12 eller 18. M är Co, Ni, Fe eller W beroende på batteri. Under en laddning eller urladdning kan alltså \ce{LiC6}, \ce{LiC12} eller \ce{LiC18} bildas eller förbrukas på anoden. \cite{formler} 
 
 Det är dessa kemiska reaktioner som driver en ström genom lasten som läggs på batteriet, då reaktionen på anoden under urladdning ger ifrån sig en elektron medan katoden behöver en elektron för att genomföra sin reaktion.
 
-För att dessa reaktioner ska kunna äga rum måste det finnas yta på anoden och katoden där de olika ämnena kan reagera med varandra. Om dessa ytor skulle minska kommer också kapaciteten på batteriet att minska. Effekter som kan göra att ytan på anoden och katoden minskar finns beskrivet vidare i \ref{slitage}.
+För att dessa reaktioner ska kunna äga rum måste det finnas yta på anoden och katoden där de olika ämnena kan reagera med varandra. Om dessa ytor skulle minska kommer också kapaciteten på batteriet att minska. Effekter som kan göra att ytan på anoden och katoden minskar finns beskrivet vidare i avsnitt \ref{slitage}.
 
 \subsubsection{Laddning}
 För laddning av batterier finns det två olika tekniker. En är att hålla en konstant ström till batteriet och den andra att hålla en konstant spänning till batteriet. Eftersom litiumjonbatterier är mycket känsliga mot för hög spänning är det vanligt att en kombination av de båda används.
@@ -146,17 +146,17 @@ Vid lagring av batterier kan de över lång tid tappa kapacitet, hur mycket bero
 \label{slitage}
 Slitage på litiumjonbatterier beror på många olika faktorer. Bland annat spelar batteriets temperatur roll. Höga temperaturer gör att slitage på batteriet kommer ske med ökad hastighet, men även låga temperaturer påverkar batteriets livslängd negativt. Låga temperaturer har visats ha störst negativ effekt vid uppladdning av batteriet. \cite{ageing}
 
-Laddning av batterier är ett av de moment som sliter på batterier signifikant. En av de effekter som påverkar livstiden mest \cite{charging} och som ger upphov till permanenta skador på batteriet är så kallad ''Lithium plating''. Detta sker då det blir en litiummetallbeläggning på anoden.\cite{nasa} Detta är en icke reversibel process och gör att batteriet permanent tappar kapacitet. För att minimera denna effekt ska laddning inte ske vid låga temperaturer, och med låg ström under de första samt sista 10~\% av laddningen. \cite{charging-p}
+Laddning av batterier är ett av de moment som sliter på batterier signifikant. En av de effekter som påverkar livstiden mest \cite{charging} och som ger upphov till permanenta skador på batteriet är så kallad ''Lithium plating''. Detta sker då det blir en litiummetallbeläggning på anoden \cite{nasa}. Detta är en icke reversibel process och gör att batteriet permanent tappar kapacitet. För att minimera denna effekt ska laddning inte ske vid låga temperaturer, och med låg ström under de första samt sista 10~\% av laddningen. \cite{charging-p}
 
-Intressant att notera är att den typen av laddningsteknik som används i laddare för hemelektronik idag inte fungerar på detta sätt.\cite{apple} De laddar istället med konstant ström från början tills dess att 4,2~V finns i varje cell och byter därefter till konstant spänning. Detta görs troligen eftersom dagens batterier trots detta laddningsbeteende ändå har en effektiv livstid på ungefär 1 000~cykler, och tillverkarna har då prioriterat snabbhet över livstid.
+Intressant att notera är att den typen av laddningsteknik som används i laddare för hemelektronik idag inte fungerar på detta sätt \cite{apple}. De laddar istället med konstant ström från början tills dess att 4,2~V finns i varje cell och byter därefter till konstant spänning. Detta görs troligen eftersom dagens batterier trots detta laddningsbeteende ändå har en effektiv livstid på ungefär 1 000~cykler, och tillverkarna har då prioriterat snabbhet över livstid.
 
 Under laddning är det också viktigt att laddaren inte överladdar batteriet. Ett batteri räknas som överladdat då spänningen överstiger 4,2~V per cell. Detta påverkar batteriet negativt på flera olika sätt, säkerhetsmässigt beskrivs detta problem senare i avsnitt \ref{säkerhet}.
 
 Om ett batteri blir överladdat kommer detta att ge slitage på batteriet genom att förändra vilka typer av litiumgrafitkonfigurationer som bildas i batteriet. För att mäta detta har forskare i en rapport \cite{overcharging-type} använt det faktum att dessa joner har olika storlek, vilket ger olika diffraktionsmönster då batteriet genomstrålas av en neutronkanon. I figur \ref{fig:linormal} och figur \ref{fig:lioverchargd} har man mätt upp koncentrationen av olika konfigurationer i ett normalt batteri respektive i ett som har blivit överladdat till 4,5~V. 
 
-\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning, tagen från \cite{overcharging-type}}{linormal}{0.8}
+\nyBild{Linormal.png}{Koncentration av olika typer av joner efter normal uppladdning, tagen från \cite{overcharging-type}. Notera att färgkoderna är efter hur många procent urladdat batteriet är}{linormal}{0.8}
 
-\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning, tagen från \cite{overcharging-type}}{lioverchargd}{0.8}
+\nyBild{Lioverchargd.png}{Koncentration av olika typer av joner efter överladdning, tagen från \cite{overcharging-type}. Notera att färgkoderna är efter hur många procent laddat batteriet är}{lioverchargd}{0.8}
 
 Ett batteri som blivit överladdat kommer att ha mindre \ce{LiC6} jämfört med ett batteri som inte blivit överladdat. Ett överladdat batteri kommer istället innehålla mer \ce{LiC12} samt \ce{LiC18} \cite{overcharging-type}. Man kan även se i figurerna att efter urladdning finns i ett överladdat batteri mer \ce{LiC12} samt \ce{LiC18} jämfört med ett icke överladdat batteri, som knappt innehåller \ce{LiC_{n}} alls \cite{overcharging-type}.
 
@@ -188,14 +188,14 @@ Att förbättra dagens batteriteknik är ett aktivt forskningsområde som engage
 Man kan tänka sig tre huvudsätt att angripa problemet att bygga vidare på och förbättra dagens litiumjonbatterier. Antingen kan man arbeta med att utveckla den teknik som finns idag med litium som laddningsbärande ämne, eller så kan man forska på att utveckla andra typer av kemiska batterier som använder andra ämnen, och slutligen kan man leta efter helt andra sätt att lagra energi på som inte använder kemiska reaktioner. I det här avsnittet behandlas ett urval av den forskning som bedrivs på dessa tre områden idag.
 
 \subsubsection{Att förbättra litiumjonbatterier}
-Ett sätt att öka energitätheten och sänka kostnaderna för batterier som fortfarande använder litium som laddningsbärare är att modifiera batteridesignen till att använda alternativa elektrodmaterial och elektrolyter. Ett exempel på detta är en typ av litium-svavel-batterier som byter ut elektroderna mot en av rent litium och en av en blandning av svavel, grafenoxid och cetrimoniumbromid (förkortat CTAB, en ingrediens i vissa bakteriedödande medel).\cite{li-s}
+Ett sätt att öka energitätheten och sänka kostnaderna för batterier som använder litium som laddningsbärare är att modifiera batteridesignen till att använda alternativa elektrodmaterial och elektrolyter. Ett exempel på detta är en typ av litium-svavel-batterier som byter ut elektroderna mot en av rent litium och en av en blandning av svavel, grafenoxid och cetrimoniumbromid (förkortat CTAB, en ingrediens i vissa bakteriedödande medel).\cite{li-s}
 
-I en artikel i American Chemical Societys tidskrift \emph{Nano Letters} beskrivs hur forskare med denna design nyligen har lyckats uppnå väldigt hög prestanda. De har lyckats framställa batterier som inte bara är lättare än konventionella litiumjonbatterier, utan också har en livslängd på över 1500 cykler och som kan urladdas med 6C (C motsvarar strömmen som laddar upp eller ur batteriets kapacitet på en timme, exempelvis kan ett batteri på 1000 mAh som listats som 6C ge 6 A). \cite{li-s}
+I en artikel i American Chemical Societys tidskrift \emph{Nano Letters} beskrivs hur forskare med denna design nyligen har lyckats uppnå väldigt hög prestanda. De har lyckats framställa batterier som inte bara är lättare än konventionella litiumjonbatterier, utan också har en livslängd på över 1500 cykler och som kan urladdas med 6C (C motsvarar strömmen som laddar upp eller ur batteriets kapacitet på en timme, exempelvis kan ett batteri på 1 Ah som listats som 6C ge 6 A). \cite{li-s}
 
 \subsubsection{Andra typer av kemiska batterier}
 Litium har fördelen som laddningsbärare i batterier att det är väldigt reaktivt och den lättaste metallen som finns. Dock bär varje litiumjon endast på en laddning och om ett batteri använde ett annat ämne som låter sig joniseras lika lätt men som bär på fler laddningar skulle man kunna öka prestandan per viktenhet substantiellt. Ett koncept som forskare jobbar på är att ersätta litium med magnesium, vars joner bär på två laddningar. Problemet som finns idag är dock att magnesium dras mycket starkare till syreatomer i de organiska elektrolyter som används, och batterier med denna design har därför inte så hög urladdningshastighet som man skulle önska. Detta skulle kunna åtgärdas med nya kombinationer av elektrolyter och elektrodmaterial, och forskare jobbar därför mycket med datorsimuleringar för att hitta en optimal design. \cite{better-battery}
 
-Ett radikalt annorlunda angreppssätt är att bygga batterier som använder den omkringliggande luften som en del i de kemiska reaktionerna. De kallas \emph{air-breathing batteries}, Li-O, och använder syre från luften som får flöda genom en porös kolelektrod. Detta ger mer utrymme i batterierna och mindre vikt eftersom det bara behövs en metallelektrod av litium. Man har dock haft stora problem med att undvika oönskade sidoreaktioner inuti batterierna som degraderar prestandan, vissa batterier har haft livslängder på under 50 cykler. Enligt artikeln \emph{A better battery} i tidskriften Nature har många forskare gett upp tanken på Li-O som batteriteknik. \cite{better-battery}
+Ett radikalt annorlunda angreppssätt är att bygga batterier som använder den omkringliggande luften som en del i de kemiska reaktionerna. De kallas \emph{air-breathing batteries}, Li-O, och använder syre från luften som får flöda genom en porös kolelektrod. Detta ger mer utrymme i batterierna och mindre vikt eftersom det bara behövs en metallelektrod av litium. Man har dock haft stora problem med att undvika oönskade sidoreaktioner inuti batterierna som degraderar prestandan. Vissa batterier har haft livslängder på under 50 cykler. Enligt artikeln \emph{A better battery} i tidskriften Nature har många forskare gett upp tanken på Li-O som batteriteknik. \cite{better-battery}
 
 Det finns dock forskningsrön som tyder på att den billigare varianten Na-O, som använder natrium istället för litium, är betydligt bättre i många avseenden och har markant mindre inverkan från sidoreaktioner. Det återstår att se hur forskningen kring detta kommer att utvecklas i framtiden. \cite{better-battery}
 
