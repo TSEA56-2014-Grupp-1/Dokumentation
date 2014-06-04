@@ -90,15 +90,21 @@ Lagerrobot}
 \setcounter{page}{1}
 
 \section{Inledning}
-Sju studenter vid Linköpings universitet har i sitt kandidatarbetsprojekt konstruerat en robot. Detta dokument tjänar till att vara ett underlag för någon som vill konstruera en liknande produkt och beskriver i detalj hur systemet fungerar.
+Vi har i vårat kandidatarbetsprojekt konstruerat en robot. Detta dokument tjänar till att vara ett underlag för någon som vill konstruera en liknande produkt och beskriver i detalj hur systemet fungerar.
 
 \section{Produktbeskrivning}
 Produkten är en robot bestående av ett chassi av plexiglas med fyra hjul, sensorer, en arm och styrelektronik. Utöver detta finns programvara för övervakning och manövrering av roboten.
 
-Roboten är tänkt att användas i ett lager där den autonomt eller fjärrstyrt hämtar och lämnar lagervaror. Lagerarbetet utförs genom att följa en svart linje längs marken där stationer är markerade med ett svart sträck, vinkelrätt mot banan, i den riktning stationen befinner sig. Vid stationerna finns en RFID-tagg för identifiering av stationstypen, upplockning eller avlämning.
+Roboten är tänkt att användas i ett lager där den autonomt eller fjärrstyrt hämtar och lämnar lagervaror. Lagerarbetet utförs genom att följa en svart linje längs marken där stationer är markerade med ett svart sträck, vinkelrätt mot banan, i den riktning stationen befinner sig. Vid stationerna finns en RFID-tagg för identifiering av stationstypen, upplockning eller avlämning. 
+
+\nyBild{bana.pdf}{Översiktlig bild av bana med robot}{bana}{0.75}
 
 \section{Systemöversikt}
 Roboten är uppbyggd av fyra olika delsystem kallade chassi, sensor, arm och kommunikation där var och en av dem har sin specifika uppgift att sköta. Förutom robotens fyra delsystem har programvara för persondatorer utvecklats för övervakning och styrning. Roboten kan både operera i ett fjärrstyrt, fullständigt manuellt, läge och i ett autonomt läge där möjligheten att styra vissa delar manuellt fortfarande ges.
+
+\nyBild{introbild.pdf}{Den färdiga roboten håller på att plocka upp ett föremål i ett ''lagerutrymme''.}{intro}{0.8}
+
+
 
 \subsection{Delsystemsöversikt}
 Sensorenheten övervakar kontinuerligt de för tillfället aktuella sensorerna och anpassar sensordata för tolkning av övriga delsystem.
@@ -110,6 +116,8 @@ Chassienheten fungerar som det beslutande organet på roboten. Den vet vid auton
 Armenheten kan vid en upplockningsstation, med vetskapen om var ett föremål befinner sig, plocka upp föremålet med robotarmen. Den har kontroll över samtliga servon i armen och vet hur dessa ska röras vid kommando. Med hjälp av inverterad kinematik kan den, vid automatiskt läge, beräkna hur vardera led ska röra sig för att nå föremålet och sedan plocka upp det.
 
 Den datorbaserade programvaran består av ett instrumentbräde där användaren kan se vilka beslut som tas av roboten samt vilka sensordata de olika sensorerna får in. Vidare kan roboten, inklusive armen, styras genom kommandon i det grafiska gränssnittet.
+
+\nyBild{Systemoversikt.pdf}{En översikt över hur de olika delsystemen är sammankopplade.}{oversikt}{0.8}
 
 \subsection{Sensorer och sensorplacering}
 

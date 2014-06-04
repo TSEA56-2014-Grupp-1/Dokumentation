@@ -3,6 +3,8 @@
 
 Robotens arm är av modell PhantomX Reactor från Trossen Robotics, som är en servostyrd arm med fyra rotationsleder och en gripklo varpå det sitter totalt 8~st AX-12A-servon. Armen kontrolleras av en mikroprocessor, ATmega 1284P, genom att parallellkoppla servona till en seriell USART-port. Kommunikationen till servona sker via halv duplex via en tri-state-buffer. Armen har en maximal räckvidd på 43~cm och en bas med  300~grader rotationsfrihet.
 
+\nyBild{arm.jpg}{En bild på robotarmen.}{arm}{0.8}
+
 \subsection{Funktion}
 
 Armen kan styras manuellt via PC-programvaran och kan köras i autonomt läge. Enhetens huvudprogram är avvaktande tills dess att kommando skickas till enheten vilket kan antingen vara ett manuellt styrningskommando eller en order från chassienheten att ta hand om upplockning av objekt.

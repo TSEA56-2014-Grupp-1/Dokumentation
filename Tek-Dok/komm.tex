@@ -12,7 +12,11 @@ Figur \ref{fig:kommblock} ger en övergripande bild över kommunikationsenhetens
 \subsection{LCD-gränssnitt}
 LCD-skärmen som är monterad på kommunikationsenheten är av modellen JM162A. Den styrs genom en parallell databuss och ett antal styrsignaler från kommunikationsenhetens processor till en intern processor i LCD-enheten. Skärmen har två rader med 16 tecken vardera. \cite{lcd}
 
+\nyBild{LCD.jpg}{Bild på LCD-skärmen.}{LCD}{0.5}
+
 Information skickas till LCD-enheten antingen som instruktioner eller data. Styrsignalernas koppling visas i figur \ref{fig:kommblock}. \verb|RS| styr om databussens värde tolkas som instruktion eller data, \verb|R/W| styr ifall information ska skrivas eller läsas, och styrsignalen \verb|E| aktiverar överföring av information. Genom att låta \verb|E| gå från hög till låg läser LCD-enheten in värdet som finns på databussen, antingen som en instruktion som ska utföras (om \verb|RS| är låg) eller som data som ska lagras i LCD-enhetens minne (om \verb|RS| är hög). Figur \ref{fig:lcdinit} visar vilka kommandon som skickas för att initiera LCD-enheten.
+
+
 
 \nyBild{lcd-init.png}{Flödesschema över initialisering av LCD-enhet. Kommandon som skickas är kursiverade och har värdena på DB (i binär notation), RS och R/W som parametrar.}{lcdinit}{0.4}
 
