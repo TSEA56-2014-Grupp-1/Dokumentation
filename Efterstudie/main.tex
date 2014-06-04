@@ -1,0 +1,181 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+
+\usepackage{epstopdf}
+\usepackage{gensymb}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{setspace}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{ctable}
+\usepackage{hyphenat}
+%\usepackage{xfrac}
+
+\title{Efterstudie}
+\input{LIPS.tex}
+
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+\frenchspacing
+
+\renewcommand{\thepage}{\roman{page}}
+
+\newcommand{\LIPSartaltermin}{VT14}
+\newcommand{\LIPSkursnamn}{TSEA56 Elektronik kandidatprojekt}
+
+\newcommand{\LIPSprojekttitel}{Lagerrobot}
+
+\newcommand{\LIPSprojektgrupp}{Grupp 1}
+\newcommand{\LIPSgruppepost}{tsea56-2014-grupp-1@googlegroups.com}
+\newcommand{\LIPSdokumentansvarig}{LIPS Teknisk Dokumentation}
+
+\newcommand{\LIPSkund}{ISY, Linköpings universitet, 581\,83 Linköping}
+\newcommand{\LIPSkundkontakt}{Tomas Svensson, 013-28 13 68, tomass@isy.liu.se}
+\newcommand{\LIPSkursansvarig}{Tomas Svensson, 013-28 13 68, 3B:528, tomass@isy.liu.se}
+\newcommand{\LIPShandledare}{Anders Nilsson, 3B:512, 013-28 26 35, anders.p.nilsson@liu.se}
+
+
+\newcommand{\LIPSdokumenttyp}{Efterstudie}
+\newcommand{\LIPSredaktor}{Johan Lind}
+\newcommand{\LIPSversion}{1.0}
+\newcommand{\LIPSdatum}{\dagensdatum}
+
+\newcommand{\LIPSgranskare}{}
+\newcommand{\LIPSgranskatdatum}{}
+\newcommand{\LIPSgodkannare}{}
+\newcommand{\LIPSgodkantdatum}{}
+
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
+\begin{document}
+
+\LIPStitelsida
+
+%% Argument till \LIPSgruppmedlem: namn, roll i gruppen, telefonnummer, epost
+\begin{LIPSprojektidentitet}
+  \LIPSgruppmedlem{Karl Linderhed}{Projektledare (PL)}{073-679 59 59}{karli315@student.liu.se}
+  \LIPSgruppmedlem{Patrik Nyberg}{Dokumentansvarig (DOK)}{073 -049 59 90}{patny205@student.liu.se}
+  \LIPSgruppmedlem{Johan Lind}{}{070-897 58 24}{johli887@student.liu.se}
+  \LIPSgruppmedlem{Erik Nybom}{}{070-022 47 85}{eriny778@student.liu.se}
+  \LIPSgruppmedlem{Andreas Runfalk}{}{070-564 23 79}{andru411@student.liu.se}
+  \LIPSgruppmedlem{Philip Nilsson}{}{073-528 48 86}{phini326@student.liu.se}
+  \LIPSgruppmedlem{Lucas Nilsson}{}{073-059 42 94}{lucni395@student.liu.se}
+\end{LIPSprojektidentitet}
+
+
+\renewcommand*\contentsname{Innehåll}
+\begin{spacing}{0.5}
+\tableofcontents{}
+\end{spacing}
+\newpage
+
+%% Argument till \LIPSversionsinfo: versionsnummer, datum, ändringar, utfört av, granskat av
+%\addcontentsline{toc}{section}{Dokumenthistorik}
+\begin{LIPSdokumenthistorik}
+  \LIPSversionsinfo{1.0}{2014-06-04}{Första version}{}{}
+\end{LIPSdokumenthistorik}
+\newpage
+
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+\section{Tidsåtgång}
+\subsection{Arbetsfördelning}
+Gruppen har planerat tiden så att alla medlemmar har bidragit ungefär lika många timmar under projektets gång. Detta betyder dock inte att alla alltid har lagt ner lika många timmar per vecka, utan det har justerats efter de olika medlemmarnas möjligheter att jobba. Alla i gruppen har varit nöjda med detta upplägg eftersom att man, från vecka till vecka, kunnat välja hur mycket tid man själv ville lägga ner.
+
+\subsection{Tidsåtgång jämfört med planerad tid}
+Följande tabell visar hur tidsåtgången fördelades på projektets olika faser. Före-fasen innehöll planering, förarbete och design. Under-fasen innehöll konstruktion, testning och skrivande av dokumentation. I efter-fasen ingick förberedelse av presentation och skrivande av användarhandledning och efterstudie.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{0.5\textwidth}{|X|X|X|}
+\hline
+Fas & Planerad tid i timmar & Använd tid i timmar \\ \hline
+Före & 478 & 398.5 \\ \hline
+Under & 1236 & 1376 \\ \hline
+Efter & 82 & 80.5 \\ \hline
+\end{tabularx}
+\caption{Tidsåtgång jämförelse}
+\end{table}
+
+\section{Analys av arbete och problem}
+
+\subsection{Vad hände under de olika faserna?}
+Förberedandefasen tog lång tid men var nödvändig för det fortsatta arbetet. En genomarbetad systemskiss la grund för en detaljrik designspecifikation, vilket i sin tur resulterade i en väl utformad tidplan.
+
+Under utförandefasen genomfördes all konstruktion och programutveckling. 
+
+Efterfasen innehöll inte så mycket i vårt fall. Till den har vi räknat redovisning, skrivande av användarhandledning, presentation och efterstudie.
+
+\subsection{Hur vi arbetade tillsammans (ansvar, beslut, kommunikation etc.)?}
+I projektets början upprättades ett gruppkontrakt för att ha något att luta sig tillbaka mot vid eventuella dispyter gruppmedlemmar emellan. Detta har dock aldrig behövt tillgripas då arbetet inom gruppen gått smärtfritt. Vi har lagt stor vikt vid att varje gruppmedlem tar sitt individuella ansvar att utföra de arbetsuppgifter som denne blivit tilldelad.
+
+Vi valde att hålla en platt organisation i projektgruppen, där inga uttalade system- eller delansvar fördelades. Vi resonerade att det bara skulle komplicera saker om vi “låste” exempelvis testansvar eller hårdvaruansvar till en specifik person när vi inte hade några egentliga skillnader i våra förkunskaper och tidigare meriter, vi har arbetat mer kollektivt. Det har självfallet blivit så att vissa projektmedlemmar har blivit inriktade på vissa delsystem och delfunktioner, vilket bara är bra. Det har dock aldrig varit några problem med att någon enstaka medlem har tvingats lösa problem själv, utan det har lätt gått att få hjälp och stöd från övriga gruppen.
+
+I det fall att en aktivitet inte fått tillräckligt antal timmar i tidplanen kan gruppmedlemmarna naturligtvis inte utföra denna på utsatt tid. Detta har hanterats veckovis då tidplanen gjorts om och justerats utefter de arbetsinsatser som uppskattats vara nödvändiga för att slutföra påbörjade aktiviteter.
+
+\subsection{Hur använde vi projektmodellen?}
+För att genomföra projektet följde vi LIPS-modellen och tog fram de dokument som finns med i denna. Vidare skrevs samtliga dokument efter deras respektive LIPS-mall. 
+
+\subsection{Hur fungerade relationen med beställaren?}
+Kontakten med beställaren har fungerat mycket smidigt. Utöver möten för beslutspunkter har vi endast varit i kontakt med beställaren för att förhandla om ett krav. Beställaren har varit positivt inställd och lyssnat till våra synpunkter.
+
+subsection{Hur fungerade relationen med handledaren?}
+Handledaren gav bra stöd och kunde alltid ordna det material som behövdes.
+
+\subsection{Tekniska framgångar/problem}
+Under projektets gång fanns flertalet motgångar. De mest nämnvärda var:
+
+\begin{packed_itemize}
+\item Läsning av RFID-taggar. Läsaren gav inte data om taggen inte var väldigt nära roboten. Då läsaren alltid fungerat dåligt ifrågasattes det inte hurvida det fanns källor som störde. Det kan ha varit sidoskannrarna som gav störningar då de är monterade nära sensorn, alternativt stör drivspänningen. Problemet åtgärdades inte innan projektets slut.
+\item Linjesensorern var väldigt känslig för stötar och oförsiktig hantering. Gruppen bytte ut sensorn tre gånger på grund av sensorer som gav fasta felaktiga värden. I vissa fall orsakade förändringar i sensorn en förskjutning av tyngdpunkten så att roboten inte höll sig i mitten av linjen. På tävlingsdagen fungerade endast nio av elva sensorer, vilket kringgicks genom att stänga av de sensorerna vid inläsningen. Detta gav färre sensorer att beräkna linjepositionen på vilket bl.a. ledde till felaktig detektering av plockstationer vid kurvor. Individuell kalibrering av alla sensorer skulle antagligen hjälpt mot felet eftersom sensorernas felvärde var någorlunda konstant, då hade vi inte behövt “skära bort” två sensorer. Ungefär 40 timmar har spenderats på problem med denna sensor.
+\item Servokommunikation för armen var svår att få pålitlig. Dokumentationen var undermålig på vissa punkter om när statuspaket skulle skickas. Då sändning och mottagning skedde på samma lina skapade det lustiga fel då armen inte reagerade på vissa kommandon, eftersom statuspaket skickades samtidigt som styrkommandon. Felen var sporadiska och därför tog det tid innan de identifierades. Totalt spenderades 68 timmar på att få väl fungerande generella funktioner för servo och armkontroll.
+\end{packed_itemize}
+
+Flera saker gick bättre än förväntat:
+\begin{packed_itemize}
+\item Detektering av föremål gick oväntat bra. Den enda motgången var att servona inte var tillräckligt exakta när de monterades horisontellt. Detta löstes genom att montera om dem vertikalt. Precisionen blev tillräckligt exakt för att i de allra flesta fall kunna göra autonom upplockning.
+\item Linjeföljning började fungera väldigt tidigt i projektet. Redan andra veckan kunde roboten följa en linje med kurvor.
+\item Implementeringen av busskommunikation blev väldigt smidig att använda. Funktionerna kunde struktureras väldigt bra.
+\end{packed_itemize}
+
+\section{Måluppfyllelse}
+\subsection{Vad har uppnåtts?}
+Samtliga krav med prioritet 1 har uppfyllts och även en stor mängd krav med prioritet 2. De krav som inte uppfyllts har att göra med robotens förmåga att mäta tillryggalagd sträcka. Vidare har ett krav med prioritet 1 omförhandlats till prioritet 3. Detta krav gick ut på att roboten ska stängas av då uppkopplingen mot datorn bryts.
+\subsection{Hur fungerade leveransen?}
+Under verifiering av krav framgick problemet med RFID-läsaren. RFID-läsaren sänktes närmare marken och hittade då samtliga taggar. Roboten godkändes efter sänkningen.
+\subsection{Hur har studiesituationen påverkat projektet?}
+Projektet har i de flesta fall prioriterats, så det är snarare projektet som påverkat andra ämnen. Att flera studenter har läst två kurser parallellt med kandidatprojektet har lett till att dessa individer fått en markant högre arbetslast än vad som är tänkt. I och med att man kan välja när man vill arbeta i kandidatprojektet så har det dock gått att anpassa sig och klara den ökade arbetsbelastningen.
+
+\section{Sammanfattning}
+I helhet är gruppen väldigt nöjd med deras resultat och prestationer. Speciellt nöjda är vi över att ha satsat på autonom upplockning och lyckats med denna, trots att det inte krävdes enligt kravspecifikationen. 
+
+Arbetet inom gruppen har gått mycket smidigt och det förarbete som gjordes tidigt i projektet har gagnat gruppen i slutändan.
+\subsection{De tre viktigaste erfarenheterna}
+\begin{packed_itemize}
+\item Vi har lärt oss mer om hur man genomför ett projekt (LIPS-modellen)
+\item Vi har lärt oss om hur man arbetar och samarbetar i en grupp där olika personer har kännedom om olika delsystem.
+\item Vi har fått tillämpa teori från tidigare kurser, exempelvis reglering och hårdvarunära programmering.
+\end{packed_itemize}
+
+\subsection{Goda råd till de som ska utföra ett liknande projekt}
+Se till att göra ett grundligt arbete under förfasen. Ett aktivitetsberoende underlättar oerhört vid tidsplaneringen. 
+
+Lär er hur man programmerar processorerna genom Atmel Studio med kortkommandon. Ni kommer att programmera processorerna många gånger.
+
+Håll ett öppet sinne vid felsökning. Det är inte säkert att det är koden som är fel, kontrollera tidigt om processorn gått sönder, om det finns någon möjlighet att det uppstår brus i kopplingar, och framför allt om virningar sitter fast ordentligt. 
+
+Var inte rädd för att hitta på nya lösningar på problem om det gör projektet mer intressant och roligt.
+
+Ett avancerat arbetsflöde i versionshanteringen av koden, med flera olika grenar, kan underlätta arbetet rejält. Se dock till att alla från början förstår tydligt hur systemet ska användas! Skriv in det i projektplanen.
+
+Allt som kan gå fel, kommer gå fel vid redovisning och tävling.
+
+\end{document} 
