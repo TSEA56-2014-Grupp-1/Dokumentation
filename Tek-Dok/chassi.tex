@@ -1,6 +1,8 @@
 \section{Chassienhet}
 Chassienheten tar alla övergripande beslut om vad som ska göras, t.ex. är det chassienheten som bestämmer när och på vilken sida armen ska plocka upp och lämna av objekt. Chassienheten sköter styrningen med PD-regleringen med hjälp av den tyngdpunkt som den får av sensorenheten via bussen. Detta för att kunna följa en svart tejpad linje på marken. På chassienheten finns en omkopplare för att kunna välja mellan autonomt och manuellt läge samt två tryckknappar, en tryckknapp för att starta linjeföljningsproceduren samt en för återställning. 
 
+\nyBild{Chassi.pdf}{Ett blockschema över chassienheten}{chassi}{0.8}
+
 \subsection{Funktion}
 
 Chassit har flera funktioner som anges i följande punktlista:
@@ -29,9 +31,9 @@ För att kontrollera hastighet till motorerna används PWM-styrning med en uppda
 
 För att kunna följa linjen utan att slingra sig fram implementeras en regleralgoritm. Den reglering som görs är en PD-reglering, enligt formeln:
 
-$$u[t] = K_{p}e[t] + K_{d}\frac{d}{dt}e[t]$$
+$$u[t] = K_{p}e[t] +\frac{K_{d}}{ \delta}e[t]$$
 
-Eftersom tiden mellan uppdateringarna är konstant kan $$ K_{d}\frac{d}{dt}$$ sparas i processorns minne som ett konstant värde. Om $u[t]$ är negativ ska motor på höger sida  bromsas medan den andra kör med full fart och vice versa. För att beräkna motorkontrollen till PWM används följande formel:
+Eftersom tiden mellan uppdateringarna är konstant kan $ \delta $ sparas i processorns minne som ett konstant värde. Om $u[t]$ är negativ ska motor på höger sida  bromsas medan den andra kör med full fart och vice versa. För att beräkna motorkontrollen till PWM används följande formel:
 
 $$P[t] = 1999 - u[t]$$
 

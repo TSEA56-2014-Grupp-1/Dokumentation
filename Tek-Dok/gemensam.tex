@@ -11,7 +11,7 @@ Paketlängden som skickas med är antalet parametrar + 1, eftersom även kontrol
 
 Kontrollsumman bildas genom att summera värdena av alla bytes i paketet, exklusive kontrollsumman själv, trunkera summan till 8 bitar, och invertera värdet bitvis.
 
-Tabeller över vilken information som skickas mellan roboten och persondatorgränssnittet är bifogade i bilaga \ref{sec:blue}.
+Tabeller över vilken information som skickas mellan roboten och persondatorgränssnittet är bifogade i appendix \ref{sec:blue}.
 
 \subsection{USART}
 \label{sec:usart}
@@ -64,7 +64,7 @@ När en enhet gör en transaktion på bussen och enheten som tar emot data retur
 
 För att bestämma vilken funktion som ska hantera data på vilket ID finns funktionerna \texttt{bus\_register\_receive}, som registrerar en funktion för mottagen data, samt \texttt{bus\_register\_response} som registrerar en funktion då data ska returneras över bussen.
 
-Tabeller över vilka funktionsanrop som kan göras och vilka ID:n som finns implementerade på de olika delsystemen samt vad de gör är bifogade i bilaga \ref{sec:callbacks}.
+Tabeller över vilka funktionsanrop som kan göras och vilka ID:n som finns implementerade på de olika delsystemen samt vad de gör är bifogade i appendix \ref{sec:callbacks}.
 
 Funktionen för att skicka data på bussen är \verb|bus_transmit|, och för att göra en förfrågan finns \verb|bus_request|. Båda dessa returnerar 0 då transaktionen lyckades. Detta innebär att om användaren vill vara säker på att en transaktion ska gå fram på bussen måste dessa funktioner köras tills dess att de returnerar 0.
 

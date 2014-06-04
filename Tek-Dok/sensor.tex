@@ -20,6 +20,8 @@ Avståndssensorerna är, inom det intervall de är designade att arbeta, kapabla
 \label{sec:linjesensor}
 Reflexsensormodulen består av en uppsättning IR-dioder och fototransistorer som tillsammans används för att mäta reflektionsförmågan hos underlaget. Eftersom reflexsensormodulen består av 11~stycken separata IR-dioder och fototransistorer används en multiplexer och en demultiplexer för att styra sensorn. Demultiplexern driver IR-dioderna och multiplexern används för att ta in insignalerna från fototransistorerna. Linjesensorn är kopplad i enlighet med kopplingsschemat i figur \ref{fig:senskoppling}. \cite{linj_sens}
 
+\nyBild{Linjesensor.pdf}{Ett blockschema över linjesensorn'.}{linjesensor}{1}
+
 Reflexsensorn ger ut en analog spänning som är omvänt proportionell mot underlagets reflekterande ljusstyrka. En inläsning från linjesensorn sker genom ett funktionsanrop till linjesensorinläsningsfunktionen som finns på sensorenheten. När denna funktion anropas uppdateras en uppsättning variabler som är lagrade i en vektor. Vektorn är 11 element lång, där varje element representerar en reflexsensor.
 
 När uppdateringen av linjesensorn startas för första gången är multiplexrarna som styr linjesensorn inställda så att reflexsensorn längst till vänster väljs. Efter detta startas A/D-omvandling på kanal~0 som svarar mot den pinne på processorn som reflexsensormodulen är kopplad till. Under vidare körning så påbörjas varje uppdatering av reflexsensorerna med att en A/D-omvandling startas varefter programmet väntar på att omvandlingen ska slutföras. När A/D-omvandlingen är färdig läggs sedan det erhållna värdet in i linjesensorns datavektor.
@@ -30,6 +32,8 @@ Den RFID-läsare som används är en “Parallax Serial” \cite{rfid}. Denna kr
 
 \subsection{Sidoskanner}
 Sidoskannerns uppgift är att hitta det objekt som ska plockas upp när roboten har stannat vid en plockstation. Sidoskannern består av två avståndssensorer, på höger respektive vänster sida om roboten, monterade på varsitt servo. Servona styrs med hjälp av pulsbreddsmodulering. Servot får en puls var 20:e~ms och pulsbredden avgör vilket läge servot antar. En pulsbredd på ungefär 0.5~ms motsvarar servots minsta utslag och en pulsbredd på ungefär 2.5~ms motsvarar max vinkelutslag. Värden på dessa utslag varierar dock något från servo till servo. \cite{hobby}
+
+\nyBild{Sidoskanner.pdf}{Ett blockschema över sidoskanrarna}{sidoskanner}{0.8}
 
 För att få ett servot att svepa över robotens ena sida ökas pulsbredden inkrementellt med en stegkonstant motsvarande ett servoutslag på en grad. För varje iteration, dvs. för varje vinkel servot står i, kommer avståndssensorn lägga in 20 stycken A/D-omvandlade avståndsmätningar i en fältstruktur för att sedan ta medianvärdet av mätningarna. Detta görs för att bli av med eventuella avvikande värden som fås ur avståndssensorerna. Slutligen omvandlas värdet till ett avstånd i millimeter genom att interpolera mellan de olika referensvärden som finns lagrade i processorn. Om avståndet är större än vad armens räckvidd är innebär det att att inget föremål detekterats och servots vinkel stegas upp ytterligare en grad. 
 
